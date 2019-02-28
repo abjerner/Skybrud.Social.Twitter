@@ -99,7 +99,7 @@ namespace Skybrud.Social.Twitter.Endpoints.Raw {
         /// </see>
         public SocialHttpResponse PostStatusMessage(TwitterPostStatusMessageOptions options) {
             if (options == null) throw new ArgumentNullException(nameof(options));
-            if (!String.IsNullOrWhiteSpace(options.Status)) throw new PropertyNotSetException(nameof(options.Status));
+            if (String.IsNullOrWhiteSpace(options.Status)) throw new PropertyNotSetException(nameof(options.Status));
             return Client.DoHttpPostRequest("https://api.twitter.com/1.1/statuses/update.json", options);
         }
 
