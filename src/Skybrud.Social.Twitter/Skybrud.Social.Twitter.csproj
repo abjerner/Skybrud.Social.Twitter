@@ -8,11 +8,11 @@
 
   <PropertyGroup>
     <RootNamespace>Skybrud.Social.Twitter</RootNamespace>
-    <Version>1.0.0-beta006</Version>
+    <Version>1.0.0-beta007</Version>
     <Company>Skybrud.dk a/s</Company>
     <Product>Skybrud.Social</Product>
     <Authors>Anders Bjerner</Authors>
-    <Copyright>Copyright © 2018</Copyright>
+    <Copyright>Copyright © 2019</Copyright>
     <Description>Authentication and service implementation for the Twitter API.</Description>
     <RepositoryUrl>https://github.com/abjerner/Skybrud.Social</RepositoryUrl>
   </PropertyGroup>
