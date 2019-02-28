@@ -1,7 +1,7 @@
 ﻿using System;
 using Skybrud.Essentials.Common;
-using Skybrud.Social.Http;
-using Skybrud.Social.Interfaces.Http;
+using Skybrud.Essentials.Http.Collections;
+using Skybrud.Essentials.Http.Options;
 
 namespace Skybrud.Social.Twitter.Options.Statuses {
 
@@ -76,7 +76,7 @@ namespace Skybrud.Social.Twitter.Options.Statuses {
             if (String.IsNullOrWhiteSpace(Status)) throw new PropertyNotSetException(nameof(Status));
 
             // Initialize a new instance with required parameters
-            SocialHttpPostData data = new SocialHttpPostData();
+            IHttpPostData data = new HttpPostData();
             data.Set("status", Status);
 
             // Append optional parameters to be POST data

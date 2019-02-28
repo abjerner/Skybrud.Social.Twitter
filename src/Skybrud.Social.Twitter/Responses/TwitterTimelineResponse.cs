@@ -1,5 +1,5 @@
 using System;
-using Skybrud.Social.Http;
+using Skybrud.Essentials.Http;
 using Skybrud.Social.Twitter.Models.Statuses;
 
 namespace Skybrud.Social.Twitter.Responses {
@@ -8,7 +8,7 @@ namespace Skybrud.Social.Twitter.Responses {
 
         #region Constructors
 
-        private TwitterTimelineResponse(SocialHttpResponse response) : base(response) {
+        private TwitterTimelineResponse(IHttpResponse response) : base(response) {
             
             // Validate the response
             ValidateResponse(response);
@@ -25,9 +25,9 @@ namespace Skybrud.Social.Twitter.Responses {
         /// <summary>
         /// Parses the specified <paramref name="response"/> into an instance of <see cref="TwitterTimelineResponse"/>.
         /// </summary>
-        /// <param name="response">The instance of <see cref="SocialHttpResponse"/> representing the raw response.</param>
+        /// <param name="response">The instance of <see cref="IHttpResponse"/> representing the raw response.</param>
         /// <returns>An instance of <see cref="TwitterTimelineResponse"/> representing the response.</returns>
-        public static TwitterTimelineResponse ParseResponse(SocialHttpResponse response) {
+        public static TwitterTimelineResponse ParseResponse(IHttpResponse response) {
             if (response == null) throw new ArgumentNullException(nameof(response));
             return new TwitterTimelineResponse(response);
         }

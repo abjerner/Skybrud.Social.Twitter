@@ -1,5 +1,5 @@
 using System;
-using Skybrud.Social.Http;
+using Skybrud.Essentials.Http;
 using Skybrud.Social.Twitter.Models.Users;
 
 namespace Skybrud.Social.Twitter.Responses.Users {
@@ -8,7 +8,7 @@ namespace Skybrud.Social.Twitter.Responses.Users {
 
         #region Constructors
 
-        private TwitterUserListResponse(SocialHttpResponse response) : base(response) {
+        private TwitterUserListResponse(IHttpResponse response) : base(response) {
 
             // Validate the response
             ValidateResponse(response);
@@ -27,7 +27,7 @@ namespace Skybrud.Social.Twitter.Responses.Users {
         /// </summary>
         /// <param name="response">The response to be parsed.</param>
         /// <returns>An instance of <see cref="TwitterUserListResponse"/> representing the response.</returns>
-        public static TwitterUserListResponse ParseResponse(SocialHttpResponse response) {
+        public static TwitterUserListResponse ParseResponse(IHttpResponse response) {
             if (response == null) throw new ArgumentNullException(nameof(response));
             return new TwitterUserListResponse(response);
         }

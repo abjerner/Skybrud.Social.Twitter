@@ -1,7 +1,7 @@
 ﻿using System;
 using Skybrud.Essentials.Common;
-using Skybrud.Social.Http;
-using Skybrud.Social.Interfaces.Http;
+using Skybrud.Essentials.Http.Collections;
+using Skybrud.Essentials.Http.Options;
 
 namespace Skybrud.Social.Twitter.Options.Users {
 
@@ -87,8 +87,8 @@ namespace Skybrud.Social.Twitter.Options.Users {
         public IHttpQueryString GetQueryString() {
 
             if (UserId == 0 && String.IsNullOrWhiteSpace(ScreenName)) throw new PropertyNotSetException(nameof(UserId));
-            
-            SocialHttpQueryString query = new SocialHttpQueryString();
+
+            IHttpQueryString query = new HttpQueryString();
 
             if (UserId != 0) query.Add("user_id", UserId);
             if (!String.IsNullOrWhiteSpace(ScreenName)) query.Add("screen_name", ScreenName);

@@ -2,7 +2,6 @@ using System;
 using Newtonsoft.Json.Linq;
 using Skybrud.Essentials.Json.Extensions;
 using Skybrud.Essentials.Time;
-using Skybrud.Social.Interfaces;
 using Skybrud.Social.Twitter.Models.Entities;
 using Skybrud.Social.Twitter.Models.Geocode;
 using Skybrud.Social.Twitter.Models.Users;
@@ -15,7 +14,7 @@ namespace Skybrud.Social.Twitter.Models.Statuses {
     /// <see>
     ///     <cref>https://developer.twitter.com/en/docs/tweets/data-dictionary/overview/tweet-object</cref>
     /// </see>
-    public class TwitterStatusMessage : TwitterObject, ISocialTimelineEntry {
+    public class TwitterStatusMessage : TwitterObject {
 
         #region Properties
 

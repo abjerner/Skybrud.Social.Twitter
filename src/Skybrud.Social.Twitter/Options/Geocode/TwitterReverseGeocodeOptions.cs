@@ -1,6 +1,6 @@
+using Skybrud.Essentials.Http.Collections;
+using Skybrud.Essentials.Http.Options;
 using Skybrud.Essentials.Strings.Extensions;
-using Skybrud.Social.Http;
-using Skybrud.Social.Interfaces.Http;
 using Skybrud.Social.Twitter.Models.Geocode;
 
 namespace Skybrud.Social.Twitter.Options.Geocode {
@@ -140,7 +140,7 @@ namespace Skybrud.Social.Twitter.Options.Geocode {
         public IHttpQueryString GetQueryString() {
 
             // Initialize the query string
-            SocialHttpQueryString query = new SocialHttpQueryString();
+            IHttpQueryString query = new HttpQueryString();
 
             // Set required parameters
             query.Set("lat", Latitude);

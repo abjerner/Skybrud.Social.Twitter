@@ -1,5 +1,5 @@
 ﻿using System;
-using Skybrud.Social.Http;
+using Skybrud.Essentials.Http;
 using Skybrud.Social.Twitter.Models.Lists;
 
 namespace Skybrud.Social.Twitter.Responses.Lists {
@@ -11,7 +11,7 @@ namespace Skybrud.Social.Twitter.Responses.Lists {
 
         #region Constructors
 
-        private TwitterDeleteListResponse(SocialHttpResponse response) : base(response) {
+        private TwitterDeleteListResponse(IHttpResponse response) : base(response) {
 
             // Validate the response
             ValidateResponse(response);
@@ -30,7 +30,7 @@ namespace Skybrud.Social.Twitter.Responses.Lists {
         /// </summary>
         /// <param name="response">The response to be parsed.</param>
         /// <returns>An instance of <see cref="TwitterDeleteListResponse"/> representing the response.</returns>
-        public static TwitterDeleteListResponse ParseResponse(SocialHttpResponse response) {
+        public static TwitterDeleteListResponse ParseResponse(IHttpResponse response) {
             if (response == null) throw new ArgumentNullException(nameof(response));
             return new TwitterDeleteListResponse(response);
         }

@@ -1,6 +1,6 @@
 ﻿using System.Net;
 using Newtonsoft.Json.Linq;
-using Skybrud.Social.Http;
+using Skybrud.Essentials.Http;
 using Skybrud.Essentials.Json.Extensions;
 using Skybrud.Social.Twitter.Exceptions;
 using Skybrud.Social.Twitter.Models.Common;
@@ -10,7 +10,7 @@ namespace Skybrud.Social.Twitter.Responses {
     /// <summary>
     /// Class representing a response from the Twitter API.
     /// </summary>
-    public class TwitterResponse : SocialResponse {
+    public class TwitterResponse : HttpResponseBase {
 
         #region Properties
 
@@ -26,8 +26,8 @@ namespace Skybrud.Social.Twitter.Responses {
         /// <summary>
         /// Initializes a new instance based on the specified <paramref name="response"/>.
         /// </summary>
-        /// <param name="response">The instance of <see cref="SocialHttpResponse"/> representing the raw response.</param>
-        protected TwitterResponse(SocialHttpResponse response) : base(response) {
+        /// <param name="response">The instance of <see cref="IHttpResponse"/> representing the raw response.</param>
+        protected TwitterResponse(IHttpResponse response) : base(response) {
             RateLimiting = TwitterRateLimiting.GetFromResponse(response);
         }
 
@@ -39,7 +39,7 @@ namespace Skybrud.Social.Twitter.Responses {
         /// Validates the specified <paramref name="response"/>.
         /// </summary>
         /// <param name="response">The response to be validated.</param>
-        public static void ValidateResponse(SocialHttpResponse response) {
+        public static void ValidateResponse(IHttpResponse response) {
 
             // Skip error checking if the server responds with an OK status code
             if (response.StatusCode == HttpStatusCode.OK) return;
@@ -83,8 +83,8 @@ namespace Skybrud.Social.Twitter.Responses {
         /// <summary>
         /// Initializes a new instance based on the specified <paramref name="response"/>.
         /// </summary>
-        /// <param name="response">The instance of <see cref="SocialHttpResponse"/> representing the raw response.</param>
-        protected TwitterResponse(SocialHttpResponse response) : base(response) { }
+        /// <param name="response">The instance of <see cref="IHttpResponse"/> representing the raw response.</param>
+        protected TwitterResponse(IHttpResponse response) : base(response) { }
 
         #endregion
 

@@ -1,12 +1,11 @@
 using System;
-using Skybrud.Social.Http;
-using Skybrud.Social.Interfaces.Http;
-using Skybrud.Social.OAuth;
-using Skybrud.Social.OAuth.Models;
+using Skybrud.Essentials.Http.Collections;
+using Skybrud.Essentials.Http.OAuth;
+using Skybrud.Essentials.Http.OAuth.Models;
 
 namespace Skybrud.Social.Twitter.OAuth {
 
-    public class TwitterOAuthAccessToken : SocialOAuthAccessToken {
+    public class TwitterOAuthAccessToken : OAuthAccessToken {
 
         #region Properties
 
@@ -24,7 +23,7 @@ namespace Skybrud.Social.Twitter.OAuth {
 
         #region Constructors
 
-        protected TwitterOAuthAccessToken(SocialOAuthClient client, IHttpQueryString query) : base(client, query) {
+        protected TwitterOAuthAccessToken(OAuthClient client, IHttpQueryString query) : base(client, query) {
             UserId = Int64.Parse(query["user_id"]);
             ScreenName = query["screen_name"];
         }
@@ -38,10 +37,10 @@ namespace Skybrud.Social.Twitter.OAuth {
         /// </summary>
         /// <param name="client">The parent OAuth client.</param>
         /// <param name="str">The query string.</param>
-        public new static TwitterOAuthAccessToken Parse(SocialOAuthClient client, string str) {
+        public new static TwitterOAuthAccessToken Parse(OAuthClient client, string str) {
 
             // Convert the query string to an IHttpQueryString
-            IHttpQueryString query = SocialHttpQueryString.ParseQueryString(str);
+            IHttpQueryString query = HttpQueryString.ParseQueryString(str);
 
             // Initialize a new instance
             return new TwitterOAuthAccessToken(client, query);
@@ -53,7 +52,7 @@ namespace Skybrud.Social.Twitter.OAuth {
         /// </summary>
         /// <param name="client">The parent OAuth client.</param>
         /// <param name="query">The query string.</param>
-        public static TwitterOAuthAccessToken Parse(SocialOAuthClient client, IHttpQueryString query) {
+        public static TwitterOAuthAccessToken Parse(OAuthClient client, IHttpQueryString query) {
             return query == null ? null : new TwitterOAuthAccessToken(client, query);
         }
 

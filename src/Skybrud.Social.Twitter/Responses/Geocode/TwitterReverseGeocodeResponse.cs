@@ -1,5 +1,5 @@
 using System;
-using Skybrud.Social.Http;
+using Skybrud.Essentials.Http;
 using Skybrud.Social.Twitter.Models.Geocode;
 
 namespace Skybrud.Social.Twitter.Responses.Geocode {
@@ -11,7 +11,7 @@ namespace Skybrud.Social.Twitter.Responses.Geocode {
 
         #region Constructors
 
-        private TwitterReverseGeocodeResponse(SocialHttpResponse response) : base(response) {
+        private TwitterReverseGeocodeResponse(IHttpResponse response) : base(response) {
 
             // Validate the response
             ValidateResponse(response);
@@ -28,9 +28,9 @@ namespace Skybrud.Social.Twitter.Responses.Geocode {
         /// <summary>
         /// Parses the specified <paramref name="response"/> into an instance of <see cref="TwitterReverseGeocodeResponse"/>.
         /// </summary>
-        /// <param name="response">The instance of <see cref="SocialHttpResponse"/> representing the raw response.</param>
+        /// <param name="response">The instance of <see cref="IHttpResponse"/> representing the raw response.</param>
         /// <returns>An instance of <see cref="TwitterReverseGeocodeResponse"/> representing the response.</returns>
-        public static TwitterReverseGeocodeResponse ParseResponse(SocialHttpResponse response) {
+        public static TwitterReverseGeocodeResponse ParseResponse(IHttpResponse response) {
             if (response == null) throw new ArgumentNullException(nameof(response));
             return new TwitterReverseGeocodeResponse(response);
         }

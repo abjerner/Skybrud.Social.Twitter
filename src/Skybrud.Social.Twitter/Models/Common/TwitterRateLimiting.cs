@@ -1,6 +1,6 @@
 ﻿using System;
 using Skybrud.Essentials.Time;
-using Skybrud.Social.Http;
+using Skybrud.Essentials.Http;
 
 namespace Skybrud.Social.Twitter.Models.Common {
 
@@ -45,7 +45,7 @@ namespace Skybrud.Social.Twitter.Models.Common {
         /// </summary>
         /// <param name="response">The response.</param>
         /// <returns>An instance of <see cref="TwitterRateLimiting"/>.</returns>
-        public static TwitterRateLimiting GetFromResponse(SocialHttpResponse response) {
+        public static TwitterRateLimiting GetFromResponse(IHttpResponse response) {
 
             int limit;
             int remaining;

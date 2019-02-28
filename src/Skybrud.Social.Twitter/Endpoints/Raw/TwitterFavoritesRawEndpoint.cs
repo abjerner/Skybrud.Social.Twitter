@@ -1,4 +1,5 @@
-using Skybrud.Social.Http;
+using Skybrud.Essentials.Http;
+using Skybrud.Essentials.Http.Collections;
 using Skybrud.Social.Twitter.OAuth;
 using Skybrud.Social.Twitter.Options.Favorites;
 
@@ -31,11 +32,11 @@ namespace Skybrud.Social.Twitter.Endpoints.Raw {
         /// <summary>
         /// Gets a list of favorites of the authenticated user.
         /// </summary>
-        /// <returns>An instance of <see cref="SocialHttpResponse"/> representing the raw response.</returns>
+        /// <returns>An instance of <see cref="IHttpResponse"/> representing the raw response.</returns>
         /// <see>
         ///     <cref>https://dev.twitter.com/rest/reference/get/favorites/list</cref>
         /// </see>
-        public SocialHttpResponse GetFavorites() {
+        public IHttpResponse GetFavorites() {
             return GetFavorites(default(TwitterGetFavoritesOptions));
         }
 
@@ -43,11 +44,11 @@ namespace Skybrud.Social.Twitter.Endpoints.Raw {
         /// Gets a list of favorites of the user with the specified <paramref name="userId"/>.
         /// </summary>
         /// <param name="userId">The ID of the user.</param>
-        /// <returns>An instance of <see cref="SocialHttpResponse"/> representing the raw response.</returns>
+        /// <returns>An instance of <see cref="IHttpResponse"/> representing the raw response.</returns>
         /// <see>
         ///     <cref>https://dev.twitter.com/rest/reference/get/favorites/list</cref>
         /// </see>
-        public SocialHttpResponse GetFavorites(long userId) {
+        public IHttpResponse GetFavorites(long userId) {
             return GetFavorites(new TwitterGetFavoritesOptions(userId));
         }
 
@@ -55,11 +56,11 @@ namespace Skybrud.Social.Twitter.Endpoints.Raw {
         /// Gets a list of favorites of the user with the specified <paramref name="screenName"/>.
         /// </summary>
         /// <param name="screenName">The screen name of the user.</param>
-        /// <returns>An instance of <see cref="SocialHttpResponse"/> representing the raw response.</returns>
+        /// <returns>An instance of <see cref="IHttpResponse"/> representing the raw response.</returns>
         /// <see>
         ///     <cref>https://dev.twitter.com/rest/reference/get/favorites/list</cref>
         /// </see>
-        public SocialHttpResponse GetFavorites(string screenName) {
+        public IHttpResponse GetFavorites(string screenName) {
             return GetFavorites(new TwitterGetFavoritesOptions(screenName));
         }
 
@@ -67,11 +68,11 @@ namespace Skybrud.Social.Twitter.Endpoints.Raw {
         /// Gets a list of favorites based on the specified <paramref name="options"/>.
         /// </summary>
         /// <param name="options">The options for the request to the API.</param>
-        /// <returns>An instance of <see cref="SocialHttpResponse"/> representing the raw response.</returns>
+        /// <returns>An instance of <see cref="IHttpResponse"/> representing the raw response.</returns>
         /// <see>
         ///     <cref>https://dev.twitter.com/rest/reference/get/favorites/list</cref>
         /// </see>
-        public SocialHttpResponse GetFavorites(TwitterGetFavoritesOptions options) {
+        public IHttpResponse GetFavorites(TwitterGetFavoritesOptions options) {
             return Client.DoHttpGetRequest("https://api.twitter.com/1.1/favorites/list.json", options);
         }
 
@@ -79,14 +80,14 @@ namespace Skybrud.Social.Twitter.Endpoints.Raw {
         /// Favorites the status message with the specified <paramref name="statusId"/> as the authenticating user.
         /// </summary>
         /// <param name="statusId">The ID of the status message.</param>
-        /// <returns>An instance of <see cref="SocialHttpResponse"/> representing the raw response.</returns>
+        /// <returns>An instance of <see cref="IHttpResponse"/> representing the raw response.</returns>
         /// <see>
         ///     <cref>https://dev.twitter.com/rest/reference/post/favorites/create</cref>
         /// </see>
-        public SocialHttpResponse Create(long statusId) {
+        public IHttpResponse Create(long statusId) {
 
             // Declare the query string
-            SocialHttpQueryString query = new SocialHttpQueryString();
+            IHttpQueryString query = new HttpQueryString();
             query.Set("id", statusId);
 
             // Make the call to the API
@@ -98,14 +99,14 @@ namespace Skybrud.Social.Twitter.Endpoints.Raw {
         /// Un-favorites the status message with the specified <paramref name="statusId"/> as the authenticating user.
         /// </summary>
         /// <param name="statusId">The ID of the status message.</param>
-        /// <returns>An instance of <see cref="SocialHttpResponse"/> representing the raw response.</returns>
+        /// <returns>An instance of <see cref="IHttpResponse"/> representing the raw response.</returns>
         /// <see>
         ///     <cref>https://dev.twitter.com/rest/reference/post/favorites/destroy</cref>
         /// </see>
-        public SocialHttpResponse Destroy(long statusId) {
+        public IHttpResponse Destroy(long statusId) {
 
             // Declare the query string
-            SocialHttpQueryString query = new SocialHttpQueryString();
+            IHttpQueryString query = new HttpQueryString();
             query.Set("id", statusId);
 
             // Make the call to the API

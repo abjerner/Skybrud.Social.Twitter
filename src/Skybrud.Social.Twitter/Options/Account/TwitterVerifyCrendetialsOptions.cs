@@ -1,5 +1,5 @@
-﻿using Skybrud.Social.Http;
-using Skybrud.Social.Interfaces.Http;
+﻿using Skybrud.Essentials.Http.Collections;
+using Skybrud.Essentials.Http.Options;
 
 namespace Skybrud.Social.Twitter.Options.Account {
     
@@ -58,7 +58,7 @@ namespace Skybrud.Social.Twitter.Options.Account {
         /// </summary>
         /// <returns>An instance of <see cref="IHttpQueryString"/>.</returns>
         public IHttpQueryString GetQueryString() {
-            SocialHttpQueryString query = new SocialHttpQueryString();
+            IHttpQueryString query = new HttpQueryString();
             if (!IncludeEntities) query.Add("include_entities", "false");
             if (SkipStatus) query.Add("skip_status", "true");
             if (IncludeEmail) query.Add("include_email", "true");

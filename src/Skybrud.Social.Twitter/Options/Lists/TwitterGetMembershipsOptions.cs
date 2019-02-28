@@ -1,6 +1,6 @@
 ﻿using System;
-using Skybrud.Social.Http;
-using Skybrud.Social.Interfaces.Http;
+using Skybrud.Essentials.Http.Collections;
+using Skybrud.Essentials.Http.Options;
 
 namespace Skybrud.Social.Twitter.Options.Lists {
 
@@ -74,7 +74,7 @@ namespace Skybrud.Social.Twitter.Options.Lists {
         /// </summary>
         /// <returns>An instance of <see cref="IHttpQueryString"/>.</returns>
         public IHttpQueryString GetQueryString() {
-            SocialHttpQueryString qs = new SocialHttpQueryString();
+            IHttpQueryString qs = new HttpQueryString();
             if (UserId > 0) qs.Set("user_id", UserId);
             if (!String.IsNullOrWhiteSpace(ScreenName)) qs.Set("screen_name", ScreenName);
             if (Count > 0) qs.Set("count", Count);

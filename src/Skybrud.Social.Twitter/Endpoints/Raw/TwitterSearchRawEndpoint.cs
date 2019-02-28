@@ -1,5 +1,5 @@
 using System;
-using Skybrud.Social.Http;
+using Skybrud.Essentials.Http;
 using Skybrud.Social.Twitter.OAuth;
 using Skybrud.Social.Twitter.Options.Search;
 
@@ -33,11 +33,11 @@ namespace Skybrud.Social.Twitter.Endpoints.Raw {
         /// Gets tweets matching the specified <paramref name="query"/>.
         /// </summary>
         /// <param name="query">The search query.</param>
-        /// <returns>An instance of <see cref="SocialHttpResponse"/> representing the raw response.</returns>
+        /// <returns>An instance of <see cref="IHttpResponse"/> representing the raw response.</returns>
         /// <see>
         ///     <cref>https://developer.twitter.com/en/docs/tweets/search/api-reference/get-search-tweets</cref>
         /// </see>
-        public SocialHttpResponse SearchTweets(string query) {
+        public IHttpResponse SearchTweets(string query) {
             if (String.IsNullOrWhiteSpace(query)) throw new ArgumentNullException(nameof(query));
             return SearchTweets(query, 0);
         }
@@ -47,11 +47,11 @@ namespace Skybrud.Social.Twitter.Endpoints.Raw {
         /// </summary>
         /// <param name="query">The search query.</param>
         /// <param name="count">The maximum amount of tweets to return (default: 15, max: 100).</param>
-        /// <returns>An instance of <see cref="SocialHttpResponse"/> representing the raw response.</returns>
+        /// <returns>An instance of <see cref="IHttpResponse"/> representing the raw response.</returns>
         /// <see>
         ///     <cref>https://developer.twitter.com/en/docs/tweets/search/api-reference/get-search-tweets</cref>
         /// </see>
-        public SocialHttpResponse SearchTweets(string query, int count) {
+        public IHttpResponse SearchTweets(string query, int count) {
             if (String.IsNullOrWhiteSpace(query)) throw new ArgumentNullException(nameof(query));
             return SearchTweets(new TwitterSearchTweetOptions(query, count));
         }
@@ -60,11 +60,11 @@ namespace Skybrud.Social.Twitter.Endpoints.Raw {
         /// Gets tweets matching the specified <paramref name="options"/>.
         /// </summary>
         /// <param name="options">The search options.</param>
-        /// <returns>An instance of <see cref="SocialHttpResponse"/> representing the raw response.</returns>
+        /// <returns>An instance of <see cref="IHttpResponse"/> representing the raw response.</returns>
         /// <see>
         ///     <cref>https://developer.twitter.com/en/docs/tweets/search/api-reference/get-search-tweets</cref>
         /// </see>
-        public SocialHttpResponse SearchTweets(TwitterSearchTweetOptions options) {
+        public IHttpResponse SearchTweets(TwitterSearchTweetOptions options) {
             if (options == null) options = new TwitterSearchTweetOptions();
             return Client.DoHttpGetRequest("https://api.twitter.com/1.1/search/tweets.json", options);
         }

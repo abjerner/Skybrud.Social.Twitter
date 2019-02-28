@@ -1,7 +1,7 @@
 using Skybrud.Essentials.Common;
+using Skybrud.Essentials.Http.Collections;
+using Skybrud.Essentials.Http.Options;
 using Skybrud.Essentials.Strings;
-using Skybrud.Social.Http;
-using Skybrud.Social.Interfaces.Http;
 
 namespace Skybrud.Social.Twitter.Options.Statuses {
 
@@ -73,7 +73,7 @@ namespace Skybrud.Social.Twitter.Options.Statuses {
 
             if (Id == 0) throw new PropertyNotSetException(nameof(Id));
 
-            SocialHttpQueryString query = new SocialHttpQueryString();
+            IHttpQueryString query = new HttpQueryString();
             query.Set("id", Id);
             if (TrimUser) query.Add("trim_user", "true");
             if (IncludeMyRetweet) query.Add("include_my_retweet", "true");

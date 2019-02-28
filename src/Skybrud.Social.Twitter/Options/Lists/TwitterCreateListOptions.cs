@@ -1,7 +1,7 @@
 ﻿using System;
+using Skybrud.Essentials.Http.Collections;
+using Skybrud.Essentials.Http.Options;
 using Skybrud.Essentials.Strings;
-using Skybrud.Social.Http;
-using Skybrud.Social.Interfaces.Http;
 using Skybrud.Social.Twitter.Models.Lists;
 
 namespace Skybrud.Social.Twitter.Options.Lists {
@@ -87,7 +87,7 @@ namespace Skybrud.Social.Twitter.Options.Lists {
         /// </summary>
         /// <returns>An instance of <see cref="IHttpQueryString"/>.</returns>
         public IHttpQueryString GetQueryString() {
-            return new SocialHttpQueryString();
+            return new HttpQueryString();
         }
 
         /// <summary>
@@ -98,7 +98,7 @@ namespace Skybrud.Social.Twitter.Options.Lists {
 
             if (String.IsNullOrWhiteSpace(Name)) throw new ArgumentNullException(nameof(Name));
 
-            SocialHttpPostData data = new SocialHttpPostData();
+            IHttpPostData data = new HttpPostData();
             data.Set("name", Name);
             data.Set("mode", StringUtils.ToCamelCase(Mode));
             if (!String.IsNullOrWhiteSpace(Description)) data.Add("description", Description);

@@ -1,5 +1,5 @@
 using System;
-using Skybrud.Social.Http;
+using Skybrud.Essentials.Http;
 using Skybrud.Social.Twitter.Models;
 
 namespace Skybrud.Social.Twitter.Responses {
@@ -8,7 +8,7 @@ namespace Skybrud.Social.Twitter.Responses {
 
         #region Constructors
 
-        private TwitterIdsResponse(SocialHttpResponse response) : base(response) {
+        private TwitterIdsResponse(IHttpResponse response) : base(response) {
 
             // Validate the response
             ValidateResponse(response);
@@ -22,7 +22,7 @@ namespace Skybrud.Social.Twitter.Responses {
 
         #region Static methods
 
-        public static TwitterIdsResponse ParseResponse(SocialHttpResponse response) {
+        public static TwitterIdsResponse ParseResponse(IHttpResponse response) {
             if (response == null) throw new ArgumentNullException(nameof(response));
             return new TwitterIdsResponse(response);
         }

@@ -1,5 +1,5 @@
 using System;
-using Skybrud.Social.Http;
+using Skybrud.Essentials.Http;
 using Skybrud.Social.Twitter.OAuth;
 using Skybrud.Social.Twitter.Options.Geocode;
 
@@ -33,11 +33,11 @@ namespace Skybrud.Social.Twitter.Endpoints.Raw {
         /// Gets information about the place with the specified <paramref name="placeId"/>.
         /// </summary>
         /// <param name="placeId">The ID of the place.</param>
-        /// <returns>An instance of <see cref="SocialHttpResponse"/> representing the raw response.</returns>
+        /// <returns>An instance of <see cref="IHttpResponse"/> representing the raw response.</returns>
         /// <see>
         ///     <cref>https://developer.twitter.com/en/docs/geo/place-information/api-reference/get-geo-id-place_id</cref>
         /// </see>
-        public SocialHttpResponse GetPlace(string placeId) {
+        public IHttpResponse GetPlace(string placeId) {
             if (String.IsNullOrWhiteSpace(placeId)) throw new ArgumentNullException(nameof(placeId));
             return Client.DoHttpGetRequest("https://api.twitter.com/1.1/geo/id/" + placeId + ".json");
         }
@@ -54,11 +54,11 @@ namespace Skybrud.Social.Twitter.Endpoints.Raw {
         /// is -180.0 to +180.0 (East is positive) inclusive. This parameter will be ignored if
         /// outside that range, if it is not a number, if <c>geo_enabled</c> is disabled, or
         /// if there not a corresponding <paramref name="latitude"/> parameter.</param>
-        /// <returns>An instance of <see cref="SocialHttpResponse"/> representing the raw response.</returns>
+        /// <returns>An instance of <see cref="IHttpResponse"/> representing the raw response.</returns>
         /// <see>
         ///     <cref>https://developer.twitter.com/en/docs/geo/places-near-location/api-reference/get-geo-reverse_geocode</cref>
         /// </see>
-        public SocialHttpResponse ReverseGeocode(double latitude, double longitude) {
+        public IHttpResponse ReverseGeocode(double latitude, double longitude) {
             return ReverseGeocode(new TwitterReverseGeocodeOptions(latitude, longitude));
         }
 
@@ -68,11 +68,11 @@ namespace Skybrud.Social.Twitter.Endpoints.Raw {
         /// and will deliver generalized results about geography.
         /// </summary>
         /// <param name="options">The options used when making the call to the API.</param>
-        /// <returns>An instance of <see cref="SocialHttpResponse"/> representing the raw response.</returns>
+        /// <returns>An instance of <see cref="IHttpResponse"/> representing the raw response.</returns>
         /// <see>
         ///     <cref>https://developer.twitter.com/en/docs/geo/places-near-location/api-reference/get-geo-reverse_geocode</cref>
         /// </see>
-        public SocialHttpResponse ReverseGeocode(TwitterReverseGeocodeOptions options) {
+        public IHttpResponse ReverseGeocode(TwitterReverseGeocodeOptions options) {
             return Client.DoHttpGetRequest("https://api.twitter.com/1.1/geo/reverse_geocode.json", options);
         }
 

@@ -1,5 +1,5 @@
-﻿using Skybrud.Social.Http;
-using Skybrud.Social.Interfaces.Http;
+﻿using Skybrud.Essentials.Http.Collections;
+using Skybrud.Essentials.Http.Options;
 
 namespace Skybrud.Social.Twitter.Options.Lists {
 
@@ -50,7 +50,7 @@ namespace Skybrud.Social.Twitter.Options.Lists {
         /// </summary>
         /// <returns>An instance of <see cref="IHttpQueryString"/>.</returns>
         public IHttpQueryString GetQueryString() {
-            return new SocialHttpQueryString();
+            return new HttpQueryString();
         }
 
         /// <summary>
@@ -58,7 +58,7 @@ namespace Skybrud.Social.Twitter.Options.Lists {
         /// </summary>
         /// <returns>An instance of <see cref="IHttpPostData"/>.</returns>
         public IHttpPostData GetPostData() {
-            return new SocialHttpPostData {{"list_id", ListId}};
+            return new HttpPostData {{"list_id", ListId}};
         }
 
         #endregion

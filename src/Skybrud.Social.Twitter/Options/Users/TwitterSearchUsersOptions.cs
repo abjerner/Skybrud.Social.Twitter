@@ -1,5 +1,5 @@
-using Skybrud.Social.Http;
-using Skybrud.Social.Interfaces.Http;
+using Skybrud.Essentials.Http.Collections;
+using Skybrud.Essentials.Http.Options;
 
 namespace Skybrud.Social.Twitter.Options.Users {
 
@@ -56,7 +56,7 @@ namespace Skybrud.Social.Twitter.Options.Users {
         /// <returns>An instance of <see cref="IHttpQueryString"/>.</returns>
         public IHttpQueryString GetQueryString() {
 
-            SocialHttpQueryString query = new SocialHttpQueryString();
+            IHttpQueryString query = new HttpQueryString();
 
             query.Set("q", Query);
             if (Page > 1) query.Set("page", Page);

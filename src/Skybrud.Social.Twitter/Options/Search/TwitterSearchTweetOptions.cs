@@ -1,8 +1,8 @@
 ﻿using System;
 using Skybrud.Essentials.Common;
 using Skybrud.Essentials.Time;
-using Skybrud.Social.Http;
-using Skybrud.Social.Interfaces.Http;
+using Skybrud.Essentials.Http.Collections;
+using Skybrud.Essentials.Http.Options;
 
 namespace Skybrud.Social.Twitter.Options.Search {
 
@@ -101,7 +101,7 @@ namespace Skybrud.Social.Twitter.Options.Search {
 
             string resultType = ResultType.ToString().ToLower();
             
-            SocialHttpQueryString query = new SocialHttpQueryString();
+            IHttpQueryString query = new HttpQueryString();
             if (!String.IsNullOrWhiteSpace(Query)) query.Set("q", Query);
             if (resultType != "mixed") query.Set("result_type", resultType);
             if (Count > 0) query.Set("count", Count);

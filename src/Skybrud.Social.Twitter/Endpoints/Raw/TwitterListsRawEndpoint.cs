@@ -1,5 +1,5 @@
 using System;
-using Skybrud.Social.Http;
+using Skybrud.Essentials.Http;
 using Skybrud.Social.Twitter.OAuth;
 using Skybrud.Social.Twitter.Options.Lists;
 
@@ -33,11 +33,11 @@ namespace Skybrud.Social.Twitter.Endpoints.Raw {
         /// Gets information about the list with the specified <paramref name="listId"/>.
         /// </summary>
         /// <param name="listId">The ID of the list.</param>
-        /// <returns>An instance of <see cref="SocialHttpResponse"/> representing the raw response.</returns>
+        /// <returns>An instance of <see cref="IHttpResponse"/> representing the raw response.</returns>
         /// <see>
         ///     <cref>https://developer.twitter.com/en/docs/accounts-and-users/create-manage-lists/api-reference/get-lists-show</cref>
         /// </see>
-        public SocialHttpResponse GetList(long listId) {
+        public IHttpResponse GetList(long listId) {
             return GetList(new TwitterGetListOptions(listId));
         }
 
@@ -46,11 +46,11 @@ namespace Skybrud.Social.Twitter.Endpoints.Raw {
         /// </summary>
         /// <param name="userId">The ID of the user owning the list.</param>
         /// <param name="slug">The slug of the list.</param>
-        /// <returns>An instance of <see cref="SocialHttpResponse"/> representing the raw response.</returns>
+        /// <returns>An instance of <see cref="IHttpResponse"/> representing the raw response.</returns>
         /// <see>
         ///     <cref>https://developer.twitter.com/en/docs/accounts-and-users/create-manage-lists/api-reference/get-lists-show</cref>
         /// </see>
-        public SocialHttpResponse GetList(long userId, string slug) {
+        public IHttpResponse GetList(long userId, string slug) {
             if (String.IsNullOrWhiteSpace(slug)) throw new ArgumentNullException(nameof(slug));
             return GetList(new TwitterGetListOptions(userId, slug));
         }
@@ -60,11 +60,11 @@ namespace Skybrud.Social.Twitter.Endpoints.Raw {
         /// </summary>
         /// <param name="screenName">The screen name of the user owning the list.</param>
         /// <param name="slug">The slug of the list.</param>
-        /// <returns>An instance of <see cref="SocialHttpResponse"/> representing the raw response.</returns>
+        /// <returns>An instance of <see cref="IHttpResponse"/> representing the raw response.</returns>
         /// <see>
         ///     <cref>https://dev.twitter.com/rest/reference/get/lists/show</cref>
         /// </see>
-        public SocialHttpResponse GetList(string screenName, string slug) {
+        public IHttpResponse GetList(string screenName, string slug) {
             if (String.IsNullOrWhiteSpace(screenName)) throw new ArgumentNullException(nameof(screenName));
             if (String.IsNullOrWhiteSpace(slug)) throw new ArgumentNullException(nameof(slug));
             return GetList(new TwitterGetListOptions(screenName, slug));
@@ -74,11 +74,11 @@ namespace Skybrud.Social.Twitter.Endpoints.Raw {
         /// Gets information about the list matching the specified <paramref name="options"/>.
         /// </summary>
         /// <param name="options">The options for the request to the API.</param>
-        /// <returns>An instance of <see cref="SocialHttpResponse"/> representing the raw response.</returns>
+        /// <returns>An instance of <see cref="IHttpResponse"/> representing the raw response.</returns>
         /// <see>
         ///     <cref>https://dev.twitter.com/rest/reference/get/lists/show</cref>
         /// </see>
-        public SocialHttpResponse GetList(TwitterGetListOptions options) {
+        public IHttpResponse GetList(TwitterGetListOptions options) {
             if (options == null) throw new ArgumentNullException(nameof(options));
             return Client.DoHttpGetRequest("https://api.twitter.com/1.1/lists/list.json", options);
         }
@@ -86,11 +86,11 @@ namespace Skybrud.Social.Twitter.Endpoints.Raw {
         /// <summary>
         /// Gets a collection of Twitter lists the authenticated user is subscribed to or owns.
         /// </summary>
-        /// <returns>An instance of <see cref="SocialHttpResponse"/> representing the raw response.</returns>
+        /// <returns>An instance of <see cref="IHttpResponse"/> representing the raw response.</returns>
         /// <see>
         ///     <cref>https://developer.twitter.com/en/docs/accounts-and-users/create-manage-lists/api-reference/get-lists-list</cref>
         /// </see>
-        public SocialHttpResponse GetLists() {
+        public IHttpResponse GetLists() {
             return GetLists(new TwitterGetListsOptions());
         }
 
@@ -98,11 +98,11 @@ namespace Skybrud.Social.Twitter.Endpoints.Raw {
         /// Gets a collection of Twitter lists the user with the specified <paramref name="userId"/> is subscribed to or owns.
         /// </summary>
         /// <param name="userId">The ID of the user.</param>
-        /// <returns>An instance of <see cref="SocialHttpResponse"/> representing the raw response.</returns>
+        /// <returns>An instance of <see cref="IHttpResponse"/> representing the raw response.</returns>
         /// <see>
         ///     <cref>https://developer.twitter.com/en/docs/accounts-and-users/create-manage-lists/api-reference/get-lists-list</cref>
         /// </see>
-        public SocialHttpResponse GetLists(long userId) {
+        public IHttpResponse GetLists(long userId) {
             return GetLists(new TwitterGetListsOptions(userId));
         }
 
@@ -110,11 +110,11 @@ namespace Skybrud.Social.Twitter.Endpoints.Raw {
         /// Gets a collection of Twitter lists the user with the specified <paramref name="screenName"/> is subscribed to or owns.
         /// </summary>
         /// <param name="screenName">The screen name of the user.</param>
-        /// <returns>An instance of <see cref="SocialHttpResponse"/> representing the raw response.</returns>
+        /// <returns>An instance of <see cref="IHttpResponse"/> representing the raw response.</returns>
         /// <see>
         ///     <cref>https://developer.twitter.com/en/docs/accounts-and-users/create-manage-lists/api-reference/get-lists-list</cref>
         /// </see>
-        public SocialHttpResponse GetLists(string screenName) {
+        public IHttpResponse GetLists(string screenName) {
             if (String.IsNullOrWhiteSpace(screenName)) throw new ArgumentNullException(nameof(screenName));
             return GetLists(new TwitterGetListsOptions(screenName));
         }
@@ -123,11 +123,11 @@ namespace Skybrud.Social.Twitter.Endpoints.Raw {
         /// Gets a collection of Twitter lists the user matching the specified <paramref name="options"/> is subscribed to or owns.
         /// </summary>
         /// <param name="options">The options for the request to the API.</param>
-        /// <returns>An instance of <see cref="SocialHttpResponse"/> representing the raw response.</returns>
+        /// <returns>An instance of <see cref="IHttpResponse"/> representing the raw response.</returns>
         /// <see>
         ///     <cref>https://developer.twitter.com/en/docs/accounts-and-users/create-manage-lists/api-reference/get-lists-list</cref>
         /// </see>
-        public SocialHttpResponse GetLists(TwitterGetListsOptions options) {
+        public IHttpResponse GetLists(TwitterGetListsOptions options) {
             if (options == null) throw new ArgumentNullException(nameof(options));
             return Client.DoHttpGetRequest("https://api.twitter.com/1.1/lists/list.json", options);
         }
@@ -136,11 +136,11 @@ namespace Skybrud.Social.Twitter.Endpoints.Raw {
         /// Gets the lists owned by the user with the specified <paramref name="userId"/>.
         /// </summary>
         /// <param name="userId">The ID of the user.</param>
-        /// <returns>An instance of <see cref="SocialHttpResponse"/> representing the raw response.</returns>
+        /// <returns>An instance of <see cref="IHttpResponse"/> representing the raw response.</returns>
         /// <see>
         ///     <cref>https://developer.twitter.com/en/docs/accounts-and-users/create-manage-lists/api-reference/get-lists-ownerships</cref>
         /// </see>
-        public SocialHttpResponse GetOwnerships(long userId) {
+        public IHttpResponse GetOwnerships(long userId) {
             return GetOwnerships(new TwitterGetOwnershipsOptions(userId));
         }
 
@@ -148,11 +148,11 @@ namespace Skybrud.Social.Twitter.Endpoints.Raw {
         /// Gets the lists owned by the user with the specified <paramref name="screenName"/>.
         /// </summary>
         /// <param name="screenName">The screen name of the user.</param>
-        /// <returns>An instance of <see cref="SocialHttpResponse"/> representing the raw response.</returns>
+        /// <returns>An instance of <see cref="IHttpResponse"/> representing the raw response.</returns>
         /// <see>
         ///     <cref>https://developer.twitter.com/en/docs/accounts-and-users/create-manage-lists/api-reference/get-lists-ownerships</cref>
         /// </see>
-        public SocialHttpResponse GetOwnerships(string screenName) {
+        public IHttpResponse GetOwnerships(string screenName) {
             if (String.IsNullOrWhiteSpace(screenName)) throw new ArgumentNullException(nameof(screenName));
             return GetOwnerships(new TwitterGetOwnershipsOptions(screenName));
         }
@@ -161,11 +161,11 @@ namespace Skybrud.Social.Twitter.Endpoints.Raw {
         /// Gets the lists owned by the user matching the specified <paramref name="options"/>.
         /// </summary>
         /// <param name="options">The options for the request to the API.</param>
-        /// <returns>An instance of <see cref="SocialHttpResponse"/> representing the raw response.</returns>
+        /// <returns>An instance of <see cref="IHttpResponse"/> representing the raw response.</returns>
         /// <see>
         ///     <cref>https://developer.twitter.com/en/docs/accounts-and-users/create-manage-lists/api-reference/get-lists-ownerships</cref>
         /// </see>
-        public SocialHttpResponse GetOwnerships(TwitterGetOwnershipsOptions options) {
+        public IHttpResponse GetOwnerships(TwitterGetOwnershipsOptions options) {
             if (options == null) throw new ArgumentNullException(nameof(options));
             return Client.DoHttpGetRequest("https://api.twitter.com/1.1/lists/list.json", options);
         }
@@ -173,11 +173,11 @@ namespace Skybrud.Social.Twitter.Endpoints.Raw {
         /// <summary>
         /// Gets the lists the authenticated user is a member of.
         /// </summary>
-        /// <returns>An instance of <see cref="SocialHttpResponse"/> representing the raw response.</returns>
+        /// <returns>An instance of <see cref="IHttpResponse"/> representing the raw response.</returns>
         /// <see>
         ///     <cref>https://developer.twitter.com/en/docs/accounts-and-users/create-manage-lists/api-reference/get-lists-memberships</cref>
         /// </see>
-        public SocialHttpResponse GetMemberships() {
+        public IHttpResponse GetMemberships() {
             return GetMemberships(new TwitterGetMembershipsOptions());
         }
 
@@ -185,11 +185,11 @@ namespace Skybrud.Social.Twitter.Endpoints.Raw {
         /// Gets the lists the user with the specified <paramref name="userId"/> is a member of.
         /// </summary>
         /// <param name="userId">The ID of the user.</param>
-        /// <returns>An instance of <see cref="SocialHttpResponse"/> representing the raw response.</returns>
+        /// <returns>An instance of <see cref="IHttpResponse"/> representing the raw response.</returns>
         /// <see>
         ///     <cref>https://developer.twitter.com/en/docs/accounts-and-users/create-manage-lists/api-reference/get-lists-memberships</cref>
         /// </see>
-        public SocialHttpResponse GetMemberships(long userId) {
+        public IHttpResponse GetMemberships(long userId) {
             return GetMemberships(new TwitterGetMembershipsOptions(userId));
         }
 
@@ -197,11 +197,11 @@ namespace Skybrud.Social.Twitter.Endpoints.Raw {
         /// Gets the lists the user with the specified <paramref name="screenName"/> is a member of.
         /// </summary>
         /// <param name="screenName">The screen name of the user.</param>
-        /// <returns>An instance of <see cref="SocialHttpResponse"/> representing the raw response.</returns>
+        /// <returns>An instance of <see cref="IHttpResponse"/> representing the raw response.</returns>
         /// <see>
         ///     <cref>https://developer.twitter.com/en/docs/accounts-and-users/create-manage-lists/api-reference/get-lists-memberships</cref>
         /// </see>
-        public SocialHttpResponse GetMemberships(string screenName) {
+        public IHttpResponse GetMemberships(string screenName) {
             if (String.IsNullOrWhiteSpace(screenName)) throw new ArgumentNullException(nameof(screenName));
             return GetMemberships(new TwitterGetMembershipsOptions(screenName));
         }
@@ -210,11 +210,11 @@ namespace Skybrud.Social.Twitter.Endpoints.Raw {
         /// Gets the lists the user matching the specified <paramref name="options"/> is a member of.
         /// </summary>
         /// <param name="options">The options for the call to the API.</param>
-        /// <returns>An instance of <see cref="SocialHttpResponse"/> representing the raw response.</returns>
+        /// <returns>An instance of <see cref="IHttpResponse"/> representing the raw response.</returns>
         /// <see>
         ///     <cref>https://developer.twitter.com/en/docs/accounts-and-users/create-manage-lists/api-reference/get-lists-memberships</cref>
         /// </see>
-        public SocialHttpResponse GetMemberships(TwitterGetMembershipsOptions options) {
+        public IHttpResponse GetMemberships(TwitterGetMembershipsOptions options) {
             if (options == null) throw new ArgumentNullException(nameof(options));
             return Client.DoHttpGetRequest("https://api.twitter.com/1.1/lists/memberships.json", options);
         }
@@ -223,11 +223,11 @@ namespace Skybrud.Social.Twitter.Endpoints.Raw {
         /// Gets the members of the list with the specified <paramref name="listId"/>.
         /// </summary>
         /// <param name="listId">The ID of the list.</param>
-        /// <returns>An instance of <see cref="SocialHttpResponse"/> representing the raw response.</returns>
+        /// <returns>An instance of <see cref="IHttpResponse"/> representing the raw response.</returns>
         /// <see>
         ///     <cref>https://developer.twitter.com/en/docs/accounts-and-users/create-manage-lists/api-reference/get-lists-members</cref>
         /// </see>
-        public SocialHttpResponse GetMembers(long listId) {
+        public IHttpResponse GetMembers(long listId) {
             return GetMembers(new TwitterGetMembersOptions(listId));
         }
 
@@ -236,11 +236,11 @@ namespace Skybrud.Social.Twitter.Endpoints.Raw {
         /// </summary>
         /// <param name="userId">The ID of the user.</param>
         /// <param name="slug">The slug of the list.</param>
-        /// <returns>An instance of <see cref="SocialHttpResponse"/> representing the raw response.</returns>
+        /// <returns>An instance of <see cref="IHttpResponse"/> representing the raw response.</returns>
         /// <see>
         ///     <cref>https://developer.twitter.com/en/docs/accounts-and-users/create-manage-lists/api-reference/get-lists-members</cref>
         /// </see>
-        public SocialHttpResponse GetMembers(long userId, string slug) {
+        public IHttpResponse GetMembers(long userId, string slug) {
             return GetMembers(new TwitterGetMembersOptions(userId, slug));
         }
 
@@ -249,11 +249,11 @@ namespace Skybrud.Social.Twitter.Endpoints.Raw {
         /// </summary>
         /// <param name="screenName">The screen name of the user owning the list.</param>
         /// <param name="slug">The slug of the list.</param>
-        /// <returns>An instance of <see cref="SocialHttpResponse"/> representing the raw response.</returns>
+        /// <returns>An instance of <see cref="IHttpResponse"/> representing the raw response.</returns>
         /// <see>
         ///     <cref>https://developer.twitter.com/en/docs/accounts-and-users/create-manage-lists/api-reference/get-lists-members</cref>
         /// </see>
-        public SocialHttpResponse GetMembers(string screenName, string slug) {
+        public IHttpResponse GetMembers(string screenName, string slug) {
             if (String.IsNullOrWhiteSpace(screenName)) throw new ArgumentNullException(nameof(screenName));
             return GetMembers(new TwitterGetMembersOptions(screenName, slug));
         }
@@ -263,11 +263,11 @@ namespace Skybrud.Social.Twitter.Endpoints.Raw {
         /// shown if the authenticated user owns the specified list.
         /// </summary>
         /// <param name="options">The options for the request to the API.</param>
-        /// <returns>An instance of <see cref="SocialHttpResponse"/> representing the raw response.</returns>
+        /// <returns>An instance of <see cref="IHttpResponse"/> representing the raw response.</returns>
         /// <see>
         ///     <cref>https://developer.twitter.com/en/docs/accounts-and-users/create-manage-lists/api-reference/get-lists-members</cref>
         /// </see>
-        public SocialHttpResponse GetMembers(TwitterGetMembersOptions options) {
+        public IHttpResponse GetMembers(TwitterGetMembersOptions options) {
             if (options == null) throw new ArgumentNullException(nameof(options));
             return Client.DoHttpGetRequest("https://api.twitter.com/1.1/lists/members.json", options);
         }
@@ -276,11 +276,11 @@ namespace Skybrud.Social.Twitter.Endpoints.Raw {
         /// Creates a new list for the authenticated user. Note that you can create up to 1000 lists per account. The created list will be public.
         /// </summary>
         /// <param name="name">The name of the list.</param>
-        /// <returns>An instance of <see cref="SocialHttpResponse"/> representing the raw response.</returns>
+        /// <returns>An instance of <see cref="IHttpResponse"/> representing the raw response.</returns>
         /// <see>
         ///     <cref>https://developer.twitter.com/en/docs/accounts-and-users/create-manage-lists/api-reference/post-lists-create</cref>
         /// </see>
-        public SocialHttpResponse CreateList(string name) {
+        public IHttpResponse CreateList(string name) {
             if (String.IsNullOrWhiteSpace(name)) throw new ArgumentNullException(nameof(name));
             return CreateList(new TwitterCreateListOptions(name));
         }
@@ -289,11 +289,11 @@ namespace Skybrud.Social.Twitter.Endpoints.Raw {
         /// Creates a new list for the authenticated user. Note that you can create up to 1000 lists per account.
         /// </summary>
         /// <param name="options">The options for the request to the API.</param>
-        /// <returns>An instance of <see cref="SocialHttpResponse"/> representing the raw response.</returns>
+        /// <returns>An instance of <see cref="IHttpResponse"/> representing the raw response.</returns>
         /// <see>
         ///     <cref>https://developer.twitter.com/en/docs/accounts-and-users/create-manage-lists/api-reference/post-lists-create</cref>
         /// </see>
-        public SocialHttpResponse CreateList(TwitterCreateListOptions options) {
+        public IHttpResponse CreateList(TwitterCreateListOptions options) {
             if (options == null) throw new ArgumentNullException(nameof(options));
             return Client.DoHttpPostRequest("https://api.twitter.com/1.1/lists/create.json", options);
         }
@@ -302,11 +302,11 @@ namespace Skybrud.Social.Twitter.Endpoints.Raw {
         /// Deletes the specified list. The authenticated user must own the list to be able to destroy it.
         /// </summary>
         /// <param name="listId"></param>
-        /// <returns>An instance of <see cref="SocialHttpResponse"/> representing the raw response.</returns>
+        /// <returns>An instance of <see cref="IHttpResponse"/> representing the raw response.</returns>
         /// <see>
         ///     <cref>https://developer.twitter.com/en/docs/accounts-and-users/create-manage-lists/api-reference/post-lists-destroy</cref>
         /// </see>
-        public SocialHttpResponse DeleteList(long listId) {
+        public IHttpResponse DeleteList(long listId) {
             return DeleteList(new TwitterDeleteListOptions(listId));
         }
 
@@ -314,11 +314,11 @@ namespace Skybrud.Social.Twitter.Endpoints.Raw {
         /// Deletes the specified list. The authenticated user must own the list to be able to destroy it.
         /// </summary>
         /// <param name="options">The options for the request to the API.</param>
-        /// <returns>An instance of <see cref="SocialHttpResponse"/> representing the raw response.</returns>
+        /// <returns>An instance of <see cref="IHttpResponse"/> representing the raw response.</returns>
         /// <see>
         ///     <cref>https://developer.twitter.com/en/docs/accounts-and-users/create-manage-lists/api-reference/post-lists-destroy</cref>
         /// </see>
-        public SocialHttpResponse DeleteList(TwitterDeleteListOptions options) {
+        public IHttpResponse DeleteList(TwitterDeleteListOptions options) {
             if (options == null) throw new ArgumentNullException(nameof(options));
             return Client.DoHttpPostRequest("https://api.twitter.com/1.1/lists/destroy.json", options);
         }
@@ -328,11 +328,11 @@ namespace Skybrud.Social.Twitter.Endpoints.Raw {
         /// </summary>
         /// <param name="listId">The numeric ID of the list.</param>
         /// <param name="userId">The numeric ID of the user.</param>
-        /// <returns>An instance of <see cref="SocialHttpResponse"/> representing the raw response.</returns>
+        /// <returns>An instance of <see cref="IHttpResponse"/> representing the raw response.</returns>
         /// <see>
         ///     <cref>https://developer.twitter.com/en/docs/accounts-and-users/create-manage-lists/api-reference/post-lists-members-create</cref>
         /// </see>
-        public SocialHttpResponse AddMember(long listId, long userId) {
+        public IHttpResponse AddMember(long listId, long userId) {
             return AddMember(new TwitterAddMemberOptions(listId, userId));
         }
 
@@ -341,11 +341,11 @@ namespace Skybrud.Social.Twitter.Endpoints.Raw {
         /// </summary>
         /// <param name="listId">The numeric ID of the list.</param>
         /// <param name="screenName">The screen name of the user.</param>
-        /// <returns>An instance of <see cref="SocialHttpResponse"/> representing the raw response.</returns>
+        /// <returns>An instance of <see cref="IHttpResponse"/> representing the raw response.</returns>
         /// <see>
         ///     <cref>https://developer.twitter.com/en/docs/accounts-and-users/create-manage-lists/api-reference/post-lists-members-create</cref>
         /// </see>
-        public SocialHttpResponse AddMember(long listId, string screenName) {
+        public IHttpResponse AddMember(long listId, string screenName) {
             if (String.IsNullOrWhiteSpace(screenName)) throw new ArgumentNullException(nameof(screenName));
             return AddMember(new TwitterAddMemberOptions(listId, screenName));
         }
@@ -354,11 +354,11 @@ namespace Skybrud.Social.Twitter.Endpoints.Raw {
         /// Adds a member to a list. The authenticated user must own the list to be able to add members to it. Note that lists cannot have more than 5,000 members.
         /// </summary>
         /// <param name="options">The options for the request to the API.</param>
-        /// <returns>An instance of <see cref="SocialHttpResponse"/> representing the raw response.</returns>
+        /// <returns>An instance of <see cref="IHttpResponse"/> representing the raw response.</returns>
         /// <see>
         ///     <cref>https://developer.twitter.com/en/docs/accounts-and-users/create-manage-lists/api-reference/post-lists-members-create</cref>
         /// </see>
-        public SocialHttpResponse AddMember(TwitterAddMemberOptions options) {
+        public IHttpResponse AddMember(TwitterAddMemberOptions options) {
             if (options == null) throw new ArgumentNullException(nameof(options));
             return Client.DoHttpPostRequest("https://api.twitter.com/1.1/lists/members/create.json", options);
         }
@@ -368,11 +368,11 @@ namespace Skybrud.Social.Twitter.Endpoints.Raw {
         /// </summary>
         /// <param name="listId">The numeric ID of the list.</param>
         /// <param name="userId">The numeric ID of the user.</param>
-        /// <returns>An instance of <see cref="SocialHttpResponse"/> representing the raw response.</returns>
+        /// <returns>An instance of <see cref="IHttpResponse"/> representing the raw response.</returns>
         /// <see>
         ///     <cref>https://developer.twitter.com/en/docs/accounts-and-users/create-manage-lists/api-reference/post-lists-members-destroy</cref>
         /// </see>
-        public SocialHttpResponse RemoveMember(long listId, long userId) {
+        public IHttpResponse RemoveMember(long listId, long userId) {
             return RemoveMember(new TwitterRemoveMemberOptions(listId, userId));
         }
 
@@ -381,11 +381,11 @@ namespace Skybrud.Social.Twitter.Endpoints.Raw {
         /// </summary>
         /// <param name="listId">The numeric ID of the list.</param>
         /// <param name="screenName">The screen name of the user.</param>
-        /// <returns>An instance of <see cref="SocialHttpResponse"/> representing the raw response.</returns>
+        /// <returns>An instance of <see cref="IHttpResponse"/> representing the raw response.</returns>
         /// <see>
         ///     <cref>https://developer.twitter.com/en/docs/accounts-and-users/create-manage-lists/api-reference/post-lists-members-destroy</cref>
         /// </see>
-        public SocialHttpResponse RemoveMember(long listId, string screenName) {
+        public IHttpResponse RemoveMember(long listId, string screenName) {
             if (String.IsNullOrWhiteSpace(screenName)) throw new ArgumentNullException(nameof(screenName));
             return RemoveMember(new TwitterRemoveMemberOptions(listId, screenName));
         }
@@ -394,11 +394,11 @@ namespace Skybrud.Social.Twitter.Endpoints.Raw {
         /// Removes the specified member from the list. The authenticated user must be the list’s owner to remove members from the list.
         /// </summary>
         /// <param name="options">The options for the request to the API.</param>
-        /// <returns>An instance of <see cref="SocialHttpResponse"/> representing the raw response.</returns>
+        /// <returns>An instance of <see cref="IHttpResponse"/> representing the raw response.</returns>
         /// <see>
         ///     <cref>https://developer.twitter.com/en/docs/accounts-and-users/create-manage-lists/api-reference/post-lists-members-destroy</cref>
         /// </see>
-        public SocialHttpResponse RemoveMember(TwitterRemoveMemberOptions options) {
+        public IHttpResponse RemoveMember(TwitterRemoveMemberOptions options) {
             if (options == null) throw new ArgumentNullException(nameof(options));
             return Client.DoHttpPostRequest("https://api.twitter.com/1.1/lists/members/destroy.json", options);
         }

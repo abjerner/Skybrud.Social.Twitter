@@ -1,5 +1,5 @@
 ﻿using System;
-using Skybrud.Social.Http;
+using Skybrud.Essentials.Http;
 
 namespace Skybrud.Social.Twitter.Exceptions {
 
@@ -11,9 +11,9 @@ namespace Skybrud.Social.Twitter.Exceptions {
         #region Properties
 
         /// <summary>
-        /// Gets a reference to the underlying <see cref="SocialHttpResponse"/>.
+        /// Gets a reference to the underlying <see cref="IHttpResponse"/>.
         /// </summary>
-        public SocialHttpResponse Response { get; }
+        public IHttpResponse Response { get; }
 
         /// <summary>
         /// Gets the error code received from the Twitter API. Not all errors have an error code.
@@ -24,11 +24,11 @@ namespace Skybrud.Social.Twitter.Exceptions {
 
         #region Constructors
 
-        internal TwitterHttpException(SocialHttpResponse response, string message) : base(message) {
+        internal TwitterHttpException(IHttpResponse response, string message) : base(message) {
             Response = response;
         }
 
-        internal TwitterHttpException(SocialHttpResponse response, string message, int code) : base(message) {
+        internal TwitterHttpException(IHttpResponse response, string message, int code) : base(message) {
             Response = response;
             Code = code;
         }

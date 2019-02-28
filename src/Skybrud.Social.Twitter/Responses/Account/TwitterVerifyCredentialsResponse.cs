@@ -1,5 +1,5 @@
 ﻿using System;
-using Skybrud.Social.Http;
+using Skybrud.Essentials.Http;
 using Skybrud.Social.Twitter.Models.Account;
 
 namespace Skybrud.Social.Twitter.Responses.Account {
@@ -11,7 +11,7 @@ namespace Skybrud.Social.Twitter.Responses.Account {
 
         #region Constructors
 
-        private TwitterVerifyCredentialsResponse(SocialHttpResponse response) : base(response) {
+        private TwitterVerifyCredentialsResponse(IHttpResponse response) : base(response) {
             
             // Validate the response
             ValidateResponse(response);
@@ -30,7 +30,7 @@ namespace Skybrud.Social.Twitter.Responses.Account {
         /// </summary>
         /// <param name="response">The response to be parsed.</param>
         /// <returns>An instance of <see cref="TwitterVerifyCredentialsResponse"/> representing the response.</returns>
-        public static TwitterVerifyCredentialsResponse ParseResponse(SocialHttpResponse response) {
+        public static TwitterVerifyCredentialsResponse ParseResponse(IHttpResponse response) {
             if (response == null) throw new ArgumentNullException(nameof(response));
             return new TwitterVerifyCredentialsResponse(response);
         }

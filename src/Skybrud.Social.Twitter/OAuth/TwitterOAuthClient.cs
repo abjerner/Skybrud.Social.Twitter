@@ -1,7 +1,7 @@
-using Skybrud.Social.Http;
-using Skybrud.Social.OAuth;
-using Skybrud.Social.OAuth.Models;
-using Skybrud.Social.OAuth.Responses;
+using Skybrud.Essentials.Http;
+using Skybrud.Essentials.Http.OAuth;
+using Skybrud.Essentials.Http.OAuth.Responses;
+using Skybrud.Essentials.Http.OAuth.Models;
 using Skybrud.Social.Twitter.Endpoints.Raw;
 
 namespace Skybrud.Social.Twitter.OAuth {
@@ -11,7 +11,7 @@ namespace Skybrud.Social.Twitter.OAuth {
     /// using a three-legged approach as well as logic for calling the methods decribed in the Twitter API (not all
     /// has been implemented yet).
     /// </summary>
-    public class TwitterOAuthClient : SocialOAuthClient {
+    public class TwitterOAuthClient : OAuthClient {
 
         #region Private fields
 
@@ -125,29 +125,29 @@ namespace Skybrud.Social.Twitter.OAuth {
 
         #endregion
 
-        public override SocialOAuthRequestTokenResponse GetRequestToken() {
+        public override OAuthRequestTokenResponse GetRequestToken() {
 
             // Make the call to the API/provider
-            SocialHttpResponse response = GetRequestTokenResponse();
+            IHttpResponse response = GetRequestTokenResponse();
 
             // Parse the response body
-            SocialOAuthRequestToken body = TwitterOAuthRequestToken.Parse(this, response.Body);
+            OAuthRequestToken body = TwitterOAuthRequestToken.Parse(this, response.Body);
 
             // Parse the response
-            return SocialOAuthRequestTokenResponse.ParseResponse(response, body);
+            return OAuthRequestTokenResponse.ParseResponse(response, body);
 
         }
 
-        public override SocialOAuthAccessTokenResponse GetAccessToken(string verifier) {
+        public override OAuthAccessTokenResponse GetAccessToken(string verifier) {
 
             // Make the call to the API/provider
-            SocialHttpResponse response = GetAccessTokenResponse(verifier);
+            IHttpResponse response = GetAccessTokenResponse(verifier);
 
             // Parse the response body
-            SocialOAuthAccessToken body = TwitterOAuthAccessToken.Parse(this, response.Body);
+            OAuthAccessToken body = TwitterOAuthAccessToken.Parse(this, response.Body);
 
             // Parse the response
-            return SocialOAuthAccessTokenResponse.ParseResponse(response, body);
+            return OAuthAccessTokenResponse.ParseResponse(response, body);
 
         }
     

@@ -1,5 +1,5 @@
 using System;
-using Skybrud.Social.Http;
+using Skybrud.Essentials.Http;
 using Skybrud.Social.Twitter.Models.Search;
 
 namespace Skybrud.Social.Twitter.Responses.Search {
@@ -11,7 +11,7 @@ namespace Skybrud.Social.Twitter.Responses.Search {
 
         #region Constructors
 
-        private TwitterSearchTweetsResponse(SocialHttpResponse response) : base(response) {
+        private TwitterSearchTweetsResponse(IHttpResponse response) : base(response) {
 
             // Validate the response
             ValidateResponse(response);
@@ -30,7 +30,7 @@ namespace Skybrud.Social.Twitter.Responses.Search {
         /// </summary>
         /// <param name="response">The response to be parsed.</param>
         /// <returns>An instance of <see cref="TwitterSearchTweetsResponse"/> representing the response.</returns>
-        public static TwitterSearchTweetsResponse ParseResponse(SocialHttpResponse response) {
+        public static TwitterSearchTweetsResponse ParseResponse(IHttpResponse response) {
             if (response == null) throw new ArgumentNullException(nameof(response));
             return new TwitterSearchTweetsResponse(response);
         }

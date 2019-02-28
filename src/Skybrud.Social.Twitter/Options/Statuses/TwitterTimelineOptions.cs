@@ -1,6 +1,6 @@
 using Skybrud.Essentials.Strings;
-using Skybrud.Social.Http;
-using Skybrud.Social.Interfaces.Http;
+using Skybrud.Essentials.Http.Collections;
+using Skybrud.Essentials.Http.Options;
 
 namespace Skybrud.Social.Twitter.Options.Statuses {
 
@@ -96,7 +96,7 @@ namespace Skybrud.Social.Twitter.Options.Statuses {
         public IHttpQueryString GetQueryString() {
 
             // Define the query string
-            SocialHttpQueryString qs = new SocialHttpQueryString();
+            IHttpQueryString qs = new HttpQueryString();
 
             // Add optional parameters
             if (SinceId > 0) qs.Add("since_id", SinceId);
