@@ -14,7 +14,7 @@ namespace Skybrud.Social.Twitter.Endpoints {
         /// <summary>
         /// Gets a reference to the Twitter service.
         /// </summary>
-        public TwitterService Service { get; }
+        public TwitterHttpService Service { get; }
 
         /// <summary>
         /// Gets a reference to the raw lists endpoint.
@@ -25,7 +25,7 @@ namespace Skybrud.Social.Twitter.Endpoints {
 
         #region Constructors
 
-        internal TwitterListsEndpoint(TwitterService service) {
+        internal TwitterListsEndpoint(TwitterHttpService service) {
             Service = service;
         }
 

@@ -7,7 +7,7 @@ namespace Skybrud.Social.Twitter {
     /// <summary>
     /// Class working as an entry point to the Twitter API.
     /// </summary>
-    public class TwitterService {
+    public class TwitterHttpService {
 
         #region Properties
 
@@ -65,11 +65,11 @@ namespace Skybrud.Social.Twitter {
 
         #region Constructors
 
-        private TwitterService(TwitterOAuthClient client) {
+        private TwitterHttpService(TwitterOAuthClient client) {
 
             // Set the client
             Client = client;
-            
+
             // Set the endpoints etc.
             Account = new TwitterAccountEndpoint(this);
             Favorites = new TwitterFavoritesEndpoint(this);
@@ -91,10 +91,10 @@ namespace Skybrud.Social.Twitter {
         /// Initializes a new instance from the specified <see cref="TwitterOAuthClient"/>.
         /// </summary>
         /// <param name="client">An instance of <see cref="TwitterOAuthClient"/>.</param>
-        /// <returns>A new instance of <see cref="TwitterService"/>.</returns>
-        public static TwitterService CreateFromOAuthClient(TwitterOAuthClient client) {
+        /// <returns>A new instance of <see cref="TwitterHttpService"/>.</returns>
+        public static TwitterHttpService CreateFromOAuthClient(TwitterOAuthClient client) {
             if (client == null) throw new ArgumentNullException(nameof(client));
-            return new TwitterService(client);
+            return new TwitterHttpService(client);
         }
 
         #endregion

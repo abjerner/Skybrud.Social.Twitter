@@ -15,7 +15,7 @@ namespace Skybrud.Social.Twitter.Endpoints {
         /// <summary>
         /// Gets a reference to the Twitter service.
         /// </summary>
-        public TwitterService Service { get; }
+        public TwitterHttpService Service { get; }
 
         /// <summary>
         /// Gets a reference to the raw favorites endpoint.
@@ -26,7 +26,7 @@ namespace Skybrud.Social.Twitter.Endpoints {
 
         #region Constructors
 
-        internal TwitterFavoritesEndpoint(TwitterService service) {
+        internal TwitterFavoritesEndpoint(TwitterHttpService service) {
             Service = service;
         }
 
