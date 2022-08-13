@@ -3,6 +3,7 @@ using Skybrud.Essentials.Http.OAuth;
 using Skybrud.Essentials.Http.OAuth.Responses;
 using Skybrud.Essentials.Http.OAuth.Models;
 using Skybrud.Social.Twitter.Endpoints.Raw;
+using Skybrud.Social.Twitter.Responses;
 
 namespace Skybrud.Social.Twitter.OAuth {
     
@@ -130,6 +131,9 @@ namespace Skybrud.Social.Twitter.OAuth {
             // Make the call to the API/provider
             IHttpResponse response = GetRequestTokenResponse();
 
+            // Validate the response
+            TwitterResponse.ValidateResponse(response);
+
             // Parse the response body
             OAuthRequestToken body = TwitterOAuthRequestToken.Parse(this, response.Body);
 
@@ -142,6 +146,9 @@ namespace Skybrud.Social.Twitter.OAuth {
 
             // Make the call to the API/provider
             IHttpResponse response = GetAccessTokenResponse(verifier);
+
+            // Validate the response
+            TwitterResponse.ValidateResponse(response);
 
             // Parse the response body
             OAuthAccessToken body = TwitterOAuthAccessToken.Parse(this, response.Body);

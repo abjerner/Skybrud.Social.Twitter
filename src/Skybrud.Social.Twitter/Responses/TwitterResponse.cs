@@ -1,7 +1,9 @@
 ﻿using System.Net;
+using System.Xml.Linq;
 using Newtonsoft.Json.Linq;
 using Skybrud.Essentials.Http;
 using Skybrud.Essentials.Json.Extensions;
+using Skybrud.Essentials.Xml.Extensions;
 using Skybrud.Social.Twitter.Exceptions;
 using Skybrud.Social.Twitter.Models.Common;
 
@@ -44,20 +46,49 @@ namespace Skybrud.Social.Twitter.Responses {
             // Skip error checking if the server responds with an OK status code
             if (response.StatusCode == HttpStatusCode.OK) return;
 
-            JObject obj = ParseJsonObject(response.Body);
+            string contentType = response.ContentType?.Split(';')[0];
 
-            // For some types of errors, Twitter will only respond with an error message
-            if (obj.HasValue("error")) throw new TwitterHttpException(response, obj.GetString("error"), 0);
+            switch (contentType) {
 
-            // However in most cases, Twitter responds with an array of errors
-            JArray errors = obj.GetArray("errors");
+                case "application/xml":  {
 
-            // Get the first error (don't remember ever seeing multiple errors in the same response)
-            JObject error = errors.GetObject(0);
+                    // Parse the XML response body
+                    XElement xml = XElement.Parse(response.Body);
 
-            // Throw the exception
-            throw new TwitterHttpException(response, error.GetString("message"), error.GetInt32("code"));
+                    // Get the XML element describing the error
+                    XElement error = xml.GetElement("error");
 
+                    // Get the code and error message
+                    int code = error.GetAttributeValueAsInt32("code");
+                    string message = error.Value;
+                    
+                    // Throw a new exception
+                    throw new TwitterHttpException(response, message, code);
+
+                }
+
+                case "application/json": {
+                        
+                    JObject obj = ParseJsonObject(response.Body);
+
+                    // For some types of errors, Twitter will only respond with an error message
+                    if (obj.HasValue("error")) throw new TwitterHttpException(response, obj.GetString("error"), 0);
+
+                    // However in most cases, Twitter responds with an array of errors
+                    JArray errors = obj.GetArray("errors");
+
+                    // Get the first error (don't remember ever seeing multiple errors in the same response)
+                    JObject error = errors.GetObject(0);
+
+                    // Throw the exception
+                    throw new TwitterHttpException(response, error.GetString("message"), error.GetInt32("code"));
+
+                }
+
+                default:
+                    throw new TwitterHttpException(response);
+
+            }
         }
 
         #endregion

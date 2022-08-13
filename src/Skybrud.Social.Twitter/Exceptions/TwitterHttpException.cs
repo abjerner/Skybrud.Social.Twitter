@@ -24,6 +24,10 @@ namespace Skybrud.Social.Twitter.Exceptions {
 
         #region Constructors
 
+        internal TwitterHttpException(IHttpResponse response) : base($"Invalid response received from the Twitter API (status: {(int) response.StatusCode})") {
+            Response = response;
+        }
+
         internal TwitterHttpException(IHttpResponse response, string message) : base(message) {
             Response = response;
         }
