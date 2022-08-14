@@ -42,24 +42,24 @@ namespace Skybrud.Social.Twitter.Endpoints {
         /// <summary>
         /// Gets a represenation of the authenticated user (requires an access token).
         /// </summary>
-        /// <returns>An instance of <see cref="TwitterVerifyCredentialsResponse"/> representing the response.</returns>
+        /// <returns>An instance of <see cref="TwitterAccountResponse"/> representing the response.</returns>
         /// <see>
         ///     <cref>https://dev.twitter.com/rest/reference/get/account/verify_credentials</cref>
         /// </see>
-        public TwitterVerifyCredentialsResponse VerifyCredentials() {
-            return TwitterVerifyCredentialsResponse.ParseResponse(Raw.VerifyCredentials());
+        public TwitterAccountResponse VerifyCredentials() {
+            return new TwitterAccountResponse(Raw.VerifyCredentials());
         }
 
         /// <summary>
         /// Gets a represenation of the authenticated user (requires an access token).
         /// </summary>
         /// <param name="options">The options for the call to the API.</param>
-        /// <returns>An instance of <see cref="TwitterVerifyCredentialsResponse"/> representing the response.</returns>
+        /// <returns>An instance of <see cref="TwitterAccountResponse"/> representing the response.</returns>
         /// <see>
         ///     <cref>https://dev.twitter.com/rest/reference/get/account/verify_credentials</cref>
         /// </see>
-        public TwitterVerifyCredentialsResponse VerifyCredentials(TwitterVerifyCrendetialsOptions options) {
-            return TwitterVerifyCredentialsResponse.ParseResponse(Raw.VerifyCredentials(options));
+        public TwitterAccountResponse VerifyCredentials(TwitterVerifyCrendetialsOptions options) {
+            return new TwitterAccountResponse(Raw.VerifyCredentials(options));
         }
 
         #endregion

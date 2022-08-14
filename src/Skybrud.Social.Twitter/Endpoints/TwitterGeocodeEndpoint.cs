@@ -37,12 +37,12 @@ namespace Skybrud.Social.Twitter.Endpoints {
         /// Gets information about the place with the specified <paramref name="placeId"/>.
         /// </summary>
         /// <param name="placeId">The ID of the place.</param>
-        /// <returns>An instance of <see cref="TwitterGetPlaceResponse"/> representing the response.</returns>
+        /// <returns>An instance of <see cref="TwitterPlaceResponse"/> representing the response.</returns>
         /// <see>
         ///     <cref>https://developer.twitter.com/en/docs/geo/place-information/api-reference/get-geo-id-place_id</cref>
         /// </see>
-        public TwitterGetPlaceResponse GetPlace(string placeId) {
-            return TwitterGetPlaceResponse.ParseResponse(Raw.GetPlace(placeId));
+        public TwitterPlaceResponse GetPlace(string placeId) {
+            return new TwitterPlaceResponse(Raw.GetPlace(placeId));
         }
 
         /// <summary>
@@ -62,7 +62,7 @@ namespace Skybrud.Social.Twitter.Endpoints {
         ///     <cref>https://developer.twitter.com/en/docs/geo/places-near-location/api-reference/get-geo-reverse_geocode</cref>
         /// </see>
         public TwitterReverseGeocodeResponse ReverseGeocode(double latitude, double longitude) {
-            return TwitterReverseGeocodeResponse.ParseResponse(Raw.ReverseGeocode(latitude, longitude));
+            return new TwitterReverseGeocodeResponse(Raw.ReverseGeocode(latitude, longitude));
         }
 
         /// <summary>
@@ -76,7 +76,7 @@ namespace Skybrud.Social.Twitter.Endpoints {
         ///     <cref>https://developer.twitter.com/en/docs/geo/places-near-location/api-reference/get-geo-reverse_geocode</cref>
         /// </see>
         public TwitterReverseGeocodeResponse ReverseGeocode(TwitterReverseGeocodeOptions options) {
-            return TwitterReverseGeocodeResponse.ParseResponse(Raw.ReverseGeocode(options));
+            return new TwitterReverseGeocodeResponse(Raw.ReverseGeocode(options));
         }
 
         #endregion

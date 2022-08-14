@@ -1,24 +1,24 @@
 using Skybrud.Essentials.Http;
-using Skybrud.Social.Twitter.Models.Users;
+using Skybrud.Social.Twitter.Models;
 
-namespace Skybrud.Social.Twitter.Responses.Users {
+namespace Skybrud.Social.Twitter.Responses {
 
     /// <summary>
-    /// Class representing a response with a list of Twitter users.
+    /// Class representing a response with a <see cref="TwitterIdsCollection"/>.
     /// </summary>
-    public class TwitterUserListResponse : TwitterResponse<TwitterUserCollection> {
+    public class TwitterIdListResponse : TwitterResponse<TwitterIdsCollection> {
 
         /// <summary>
         /// Initializes a new instance based on the specified <paramref name="response"/>.
         /// </summary>
         /// <param name="response">The instance of <see cref="IHttpResponse"/> representing the raw response.</param>
-        public TwitterUserListResponse(IHttpResponse response) : base(response) {
+        public TwitterIdListResponse(IHttpResponse response) : base(response) {
 
             // Validate the response
             ValidateResponse(response);
 
             // Parse the response body
-            Body = ParseJsonObject(response.Body, TwitterUserCollection.Parse);
+            Body = ParseJsonObject(response.Body, TwitterIdsCollection.Parse);
 
         }
 

@@ -1,4 +1,3 @@
-using System;
 using Skybrud.Essentials.Http;
 using Skybrud.Social.Twitter.Models.Search;
 
@@ -9,9 +8,11 @@ namespace Skybrud.Social.Twitter.Responses.Search {
     /// </summary>
     public class TwitterSearchTweetsResponse : TwitterResponse<TwitterSearchTweetsResults> {
 
-        #region Constructors
-
-        private TwitterSearchTweetsResponse(IHttpResponse response) : base(response) {
+        /// <summary>
+        /// Initializes a new instance based on the specified <paramref name="response"/>.
+        /// </summary>
+        /// <param name="response">The instance of <see cref="IHttpResponse"/> representing the raw response.</param>
+        public TwitterSearchTweetsResponse(IHttpResponse response) : base(response) {
 
             // Validate the response
             ValidateResponse(response);
@@ -20,22 +21,6 @@ namespace Skybrud.Social.Twitter.Responses.Search {
             Body = ParseJsonObject(response.Body, TwitterSearchTweetsResults.Parse);
 
         }
-
-        #endregion
-
-        #region Static methods
-
-        /// <summary>
-        /// Parses the specified <paramref name="response"/> into an instance of <see cref="TwitterSearchTweetsResponse"/>.
-        /// </summary>
-        /// <param name="response">The response to be parsed.</param>
-        /// <returns>An instance of <see cref="TwitterSearchTweetsResponse"/> representing the response.</returns>
-        public static TwitterSearchTweetsResponse ParseResponse(IHttpResponse response) {
-            if (response == null) throw new ArgumentNullException(nameof(response));
-            return new TwitterSearchTweetsResponse(response);
-        }
-
-        #endregion
 
     }
 

@@ -1,18 +1,19 @@
-﻿using System;
-using Skybrud.Essentials.Http;
+﻿using Skybrud.Essentials.Http;
 using Skybrud.Social.Twitter.Models.Lists;
 
 namespace Skybrud.Social.Twitter.Responses.Lists {
-    
+
     /// <summary>
     /// Class respresenting the response for a list.
     /// </summary>
     public class TwitterListResponse : TwitterResponse<TwitterList> {
 
-        #region Constructors
+        /// <summary>
+        /// Initializes a new instance based on the specified <paramref name="response"/>.
+        /// </summary>
+        /// <param name="response">The instance of <see cref="IHttpResponse"/> representing the raw response.</param>
+        public TwitterListResponse(IHttpResponse response) : base(response) {
 
-        private TwitterListResponse(IHttpResponse response) : base(response) {
-            
             // Validate the response
             ValidateResponse(response);
 
@@ -20,22 +21,6 @@ namespace Skybrud.Social.Twitter.Responses.Lists {
             Body = ParseJsonObject(response.Body, TwitterList.Parse);
 
         }
-
-        #endregion
-
-        #region Static methods
-
-        /// <summary>
-        /// Parses the specified <paramref name="response"/> into an instance of <see cref="TwitterListResponse"/>.
-        /// </summary>
-        /// <param name="response">The response to be parsed.</param>
-        /// <returns>An instance of <see cref="TwitterListResponse"/> representing the response.</returns>
-        public static TwitterListResponse ParseResponse(IHttpResponse response) {
-            if (response == null) throw new ArgumentNullException(nameof(response));
-            return new TwitterListResponse(response);
-        }
-
-        #endregion
 
     }
 

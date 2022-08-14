@@ -1,6 +1,5 @@
 using Skybrud.Social.Twitter.Endpoints.Raw;
 using Skybrud.Social.Twitter.Options.Favorites;
-using Skybrud.Social.Twitter.Responses;
 using Skybrud.Social.Twitter.Responses.Statuses;
 
 namespace Skybrud.Social.Twitter.Endpoints {
@@ -37,48 +36,48 @@ namespace Skybrud.Social.Twitter.Endpoints {
         /// <summary>
         /// Gets a list of favorites of the authenticated user.
         /// </summary>
-        public TwitterTimelineResponse GetFavorites() {
-            return TwitterTimelineResponse.ParseResponse(Raw.GetFavorites());
+        public TwitterStatusListResponse GetFavorites() {
+            return new TwitterStatusListResponse(Raw.GetFavorites());
         }
 
         /// <summary>
         /// Gets a list of favorites of the user with the specified <paramref name="userId"/>.
         /// </summary>
         /// <param name="userId">The ID of the user.</param>
-        public TwitterTimelineResponse GetFavorites(long userId) {
-            return TwitterTimelineResponse.ParseResponse(Raw.GetFavorites(userId));
+        public TwitterStatusListResponse GetFavorites(long userId) {
+            return new TwitterStatusListResponse(Raw.GetFavorites(userId));
         }
 
         /// <summary>
         /// Gets a list of favorites of the user with the specified <paramref name="screenName"/>.
         /// </summary>
         /// <param name="screenName">The screen name of the user.</param>
-        public TwitterTimelineResponse GetFavorites(string screenName) {
-            return TwitterTimelineResponse.ParseResponse(Raw.GetFavorites(screenName));
+        public TwitterStatusListResponse GetFavorites(string screenName) {
+            return new TwitterStatusListResponse(Raw.GetFavorites(screenName));
         }
 
         /// <summary>
         /// Gets a list of favorites based on the specified <paramref name="options"/>.
         /// </summary>
         /// <param name="options">The options for the call to the API.</param>
-        public TwitterTimelineResponse GetFavorites(TwitterGetFavoritesOptions options) {
-            return TwitterTimelineResponse.ParseResponse(Raw.GetFavorites(options));
+        public TwitterStatusListResponse GetFavorites(TwitterGetFavoritesOptions options) {
+            return new TwitterStatusListResponse(Raw.GetFavorites(options));
         }
 
         /// <summary>
         /// Favorites the status message with the specified <paramref name="statusId"/> as the authenticating user.
         /// </summary>
         /// <param name="statusId">The ID of the status message.</param>
-        public TwitterGetStatusMessageResponse Create(long statusId) {
-            return TwitterGetStatusMessageResponse.ParseResponse(Raw.Create(statusId));
+        public TwitterStatusResponse Create(long statusId) {
+            return new TwitterStatusResponse(Raw.Create(statusId));
         }
 
         /// <summary>
         /// Un-favorites the status message with the specified <paramref name="statusId"/> as the authenticating user.
         /// </summary>
         /// <param name="statusId">The ID of the status message.</param>
-        public TwitterGetStatusMessageResponse Destroy(long statusId) {
-            return TwitterGetStatusMessageResponse.ParseResponse(Raw.Destroy(statusId));
+        public TwitterStatusResponse Destroy(long statusId) {
+            return new TwitterStatusResponse(Raw.Destroy(statusId));
         }
 
         #endregion

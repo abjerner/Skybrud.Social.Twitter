@@ -1,13 +1,11 @@
 using Skybrud.Social.Twitter.Endpoints.Raw;
-using Skybrud.Social.Twitter.Options;
 using Skybrud.Social.Twitter.Options.Search;
-using Skybrud.Social.Twitter.Responses;
 using Skybrud.Social.Twitter.Responses.Search;
 
 namespace Skybrud.Social.Twitter.Endpoints {
 
     /// <summary>
-    /// Class representing the implementation of the <strong>Lists</strong> endpoint.
+    /// Class representing the implementation of the <strong>Search</strong> endpoint.
     /// </summary>
     public class TwitterSearchEndpoint {
 
@@ -41,7 +39,7 @@ namespace Skybrud.Social.Twitter.Endpoints {
         /// <param name="query">The search query.</param>
         /// <returns>An instance of <see cref="TwitterSearchTweetsResponse"/> representing the response.</returns>
         public TwitterSearchTweetsResponse SearchTweets(string query) {
-            return TwitterSearchTweetsResponse.ParseResponse(Raw.SearchTweets(query)); 
+            return new TwitterSearchTweetsResponse(Raw.SearchTweets(query));
         }
 
         /// <summary>
@@ -51,7 +49,7 @@ namespace Skybrud.Social.Twitter.Endpoints {
         /// <param name="count">The maximum amount of tweets to return (default: 15, max: 100).</param>
         /// <returns>An instance of <see cref="TwitterSearchTweetsResponse"/> representing the response.</returns>
         public TwitterSearchTweetsResponse SearchTweets(string query, int count) {
-            return TwitterSearchTweetsResponse.ParseResponse(Raw.SearchTweets(query, count)); 
+            return new TwitterSearchTweetsResponse(Raw.SearchTweets(query, count));
         }
 
         /// <summary>
@@ -60,7 +58,7 @@ namespace Skybrud.Social.Twitter.Endpoints {
         /// <param name="options">The search options.</param>
         /// <returns>An instance of <see cref="TwitterSearchTweetsResponse"/> representing the response.</returns>
         public TwitterSearchTweetsResponse SearchTweets(TwitterSearchTweetOptions options) {
-            return TwitterSearchTweetsResponse.ParseResponse(Raw.SearchTweets(options)); 
+            return new TwitterSearchTweetsResponse(Raw.SearchTweets(options));
         }
 
         #endregion
