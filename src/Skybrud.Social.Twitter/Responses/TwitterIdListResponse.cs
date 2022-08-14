@@ -4,9 +4,9 @@ using Skybrud.Social.Twitter.Models;
 namespace Skybrud.Social.Twitter.Responses {
 
     /// <summary>
-    /// Class representing a response with a <see cref="TwitterIdsCollection"/>.
+    /// Class representing a response with a <see cref="TwitterIdList"/>.
     /// </summary>
-    public class TwitterIdListResponse : TwitterResponse<TwitterIdsCollection> {
+    public class TwitterIdListResponse : TwitterResponse<TwitterIdList> {
 
         /// <summary>
         /// Initializes a new instance based on the specified <paramref name="response"/>.
@@ -18,7 +18,7 @@ namespace Skybrud.Social.Twitter.Responses {
             ValidateResponse(response);
 
             // Parse the response body
-            Body = ParseJsonObject(response.Body, TwitterIdsCollection.Parse);
+            Body = ParseJsonObject(response.Body, TwitterIdList.Parse);
 
         }
 

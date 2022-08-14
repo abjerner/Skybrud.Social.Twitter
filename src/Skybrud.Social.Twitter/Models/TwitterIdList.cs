@@ -6,7 +6,7 @@ namespace Skybrud.Social.Twitter.Models {
     /// <summary>
     /// Class representing a list of IDs.
     /// </summary>
-    public class TwitterIdsCollection : TwitterObject {
+    public class TwitterIdList : TwitterObject {
 
         #region Properties
 
@@ -30,10 +30,10 @@ namespace Skybrud.Social.Twitter.Models {
         #region Constructors
 
         /// <summary>
-        /// Initializes a new instance of <see cref="TwitterIdsCollection"/> parsed from the specified <paramref name="obj"/>.
+        /// Initializes a new instance of <see cref="TwitterIdList"/> parsed from the specified <paramref name="obj"/>.
         /// </summary>
         /// <param name="obj">The <see cref="JObject"/> to be parsed.</param>
-        protected TwitterIdsCollection(JObject obj) : base(obj) {
+        protected TwitterIdList(JObject obj) : base(obj) {
             Ids = obj.GetInt64Array("ids");
             NextCursor = obj.GetInt64("next_cursor");
             PreviousCursor = obj.GetInt64("previous_cursor");
@@ -44,12 +44,12 @@ namespace Skybrud.Social.Twitter.Models {
         #region Static methods
 
         /// <summary>
-        /// Gets an instance of <see cref="TwitterIdsCollection"/> from the specified <see cref="JObject"/>.
+        /// Gets an instance of <see cref="TwitterIdList"/> from the specified <see cref="JObject"/>.
         /// </summary>
         /// <param name="obj">The instance of <see cref="JObject"/> to parse.</param>
-        /// <returns>An instance of <see cref="TwitterIdsCollection"/>.</returns>
-        public static TwitterIdsCollection Parse(JObject obj) {
-            return obj == null ? null : new TwitterIdsCollection(obj);
+        /// <returns>An instance of <see cref="TwitterIdList"/>.</returns>
+        public static TwitterIdList Parse(JObject obj) {
+            return obj == null ? null : new TwitterIdList(obj);
         }
 
         #endregion
