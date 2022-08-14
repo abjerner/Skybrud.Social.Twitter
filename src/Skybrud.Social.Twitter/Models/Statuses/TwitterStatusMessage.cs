@@ -41,7 +41,7 @@ namespace Skybrud.Social.Twitter.Models.Statuses {
         /// <summary>
         /// Gets whether the <see cref="Text"/> property has a value.
         /// </summary>
-        public bool HasText => !String.IsNullOrWhiteSpace(Text);
+        public bool HasText => !string.IsNullOrWhiteSpace(Text);
 
         /// <summary>
         /// Gets the full text or message of the tweet.
@@ -51,7 +51,7 @@ namespace Skybrud.Social.Twitter.Models.Statuses {
         /// <summary>
         /// Gets whether the <see cref="FullText"/> property has a value.
         /// </summary>
-        public bool HasFullText => !String.IsNullOrWhiteSpace(FullText);
+        public bool HasFullText => !string.IsNullOrWhiteSpace(FullText);
 
         /// <summary>
         /// Gets the source/client used for making the tweet.
@@ -61,31 +61,16 @@ namespace Skybrud.Social.Twitter.Models.Statuses {
         /// <summary>
         /// Indicates whether the value of <see cref="Text"/> was truncated, for example, as a result of a retweet
         /// exceeding the original tweet text length limit of 140 characters.
-        /// 
+        ///
         /// Truncated text will end in ellipsis, like this <c>...</c>. Since Twitter now rejects long tweets vs
         /// truncating them, the large majority of Tweets will have this set to <c>false</c>.
         /// </summary>
         public bool IsTruncated { get; }
 
-
-
-
-
-
-
-
-
-
+        /// <summary>
+        /// Gets information about the status message this status message was a reply to, if a reply.
+        /// </summary>
         public TwitterReplyTo InReplyTo { get; }
-
-
-
-
-
-
-
-
-
 
         /// <summary>
         /// Information about the user who made the tweet. May be <c>null</c>.
@@ -96,7 +81,7 @@ namespace Skybrud.Social.Twitter.Models.Statuses {
         /// Gets whether the <see cref="User"/> property has a value.
         /// </summary>
         public bool HasUser => User != null;
-        
+
         /// <summary>
         /// Gets the geographic location of the tweet as reported by the user or client application.
         /// </summary>
@@ -122,7 +107,7 @@ namespace Skybrud.Social.Twitter.Models.Statuses {
         /// Gets the ID of the quoted tweet (if a quote).
         /// </summary>
         public long QuotedStatusId { get; }
-        
+
         /// <summary>
         /// Gets the ID of the quoted tweet (if a quote).
         /// </summary>
@@ -184,7 +169,7 @@ namespace Skybrud.Social.Twitter.Models.Statuses {
         /// Gets whether the authenticated user has favorited the tweet.
         /// </summary>
         public bool HasFavorited { get; }
-        
+
         /// <summary>
         /// Gets whether the authenticated user has retweeted the tweet.
         /// </summary>
@@ -235,15 +220,13 @@ namespace Skybrud.Social.Twitter.Models.Statuses {
             if (obj.HasValue("in_reply_to_status_id")) {
                 InReplyTo = new TwitterReplyTo {
                     StatusId = obj.GetInt64("in_reply_to_status_id"),
-                    StatusIdStr = obj.GetString("in_reply_to_status_id_str"),
                     UserId = obj.GetInt64("in_reply_to_user_id"),
-                    UserIdStr = obj.GetString("in_reply_to_user_id_str"),
                     ScreenName = obj.GetString("in_reply_to_screen_name")
                 };
             }
 
             User = obj.GetObject("user", TwitterUser.Parse);
-            
+
             // For some weird reason Twitter flips the coordinates by writing longitude before latitude
             // See: https://dev.twitter.com/docs/platform-objects/tweets#obj-coordinates)
             Coordinates = obj.GetObject("coordinates", TwitterCoordinates.Parse);
@@ -263,7 +246,7 @@ namespace Skybrud.Social.Twitter.Models.Statuses {
             ReplyCount = obj.GetInt32("reply_count");
             RetweetCount = obj.GetInt32("retweet_count");
             FavoriteCount = obj.GetInt32("favorite_count");
-            
+
             // Parse the entities (if any)
             Entities = obj.GetObject("entities", TwitterStatusMessageEntities.Parse);
             ExtendedEntities = obj.GetObject("extended_entities", TwitterExtendedEntities.Parse);

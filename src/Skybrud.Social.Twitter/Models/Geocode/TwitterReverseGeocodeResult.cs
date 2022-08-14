@@ -1,31 +1,40 @@
-﻿using Newtonsoft.Json.Linq;
+﻿using System.Collections.Generic;
+using Newtonsoft.Json.Linq;
 using Skybrud.Essentials.Json.Extensions;
 
 namespace Skybrud.Social.Twitter.Models.Geocode {
-    
+
+    /// <summary>
+    /// Class representing a reverse geocode result
+    /// </summary>
     public class TwitterReverseGeocodeResult : TwitterObject {
 
         #region Properties
 
-        public TwitterReverseGeocodeResults Results { get; private set; }
-        
-        public TwitterPlace[] Places { get; private set; }
+        /// <summary>
+        /// Gets a list of the matched places.
+        /// </summary>
+        public IReadOnlyList<TwitterPlace> Places { get; }
 
         #endregion
 
         #region Constructors
 
-        private TwitterReverseGeocodeResult(TwitterReverseGeocodeResults results, JObject obj) : base(obj) {
-            Results = results;
-            Places = obj.GetArray("places", TwitterPlace.Parse);
+        private TwitterReverseGeocodeResult(JObject json) : base(json) {
+            Places = json.GetArray("places", TwitterPlace.Parse);
         }
 
         #endregion
 
         #region Static methods
 
-        public static TwitterReverseGeocodeResult Parse(TwitterReverseGeocodeResults results, JObject obj) {
-            return new TwitterReverseGeocodeResult(results, obj);
+        /// <summary>
+        /// Parses the specified <paramref name="json"/> object into an instance of <see cref="TwitterReverseGeocodeResult"/>.
+        /// </summary>
+        /// <param name="json">The JSON object to be parsed.</param>
+        /// <returns>An instance of <see cref="TwitterReverseGeocodeResult"/>.</returns>
+        public static TwitterReverseGeocodeResult Parse(JObject json) {
+            return json == null ? null : new TwitterReverseGeocodeResult(json);
         }
 
         #endregion

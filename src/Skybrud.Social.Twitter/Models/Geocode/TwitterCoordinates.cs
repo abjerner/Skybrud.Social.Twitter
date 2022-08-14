@@ -34,7 +34,7 @@ namespace Skybrud.Social.Twitter.Models.Geocode {
         }
 
         /// <summary>
-        /// Initializes a new instance of <see cref="TwitterCoordinates"/> parsed from the specified <paramref name="obj"/>.
+        /// Initializes a new instance of <see cref="TwitterCoordinates"/> parsed from the specified <paramref name="array"/>.
         /// </summary>
         /// <param name="array">The <see cref="JArray"/> to be parsed.</param>
         protected TwitterCoordinates(JArray array) : base(null) {

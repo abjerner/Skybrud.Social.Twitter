@@ -3,6 +3,9 @@ using Skybrud.Essentials.Json.Extensions;
 
 namespace Skybrud.Social.Twitter.Models {
 
+    /// <summary>
+    /// Class representing a list of IDs.
+    /// </summary>
     public class TwitterIdsCollection : TwitterObject {
 
         #region Properties
@@ -50,7 +53,7 @@ namespace Skybrud.Social.Twitter.Models {
         }
 
         #endregion
-    
+
     }
 
 }

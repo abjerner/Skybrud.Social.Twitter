@@ -6,7 +6,7 @@ namespace Skybrud.Social.Twitter.Responses.Geocode {
     /// <summary>
     /// Class representing the response of a request to the Twitter API for doing a reverse geocode search.
     /// </summary>
-    public class TwitterReverseGeocodeResponse : TwitterResponse<TwitterReverseGeocodeResults> {
+    public class TwitterReverseGeocodeResponse : TwitterResponse<TwitterReverseGeocode> {
 
         /// <summary>
         /// Initializes a new instance based on the specified <paramref name="response"/>.
@@ -18,7 +18,7 @@ namespace Skybrud.Social.Twitter.Responses.Geocode {
             ValidateResponse(response);
 
             // Parse the response body
-            Body = ParseJsonObject(response.Body, TwitterReverseGeocodeResults.Parse);
+            Body = ParseJsonObject(response.Body, TwitterReverseGeocode.Parse);
 
         }
 

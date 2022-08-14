@@ -3,20 +3,39 @@ using Skybrud.Essentials.Json.Extensions;
 
 namespace Skybrud.Social.Twitter.Models.Search {
 
+    /// <summary>
+    /// Class with meta data about a Twitter search.
+    /// </summary>
+    /// <see>
+    ///     <cref>https://developer.twitter.com/en/docs/twitter-api/v1/tweets/search/api-reference/get-search-tweets</cref>
+    /// </see>
     public class TwitterSearchTweetsMetaData : TwitterObject {
 
         #region Properties
 
+        /// <summary>
+        /// Gets the time in qhich the search was completed.
+        /// </summary>
         public float CompletedIn { get; }
-        
+
+        /// <summary>
+        /// Gets the maximum ID.
+        /// </summary>
         public long MaxId { get; }
-        
+
+        /// <summary>
+        /// gets the query.
+        /// </summary>
         public string Query { get; }
-        
-        public string RefreshUrl { get; }
-        
+
+        /// <summary>
+        /// Gets the count.
+        /// </summary>
         public int Count { get; }
-        
+
+        /// <summary>
+        /// Gets the since ID.
+        /// </summary>
         public long SinceId { get; }
 
         #endregion
@@ -31,7 +50,6 @@ namespace Skybrud.Social.Twitter.Models.Search {
             CompletedIn = obj.GetFloat("completed_in");
             MaxId = obj.GetInt64("max_id");
             Query = obj.GetString("query");
-            RefreshUrl = obj.GetString("refresh_url");
             Count = obj.GetInt32("count");
             SinceId = obj.GetInt64("since_id");
         }

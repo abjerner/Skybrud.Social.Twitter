@@ -2,6 +2,9 @@ using Skybrud.Social.Twitter.Models.Entities;
 
 namespace Skybrud.Social.Twitter.Entities.Formatting {
 
+    /// <summary>
+    /// Interface describing an entity formatter.
+    /// </summary>
     public interface ITwitterEntityFormatter {
 
         /// <summary>

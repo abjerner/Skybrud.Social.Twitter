@@ -1,8 +1,13 @@
 using System;
 using Skybrud.Social.Twitter.Models.Entities;
 
+#pragma warning disable CS1591
+
 namespace Skybrud.Social.Twitter.Entities.Formatting {
-    
+
+    /// <summary>
+    /// Extended implementation of the <see cref="ITwitterEntityFormatter"/> interface.
+    /// </summary>
     public class TwitterExtendedEntityFormatter : TwitterDefaultEntityFormatter {
 
         public Func<string, TwitterHashTagEntity, string> Tags { get; set; }

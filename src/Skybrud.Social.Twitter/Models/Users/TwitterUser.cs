@@ -56,7 +56,7 @@ namespace Skybrud.Social.Twitter.Models.Users {
         /// <summary>
         /// Gets whether the <see cref="Location"/> property has a value.
         /// </summary>
-        public bool HasLocation => !String.IsNullOrWhiteSpace(Location);
+        public bool HasLocation => !string.IsNullOrWhiteSpace(Location);
 
         /// <summary>
         /// <em>Nullable</em>. Gets the URL provided by the user in association with their profile.
@@ -66,7 +66,7 @@ namespace Skybrud.Social.Twitter.Models.Users {
         /// <summary>
         /// Gets whether the <see cref="Url"/> property has a value.
         /// </summary>
-        public bool HasUrl => !String.IsNullOrWhiteSpace(Url);
+        public bool HasUrl => !string.IsNullOrWhiteSpace(Url);
 
         /// <summary>
         /// Entities which have been parsed out of the url or description fields defined by the user.
@@ -81,7 +81,7 @@ namespace Skybrud.Social.Twitter.Models.Users {
         /// <summary>
         /// Gets whether the <see cref="Description"/> property has a value.
         /// </summary>
-        public bool HasDescription => !String.IsNullOrWhiteSpace(Description);
+        public bool HasDescription => !string.IsNullOrWhiteSpace(Description);
 
         // TODO: Add support for the "derived" property
 
