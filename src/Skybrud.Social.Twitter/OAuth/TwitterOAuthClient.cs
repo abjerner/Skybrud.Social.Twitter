@@ -12,7 +12,7 @@ namespace Skybrud.Social.Twitter.OAuth {
     /// using a three-legged approach as well as logic for calling the methods decribed in the Twitter API (not all
     /// has been implemented yet).
     /// </summary>
-    public class TwitterOAuthClient : OAuthClient {
+    public class TwitterOAuthClient : OAuthClient, ITwitterOAuthClient {
 
         #region Private fields
 

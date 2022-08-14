@@ -1,5 +1,6 @@
 using System;
 using Skybrud.Essentials.Http;
+using Skybrud.Essentials.Http.Client;
 using Skybrud.Social.Twitter.OAuth;
 using Skybrud.Social.Twitter.Options.Geocode;
 
@@ -15,13 +16,13 @@ namespace Skybrud.Social.Twitter.Endpoints.Raw {
         /// <summary>
         /// Gets a reference to the OAuth client.
         /// </summary>
-        public TwitterOAuthClient Client { get; }
+        public ITwitterOAuthClient Client { get; }
 
         #endregion
 
         #region Constructors
 
-        internal TwitterGeocodeRawEndpoint(TwitterOAuthClient client) {
+        internal TwitterGeocodeRawEndpoint(ITwitterOAuthClient client) {
             Client = client;
         }
 

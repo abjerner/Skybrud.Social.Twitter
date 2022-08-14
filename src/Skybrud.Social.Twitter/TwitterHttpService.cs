@@ -14,7 +14,7 @@ namespace Skybrud.Social.Twitter {
         /// <summary>
         /// Gets a reference to the underlying OAuth client.
         /// </summary>
-        public TwitterOAuthClient Client { get; }
+        public ITwitterOAuthClient Client { get; }
 
         /// <summary>
         /// Gets a reference to the Account endpoint.
@@ -65,7 +65,7 @@ namespace Skybrud.Social.Twitter {
 
         #region Constructors
 
-        private TwitterHttpService(TwitterOAuthClient client) {
+        private TwitterHttpService(ITwitterOAuthClient client) {
 
             // Set the client
             Client = client;
@@ -88,11 +88,11 @@ namespace Skybrud.Social.Twitter {
         #region Static methods
 
         /// <summary>
-        /// Initializes a new instance from the specified <see cref="TwitterOAuthClient"/>.
+        /// Initializes a new instance from the specified <see cref="ITwitterOAuthClient"/>.
         /// </summary>
-        /// <param name="client">An instance of <see cref="TwitterOAuthClient"/>.</param>
+        /// <param name="client">An instance of <see cref="ITwitterOAuthClient"/>.</param>
         /// <returns>A new instance of <see cref="TwitterHttpService"/>.</returns>
-        public static TwitterHttpService CreateFromOAuthClient(TwitterOAuthClient client) {
+        public static TwitterHttpService CreateFromOAuthClient(ITwitterOAuthClient client) {
             if (client == null) throw new ArgumentNullException(nameof(client));
             return new TwitterHttpService(client);
         }

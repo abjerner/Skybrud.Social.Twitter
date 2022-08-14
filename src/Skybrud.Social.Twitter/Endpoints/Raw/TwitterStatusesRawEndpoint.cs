@@ -1,5 +1,6 @@
 using System;
 using Skybrud.Essentials.Http;
+using Skybrud.Essentials.Http.Client;
 using Skybrud.Social.Twitter.Models.Statuses;
 using Skybrud.Social.Twitter.OAuth;
 using Skybrud.Social.Twitter.Options.Statuses;
@@ -16,13 +17,13 @@ namespace Skybrud.Social.Twitter.Endpoints.Raw {
         /// <summary>
         /// Gets a reference to the OAuth client.
         /// </summary>
-        public TwitterOAuthClient Client { get; }
+        public ITwitterOAuthClient Client { get; }
 
         #endregion
 
         #region Constructors
 
-        internal TwitterStatusesRawEndpoint(TwitterOAuthClient client) {
+        internal TwitterStatusesRawEndpoint(ITwitterOAuthClient client) {
             Client = client;
         }
 
@@ -229,7 +230,7 @@ namespace Skybrud.Social.Twitter.Endpoints.Raw {
 
         /// <summary>
         /// Gets a collection of the most recent tweets and retweets posted by the authenticating user and the users
-        /// they follow. 
+        /// they follow.
         /// </summary>
         /// <param name="options">The options for the call.</param>
         /// <returns>An instance of <see cref="IHttpResponse"/> representing the raw response.</returns>

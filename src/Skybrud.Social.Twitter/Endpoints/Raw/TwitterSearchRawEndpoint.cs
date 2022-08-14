@@ -15,13 +15,13 @@ namespace Skybrud.Social.Twitter.Endpoints.Raw {
         /// <summary>
         /// Gets a reference to the OAuth 1.0a client.
         /// </summary>
-        public TwitterOAuthClient Client { get; }
+        public ITwitterOAuthClient Client { get; }
 
         #endregion
 
         #region Constructors
 
-        internal TwitterSearchRawEndpoint(TwitterOAuthClient client) {
+        internal TwitterSearchRawEndpoint(ITwitterOAuthClient client) {
             Client = client;
         }
 

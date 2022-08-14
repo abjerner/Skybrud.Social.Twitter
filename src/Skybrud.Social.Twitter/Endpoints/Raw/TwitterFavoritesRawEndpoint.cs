@@ -1,4 +1,5 @@
 using Skybrud.Essentials.Http;
+using Skybrud.Essentials.Http.Client;
 using Skybrud.Essentials.Http.Collections;
 using Skybrud.Social.Twitter.OAuth;
 using Skybrud.Social.Twitter.Options.Favorites;
@@ -15,13 +16,13 @@ namespace Skybrud.Social.Twitter.Endpoints.Raw {
         /// <summary>
         /// Gets a reference to the OAuth 1.0a client.
         /// </summary>
-        public TwitterOAuthClient Client { get; }
+        public ITwitterOAuthClient Client { get; }
 
         #endregion
 
         #region Constructors
 
-        internal TwitterFavoritesRawEndpoint(TwitterOAuthClient client) {
+        internal TwitterFavoritesRawEndpoint(ITwitterOAuthClient client) {
             Client = client;
         }
 
