@@ -8,8 +8,10 @@ using Skybrud.Social.Twitter.Entities.Formatting;
 using Skybrud.Social.Twitter.Models.Entities;
 using Skybrud.Social.Twitter.Models.Geocode;
 
+#pragma warning disable CS1591
+
 namespace Skybrud.Social.Twitter {
-    
+
     /// <summary>
     /// Various utility methods for working with Twitter and the Twitter API.
     /// </summary>
@@ -17,7 +19,7 @@ namespace Skybrud.Social.Twitter {
 
         #region Version
 
-#if NET_FRAMEWORK
+#if NET45_OR_GREATER
 
         /// <summary>
         /// Gets the assembly version as a string.
@@ -43,7 +45,7 @@ namespace Skybrud.Social.Twitter {
             Assembly assembly = typeof(TwitterUtils).Assembly;
             return FileVersionInfo.GetVersionInfo(assembly.Location).FileVersion;
         }
-        
+
         #endif
 
         #endregion
@@ -100,7 +102,7 @@ namespace Skybrud.Social.Twitter {
         public static string FormatEntities(string text, IEnumerable<TwitterBaseEntity> entities, ITwitterEntityFormatter formatter) {
 
             // Some input validation
-            if (String.IsNullOrWhiteSpace(text) || entities == null || formatter == null) return text;
+            if (string.IsNullOrWhiteSpace(text) || entities == null || formatter == null) return text;
 
             // Iterate through the entities
             foreach (TwitterBaseEntity entity in entities.OrderByDescending(x => x.StartIndex)) {
