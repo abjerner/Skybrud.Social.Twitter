@@ -1,10 +1,12 @@
-using System;
 using Skybrud.Essentials.Http.Collections;
 using Skybrud.Essentials.Http.OAuth;
 using Skybrud.Essentials.Http.OAuth.Models;
 
 namespace Skybrud.Social.Twitter.OAuth {
 
+    /// <summary>
+    /// Class with information about an OAuth 1.0a access token.
+    /// </summary>
     public class TwitterOAuthAccessToken : OAuthAccessToken {
 
         #region Properties
@@ -23,8 +25,13 @@ namespace Skybrud.Social.Twitter.OAuth {
 
         #region Constructors
 
+        /// <summary>
+        /// Initializes a new instance based on the specified <paramref name="client"/> and <paramref name="query"/>.
+        /// </summary>
+        /// <param name="client">The current OAuth client.</param>
+        /// <param name="query">The query string representing the access token information.</param>
         protected TwitterOAuthAccessToken(OAuthClient client, IHttpQueryString query) : base(client, query) {
-            UserId = Int64.Parse(query["user_id"]);
+            UserId = long.Parse(query["user_id"]);
             ScreenName = query["screen_name"];
         }
 
@@ -37,10 +44,10 @@ namespace Skybrud.Social.Twitter.OAuth {
         /// </summary>
         /// <param name="client">The parent OAuth client.</param>
         /// <param name="str">The query string.</param>
-        public new static TwitterOAuthAccessToken Parse(OAuthClient client, string str) {
+        public static new TwitterOAuthAccessToken Parse(OAuthClient client, string str) {
 
             // Convert the query string to an IHttpQueryString
-            IHttpQueryString query = HttpQueryString.ParseQueryString(str);
+            IHttpQueryString query = HttpQueryString.Parse(str);
 
             // Initialize a new instance
             return new TwitterOAuthAccessToken(client, query);
@@ -57,7 +64,7 @@ namespace Skybrud.Social.Twitter.OAuth {
         }
 
         #endregion
-    
+
     }
 
 }

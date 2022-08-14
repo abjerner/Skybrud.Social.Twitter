@@ -208,7 +208,7 @@ namespace Skybrud.Social.Twitter.Models.Statuses {
         /// <summary>
         /// Gets the date of the object that represents how the object can be sorted in a timeline.
         /// </summary>
-        public EssentialsDateTime SortDate => CreatedAt;
+        public EssentialsTime SortDate => CreatedAt;
 
         #endregion
 

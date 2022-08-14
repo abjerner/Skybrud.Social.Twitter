@@ -1,6 +1,7 @@
 ﻿using System;
 using Skybrud.Essentials.Time;
 using Skybrud.Essentials.Http;
+using Skybrud.Essentials.Time.UnixTime;
 
 namespace Skybrud.Social.Twitter.Models.Common {
 
@@ -24,7 +25,7 @@ namespace Skybrud.Social.Twitter.Models.Common {
         /// <summary>
         /// Gets the timestamp for when the current window will be reset.
         /// </summary>
-        public EssentialsDateTime Reset { get; }
+        public EssentialsTime Reset { get; }
 
         #endregion
 
@@ -33,7 +34,7 @@ namespace Skybrud.Social.Twitter.Models.Common {
         private TwitterRateLimiting(int limit, int remaining, int reset) {
             Limit = limit;
             Remaining = remaining;
-            Reset = TimeUtils.GetDateTimeFromUnixTime(reset);
+            Reset = UnixTimeUtils.FromSeconds(reset);
         }
 
         #endregion
@@ -46,25 +47,10 @@ namespace Skybrud.Social.Twitter.Models.Common {
         /// <param name="response">The response.</param>
         /// <returns>An instance of <see cref="TwitterRateLimiting"/>.</returns>
         public static TwitterRateLimiting GetFromResponse(IHttpResponse response) {
-
-            int limit;
-            int remaining;
-            int reset;
-
-            if (!Int32.TryParse(response.Headers["x-rate-limit-limit"] ?? "", out limit)) {
-                limit = -1;
-            }
-
-            if (!Int32.TryParse(response.Headers["x-rate-limit-remaining"] ?? "", out remaining)) {
-                remaining = -1;
-            }
-
-            if (!Int32.TryParse(response.Headers["x-rate-limit-reset"] ?? "", out reset)) {
-                reset = 0;
-            }
-
+            if (!int.TryParse(response.Headers["x-rate-limit-limit"] ?? string.Empty, out int limit)) limit = -1;
+            if (!int.TryParse(response.Headers["x-rate-limit-remaining"] ?? string.Empty, out int remaining)) remaining = -1;
+            if (!int.TryParse(response.Headers["x-rate-limit-reset"] ?? string.Empty, out int reset)) reset = 0;
             return new TwitterRateLimiting(limit, remaining, reset);
-
         }
 
         #endregion

@@ -6,7 +6,7 @@ using Skybrud.Social.Twitter.Models.Entities;
 using Skybrud.Social.Twitter.Models.Statuses;
 
 namespace Skybrud.Social.Twitter.Models.Users {
-    
+
     /// <summary>
     /// Class representing a Twitter user as returned by the Twitter API.
     /// </summary>
@@ -96,7 +96,7 @@ namespace Skybrud.Social.Twitter.Models.Users {
         /// See <a href="https://help.twitter.com/en/managing-your-account/about-twitter-verified-accounts">About verified accounts</a>
         /// </summary>
         public bool IsVerified { get; }
-        
+
         /// <summary>
         /// Gets the number of followers this account currently has. Under certain conditions of duress, this field
         /// will temporarily indicate <c>0</c>.
@@ -113,7 +113,7 @@ namespace Skybrud.Social.Twitter.Models.Users {
         /// Gets the number of public lists that this user is a member of.
         /// </summary>
         public int ListedCount { get; }
-        
+
         /// <summary>
         /// Gets the number of tweets this user has favorited in the account's lifetime. British spelling used in the
         /// field name for historical reasons.
@@ -129,12 +129,12 @@ namespace Skybrud.Social.Twitter.Models.Users {
         /// Gets the number of tweets (including retweets) issued by the user.
         /// </summary>
         public int StatusesCount { get; }
-        
+
         /// <summary>
         /// Gets the UTC datetime that the user account was created on Twitter.
         /// </summary>
-        public EssentialsDateTime CreatedAt { get; }
-        
+        public EssentialsTime CreatedAt { get; }
+
         /// <summary>
         /// Gets the offset from GMT/UTC in seconds.
         /// </summary>

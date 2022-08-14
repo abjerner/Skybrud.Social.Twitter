@@ -29,7 +29,7 @@ namespace Skybrud.Social.Twitter.Options.Search {
         public TwitterSearchTweetResultType ResultType { get; set; }
 
         /// <summary>
-        /// The number of tweets to return per page, up to a maximum of <c>100</c>. Defaults to <c>15</c>. 
+        /// The number of tweets to return per page, up to a maximum of <c>100</c>. Defaults to <c>15</c>.
         /// </summary>
         public int Count { get; set; }
 
@@ -37,7 +37,7 @@ namespace Skybrud.Social.Twitter.Options.Search {
         /// Returns tweets generated before the given date. Keep in mind that the search index may not go back as far
         /// as the date you specify here.
         /// </summary>
-        public EssentialsDateTime Until { get; set; }
+        public EssentialsTime Until { get; set; }
 
         /// <summary>
         /// Returns results with an ID greater than (that is, more recent than) the specified ID. There are limits to
@@ -97,12 +97,12 @@ namespace Skybrud.Social.Twitter.Options.Search {
         /// <returns>An instance of <see cref="IHttpQueryString"/>.</returns>
         public IHttpQueryString GetQueryString() {
 
-            if (String.IsNullOrWhiteSpace(Query)) throw new PropertyNotSetException(Query);
+            if (string.IsNullOrWhiteSpace(Query)) throw new PropertyNotSetException(Query);
 
             string resultType = ResultType.ToString().ToLower();
-            
+
             IHttpQueryString query = new HttpQueryString();
-            if (!String.IsNullOrWhiteSpace(Query)) query.Set("q", Query);
+            if (!string.IsNullOrWhiteSpace(Query)) query.Set("q", Query);
             if (resultType != "mixed") query.Set("result_type", resultType);
             if (Count > 0) query.Set("count", Count);
             if (Until != null) query.Set("until", Until.ToString("yyyy-MM-dd"));
@@ -110,7 +110,7 @@ namespace Skybrud.Social.Twitter.Options.Search {
             if (MaxId > 0) query.Set("max_id", MaxId);
             if (!IncludeEntities) query.Set("include_entities", "false");
             return query;
-        
+
         }
 
         #endregion

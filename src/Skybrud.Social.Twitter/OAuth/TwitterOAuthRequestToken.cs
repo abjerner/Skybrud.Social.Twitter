@@ -19,10 +19,10 @@ namespace Skybrud.Social.Twitter.OAuth {
         /// </summary>
         /// <param name="client">The parent OAuth client.</param>
         /// <param name="str">The query string.</param>
-        public new static OAuthRequestToken Parse(OAuthClient client, string str) {
+        public static new OAuthRequestToken Parse(OAuthClient client, string str) {
 
             // Convert the query string to a NameValueCollection
-            IHttpQueryString query = HttpQueryString.ParseQueryString(str);
+            IHttpQueryString query = HttpQueryString.Parse(str);
 
             // Initialize a new instance
             return new TwitterOAuthRequestToken(client, query);
