@@ -1,12 +1,11 @@
-﻿using System;
-using Skybrud.Essentials.Http;
+﻿using Skybrud.Essentials.Http;
 
 namespace Skybrud.Social.Twitter.Exceptions {
 
     /// <summary>
     /// Exception class representing an error received from the Twitter API.
     /// </summary>
-    public class TwitterHttpException : Exception {
+    public class TwitterHttpException : TwitterException {
 
         #region Properties
 
