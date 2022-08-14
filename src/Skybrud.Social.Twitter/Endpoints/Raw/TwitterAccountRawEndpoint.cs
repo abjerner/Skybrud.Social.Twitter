@@ -1,9 +1,10 @@
+using System;
 using Skybrud.Essentials.Http;
 using Skybrud.Social.Twitter.OAuth;
 using Skybrud.Social.Twitter.Options.Account;
 
 namespace Skybrud.Social.Twitter.Endpoints.Raw {
-    
+
     /// <summary>
     /// Class representing the raw implementation of the <strong>Account</strong> endpoint.
     /// </summary>
@@ -33,10 +34,10 @@ namespace Skybrud.Social.Twitter.Endpoints.Raw {
         /// </summary>
         /// <returns>An instance of <see cref="IHttpResponse"/> representing the raw response.</returns>
         /// <see>
-        ///     <cref>https://dev.twitter.com/rest/reference/get/account/verify_credentials</cref>
+        ///     <cref>https://developer.twitter.com/en/docs/twitter-api/v1/accounts-and-users/manage-account-settings/api-reference/get-account-verify_credentials</cref>
         /// </see>
         public IHttpResponse VerifyCredentials() {
-            return Client.DoHttpGetRequest("https://api.twitter.com/1.1/account/verify_credentials.json");
+            return VerifyCredentials(new TwitterVerifyCrendetialsOptions());
         }
 
         /// <summary>
@@ -45,10 +46,11 @@ namespace Skybrud.Social.Twitter.Endpoints.Raw {
         /// <param name="options">The options for the call to the API.</param>
         /// <returns>An instance of <see cref="IHttpResponse"/> representing the raw response.</returns>
         /// <see>
-        ///     <cref>https://dev.twitter.com/rest/reference/get/account/verify_credentials</cref>
+        ///     <cref>https://developer.twitter.com/en/docs/twitter-api/v1/accounts-and-users/manage-account-settings/api-reference/get-account-verify_credentials</cref>
         /// </see>
         public IHttpResponse VerifyCredentials(TwitterVerifyCrendetialsOptions options) {
-            return Client.DoHttpGetRequest("https://api.twitter.com/1.1/account/verify_credentials.json", options);
+            if (options == null) throw new ArgumentNullException(nameof(options));
+            return Client.GetResponse(options);
         }
 
         #endregion

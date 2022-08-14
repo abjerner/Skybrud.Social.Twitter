@@ -1,21 +1,22 @@
-﻿using Skybrud.Essentials.Http.Collections;
+﻿using Skybrud.Essentials.Http;
+using Skybrud.Essentials.Http.Collections;
 using Skybrud.Essentials.Http.Options;
 
 namespace Skybrud.Social.Twitter.Options.Account {
-    
+
     /// <summary>
     /// Options for a call to verify the authenticated user (or the <em>credentials</em> of the user).
     /// </summary>
     /// <see>
-    ///     <cref>https://dev.twitter.com/rest/reference/get/account/verify_credentials</cref>
+    ///     <cref>https://developer.twitter.com/en/docs/twitter-api/v1/accounts-and-users/manage-account-settings/api-reference/get-account-verify_credentials</cref>
     /// </see>
-    public class TwitterVerifyCrendetialsOptions : IHttpGetOptions {
+    public class TwitterVerifyCrendetialsOptions : IHttpRequestOptions {
 
         #region Properties
 
         /// <summary>
         /// Gets or sets whether entities should be included in the response. Default is <c>true</c>.
-        /// 
+        ///
         /// Notice that both the user object and the status object will have their own <c>entities</c> property.
         /// The Twitter API documentation doesn't this further, but at the time of writing, this property only seems to
         /// effect the <c>entities</c> property on the status object.
@@ -32,7 +33,7 @@ namespace Skybrud.Social.Twitter.Options.Account {
         /// <summary>
         /// Gets or sets the email of the authenticated user should be included in the response. Default is
         /// <c>false</c>.
-        /// 
+        ///
         /// Notice that this qill require the <strong>Request email addresses from users</strong> option to be enabled
         /// in the settings of your Twitter app.
         /// </summary>
@@ -51,18 +52,20 @@ namespace Skybrud.Social.Twitter.Options.Account {
 
         #endregion
 
-        #region Member properties
+        #region Member methods
 
-        /// <summary>
-        /// Gets an instance of <see cref="IHttpQueryString"/> representing the GET parameters.
-        /// </summary>
-        /// <returns>An instance of <see cref="IHttpQueryString"/>.</returns>
-        public IHttpQueryString GetQueryString() {
+        /// <inheritdoc />
+        public IHttpRequest GetRequest() {
+
+            // Initialize the query string
             IHttpQueryString query = new HttpQueryString();
             if (!IncludeEntities) query.Add("include_entities", "false");
             if (SkipStatus) query.Add("skip_status", "true");
             if (IncludeEmail) query.Add("include_email", "true");
-            return query;
+
+            // Initialize a new GET request
+            return HttpRequest.Get("/1.1/account/verify_credentials.json", query);
+
         }
 
         #endregion

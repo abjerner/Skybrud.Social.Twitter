@@ -1,5 +1,5 @@
-﻿using System;
-using Skybrud.Essentials.Common;
+﻿using Skybrud.Essentials.Common;
+using Skybrud.Essentials.Http;
 using Skybrud.Essentials.Http.Collections;
 using Skybrud.Essentials.Http.Options;
 
@@ -11,7 +11,7 @@ namespace Skybrud.Social.Twitter.Options.Users {
     /// <see>
     ///     <cref>https://developer.twitter.com/en/docs/accounts-and-users/follow-search-get-users/api-reference/get-users-show</cref>
     /// </see>
-    public class TwitterGetUserOptions : IHttpGetOptions {
+    public class TwitterGetUserOptions : IHttpRequestOptions {
 
         #region Properties
 
@@ -79,25 +79,23 @@ namespace Skybrud.Social.Twitter.Options.Users {
 
         #region Member methods
 
-        /// <summary>
-        /// Return a new instance of <see cref="IHttpQueryString"/> representing the specified options.
-        /// </summary>
-        /// <returns>An instance of <see cref="IHttpQueryString"/>.</returns>
-        /// <exception cref="PropertyNotSetException">If neither <see cref="UserId"/> or <see cref="ScreenName"/> is specified.</exception>
-        public IHttpQueryString GetQueryString() {
+        /// <inheritdoc />
+        public IHttpRequest GetRequest() {
 
-            if (UserId == 0 && String.IsNullOrWhiteSpace(ScreenName)) throw new PropertyNotSetException(nameof(UserId));
+            // Must have either a user ID or a screen name
+            if (UserId == 0 && string.IsNullOrWhiteSpace(ScreenName)) throw new PropertyNotSetException(nameof(UserId));
 
+            // Initialize the query string
             IHttpQueryString query = new HttpQueryString();
-
             if (UserId != 0) query.Add("user_id", UserId);
-            if (!String.IsNullOrWhiteSpace(ScreenName)) query.Add("screen_name", ScreenName);
+            if (!string.IsNullOrWhiteSpace(ScreenName)) query.Add("screen_name", ScreenName);
             if (IncludeEntities) query.Add("include_entities", "true");
 
-            return query;
+            // Initialize a new GET request
+            return HttpRequest.Get("/1.1/users/show.json", query);
 
         }
-        
+
         #endregion
 
     }

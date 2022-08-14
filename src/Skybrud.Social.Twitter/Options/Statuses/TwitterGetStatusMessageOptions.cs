@@ -1,4 +1,5 @@
 using Skybrud.Essentials.Common;
+using Skybrud.Essentials.Http;
 using Skybrud.Essentials.Http.Collections;
 using Skybrud.Essentials.Http.Options;
 using Skybrud.Essentials.Strings;
@@ -8,7 +9,7 @@ namespace Skybrud.Social.Twitter.Options.Statuses {
     /// <summary>
     /// Class with options for getting information about a single status message (tweet).
     /// </summary>
-    public class TwitterGetStatusMessageOptions : IHttpGetOptions {
+    public class TwitterGetStatusMessageOptions : IHttpRequestOptions {
 
         #region Properties
 
@@ -65,21 +66,21 @@ namespace Skybrud.Social.Twitter.Options.Statuses {
 
         #region Member methods
 
-        /// <summary>
-        /// Gets an instance of <see cref="IHttpQueryString"/> representing the GET parameters.
-        /// </summary>
-        /// <returns>An instance of <see cref="IHttpQueryString"/>.</returns>
-        public IHttpQueryString GetQueryString() {
+        /// <inheritdoc />
+        public IHttpRequest GetRequest() {
 
+            // Validate required properties
             if (Id == 0) throw new PropertyNotSetException(nameof(Id));
 
-            IHttpQueryString query = new HttpQueryString();
-            query.Set("id", Id);
+            // Initialize the query string
+            IHttpQueryString query = new HttpQueryString { { "id", Id } };
             if (TrimUser) query.Add("trim_user", "true");
             if (IncludeMyRetweet) query.Add("include_my_retweet", "true");
             if (IncludeEntities) query.Add("include_entities", "true");
             if (TweetMode != TwitterTweetMode.Compatibility) query.Add("tweet_mode", StringUtils.ToCamelCase(TweetMode));
-            return query;
+
+            // Initialize a new GET request
+            return HttpRequest.Get("/1.1/statuses/show.json", query);
 
         }
 

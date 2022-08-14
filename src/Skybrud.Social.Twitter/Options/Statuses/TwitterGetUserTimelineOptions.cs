@@ -1,17 +1,17 @@
-using System;
+using Skybrud.Essentials.Http;
 using Skybrud.Essentials.Strings;
 using Skybrud.Essentials.Http.Collections;
 using Skybrud.Essentials.Http.Options;
 
 namespace Skybrud.Social.Twitter.Options.Statuses {
-    
+
     /// <summary>
     /// Class with options for getting the timeline of a Twitter user.
     /// </summary>
     /// <see>
     ///     <cref>https://developer.twitter.com/en/docs/tweets/timelines/api-reference/get-statuses-user_timeline</cref>
     /// </see>
-    public class TwitterGetUserTimelineOptions : IHttpGetOptions {
+    public class TwitterGetUserTimelineOptions : IHttpRequestOptions {
 
         #region Properties
 
@@ -67,12 +67,12 @@ namespace Skybrud.Social.Twitter.Options.Statuses {
         /// <summary>
         /// When set to <code>false</code>, the timeline will strip any native retweets  (though they will still count
         /// toward both the maximal length of the timeline and the slice selected by the count parameter).
-        /// 
+        ///
         /// Note: If you're using the <code>trim_user</code> parameter in conjunction with <code>include_rts</code>,
         /// the retweets will still contain a full user object.
         /// </summary>
         public bool IncludeRetweets { get; set; }
-        
+
         /// <summary>
         /// Gets or sets the tweet mode, qhich determines the JSON payload of each tweet. Default is <see cref="TwitterTweetMode.Compatibility"/>.
         /// </summary>
@@ -125,7 +125,7 @@ namespace Skybrud.Social.Twitter.Options.Statuses {
             MaxId = maxId;
             IncludeRetweets = true;
         }
-        
+
         /// <summary>
         /// Initializes a new instance based on the specified <paramref name="screenName"/>.
         /// </summary>
@@ -134,7 +134,7 @@ namespace Skybrud.Social.Twitter.Options.Statuses {
             ScreenName = screenName;
             IncludeRetweets = true;
         }
-        
+
         /// <summary>
         /// Initializes a new instance based on the specified <paramref name="screenName"/>.
         /// </summary>
@@ -164,28 +164,24 @@ namespace Skybrud.Social.Twitter.Options.Statuses {
 
         #region Member methods
 
-        /// <summary>
-        /// Gets an instance of <see cref="IHttpQueryString"/> representing the GET parameters.
-        /// </summary>
-        /// <returns>An instance of <see cref="IHttpQueryString"/>.</returns>
-        public IHttpQueryString GetQueryString() {
+        /// <inheritdoc />
+        public IHttpRequest GetRequest() {
 
-            // Define the query string
-            IHttpQueryString qs = new HttpQueryString();
+            // Initialize the query string
+            IHttpQueryString query = new HttpQueryString();
+            if (UserId > 0) query.Set("user_id", UserId);
+            if (!string.IsNullOrWhiteSpace(ScreenName)) query.Set("screen_name", ScreenName);
+            if (SinceId > 0) query.Set("since_id", SinceId);
+            if (Count > 0) query.Set("count", Count);
+            if (MaxId > 0) query.Set("max_id", MaxId);
+            if (TrimUser) query.Set("trim_user", "true");
+            if (ExcludeReplies) query.Set("exclude_replies", "true");
+            if (ContributorDetails) query.Set("contributor_details", "true");
+            if (!IncludeRetweets) query.Set("include_rts", "false");
+            if (TweetMode != TwitterTweetMode.Compatibility) query.Add("tweet_mode", StringUtils.ToCamelCase(TweetMode));
 
-            // Add optional parameters
-            if (UserId > 0) qs.Set("user_id", UserId);
-            if (!String.IsNullOrWhiteSpace(ScreenName)) qs.Set("screen_name", ScreenName);
-            if (SinceId > 0) qs.Set("since_id", SinceId);
-            if (Count > 0) qs.Set("count", Count);
-            if (MaxId > 0) qs.Set("max_id", MaxId);
-            if (TrimUser) qs.Set("trim_user", "true");
-            if (ExcludeReplies) qs.Set("exclude_replies", "true");
-            if (ContributorDetails) qs.Set("contributor_details", "true");
-            if (!IncludeRetweets) qs.Set("include_rts", "false");
-            if (TweetMode != TwitterTweetMode.Compatibility) qs.Add("tweet_mode", StringUtils.ToCamelCase(TweetMode));
-
-            return qs;
+            // Initialize a new GET request
+            return HttpRequest.Get("/1.1/statuses/user_timeline.json", query);
 
         }
 

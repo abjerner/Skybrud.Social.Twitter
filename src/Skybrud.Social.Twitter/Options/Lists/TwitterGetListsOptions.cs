@@ -1,4 +1,4 @@
-﻿using System;
+﻿using Skybrud.Essentials.Http;
 using Skybrud.Essentials.Http.Collections;
 using Skybrud.Essentials.Http.Options;
 
@@ -7,7 +7,7 @@ namespace Skybrud.Social.Twitter.Options.Lists {
     /// <summary>
     /// Options for a request to the Twitter API for getting a list of Twitter lists.
     /// </summary>
-    public class TwitterGetListsOptions : IHttpGetOptions {
+    public class TwitterGetListsOptions : IHttpRequestOptions {
 
         #region Properties
 
@@ -55,16 +55,18 @@ namespace Skybrud.Social.Twitter.Options.Lists {
 
         #region Member methods
 
-        /// <summary>
-        /// Gets an instance of <see cref="IHttpQueryString"/> representing the GET parameters.
-        /// </summary>
-        /// <returns>An instance of <see cref="IHttpQueryString"/>.</returns>
-        public IHttpQueryString GetQueryString() {
-            IHttpQueryString qs = new HttpQueryString();
-            if (UserId > 0) qs.Set("user_id", UserId);
-            if (!String.IsNullOrWhiteSpace(ScreenName)) qs.Set("screen_name", ScreenName);
-            if (Reverse) qs.Set("reverse", "1");
-            return qs;
+        /// <inheritdoc />
+        public IHttpRequest GetRequest() {
+
+            // Initialize the query string
+            IHttpQueryString query = new HttpQueryString();
+            if (UserId > 0) query.Set("user_id", UserId);
+            if (!string.IsNullOrWhiteSpace(ScreenName)) query.Set("screen_name", ScreenName);
+            if (Reverse) query.Set("reverse", "1");
+
+            // Initialize a new GET request
+            return HttpRequest.Get("/1.1/lists/list.json", query);
+
         }
 
         #endregion

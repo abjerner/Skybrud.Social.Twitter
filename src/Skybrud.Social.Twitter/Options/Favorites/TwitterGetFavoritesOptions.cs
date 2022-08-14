@@ -1,13 +1,13 @@
-using System;
+using Skybrud.Essentials.Http;
 using Skybrud.Essentials.Http.Collections;
 using Skybrud.Essentials.Http.Options;
 
 namespace Skybrud.Social.Twitter.Options.Favorites {
-    
+
     /// <summary>
     /// Class with options for a request to the Twitter API for getting a list of favorites.
     /// </summary>
-    public class TwitterGetFavoritesOptions : IHttpGetOptions {
+    public class TwitterGetFavoritesOptions : IHttpRequestOptions {
 
         #region Properties
 
@@ -26,24 +26,24 @@ namespace Skybrud.Social.Twitter.Options.Favorites {
         /// <code>20</code>. The value of count is best thought of as a limit to the number of tweets to return because
         /// suspended or deleted content is removed after the count has been applied.
         /// </summary>
-        public int Count { get; set; }
+        public int? Count { get; set; }
 
         /// <summary>
         /// Returns results with an ID greater than (that is, more recent than) the specified ID. There are limits to
         /// the number of Tweets which can be accessed through the API. If the limit of Tweets has occured since the
         /// <c>since_id</c>, the <c>since_id</c> will be forced to the oldest ID available.
         /// </summary>
-        public long SinceId { get; set; }
+        public long? SinceId { get; set; }
 
         /// <summary>
         /// Returns results with an ID less than (that is, older than) or equal to the specified ID.
         /// </summary>
-        public long MaxId { get; set; }
+        public long? MaxId { get; set; }
 
         /// <summary>
         /// The <c>entities</c> node will be omitted when set to <c>false</c>.
         /// </summary>
-        public bool IncludeEntities { get; set; }
+        public bool? IncludeEntities { get; set; }
 
         #endregion
 
@@ -78,19 +78,21 @@ namespace Skybrud.Social.Twitter.Options.Favorites {
 
         #region Member methods
 
-        /// <summary>
-        /// Gets an instance of <see cref="IHttpQueryString"/> representing the GET parameters.
-        /// </summary>
-        /// <returns>An instance of <see cref="IHttpQueryString"/>.</returns>
-        public IHttpQueryString GetQueryString() {
-            IHttpQueryString qs = new HttpQueryString();
-            if (UserId > 0) qs.Set("user_id", UserId);
-            if (!String.IsNullOrWhiteSpace(ScreenName)) qs.Set("screen_name", ScreenName);
-            if (Count > 0) qs.Set("count", Count);
-            if (SinceId > 0) qs.Set("since_id", SinceId);
-            if (MaxId > 0) qs.Set("max_id", MaxId);
-            if (!IncludeEntities) qs.Set("include_entities", "0");
-            return qs;
+        /// <inheritdoc />
+        public IHttpRequest GetRequest() {
+
+            // Initialize the query string
+            IHttpQueryString query = new HttpQueryString();
+            if (UserId > 0) query.Set("user_id", UserId);
+            if (!string.IsNullOrWhiteSpace(ScreenName)) query.Set("screen_name", ScreenName);
+            if (Count is not null) query.Set("count", Count.Value);
+            if (SinceId is not null) query.Set("since_id", SinceId.Value);
+            if (MaxId is not null) query.Set("max_id", MaxId.Value);
+            if (IncludeEntities is not null) query.Set("include_entities", IncludeEntities.Value ? "1" : "0");
+
+            // Initialize a new GET request
+            return HttpRequest.Get("/1.1/favorites/list.json", query);
+
         }
 
         #endregion

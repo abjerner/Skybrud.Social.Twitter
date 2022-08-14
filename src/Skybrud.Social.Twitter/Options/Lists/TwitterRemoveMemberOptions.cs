@@ -1,5 +1,5 @@
-﻿using System;
-using Skybrud.Essentials.Common;
+﻿using Skybrud.Essentials.Common;
+using Skybrud.Essentials.Http;
 using Skybrud.Essentials.Http.Collections;
 using Skybrud.Essentials.Http.Options;
 
@@ -11,7 +11,7 @@ namespace Skybrud.Social.Twitter.Options.Lists {
     /// <see>
     ///     <cref>https://developer.twitter.com/en/docs/accounts-and-users/create-manage-lists/api-reference/post-lists-members-destroy</cref>
     /// </see>
-    public class TwitterRemoveMemberOptions : IHttpPostOptions {
+    public class TwitterRemoveMemberOptions : IHttpRequestOptions {
 
         #region Properties
 
@@ -69,29 +69,20 @@ namespace Skybrud.Social.Twitter.Options.Lists {
 
         #region Member methods
 
-        /// <summary>
-        /// Gets an instance of <see cref="IHttpQueryString"/> representing the GET parameters.
-        /// </summary>
-        /// <returns>An instance of <see cref="IHttpQueryString"/>.</returns>
-        public IHttpQueryString GetQueryString() {
-            return new HttpQueryString();
-        }
+        /// <inheritdoc />
+        public IHttpRequest GetRequest() {
 
-        /// <summary>
-        /// Gets an instance of <see cref="IHttpPostData"/> representing the POST parameters.
-        /// </summary>
-        /// <returns>An instance of <see cref="IHttpPostData"/>.</returns>
-        public IHttpPostData GetPostData() {
-
+            // Validate required properties
             if (ListId == 0) throw new PropertyNotSetException(nameof(ListId));
-            if (UserId == 0 && String.IsNullOrWhiteSpace(ScreenName)) throw new PropertyNotSetException(nameof(UserId));
+            if (UserId == 0 && string.IsNullOrWhiteSpace(ScreenName)) throw new PropertyNotSetException(nameof(UserId));
 
-            IHttpPostData data = new HttpPostData {{"list_id", ListId}};
+            // Initialize the POST body
+            IHttpPostData body = new HttpPostData { { "list_id", ListId } };
+            if (UserId > 0) body.Add("user_id", UserId);
+            if (!string.IsNullOrWhiteSpace(ScreenName)) body.Add("screen_name", ScreenName);
 
-            if (UserId > 0) data.Add("user_id", UserId);
-            if (!String.IsNullOrWhiteSpace(ScreenName)) data.Add("screen_name", ScreenName);
-
-            return data;
+            // Initialize a new POST request
+            return HttpRequest.Post("/1.1/lists/members/destroy.json", null, body);
 
         }
 

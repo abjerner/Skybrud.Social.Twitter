@@ -1,8 +1,9 @@
-﻿using System;
-using Skybrud.Essentials.Common;
+﻿using Skybrud.Essentials.Common;
+using Skybrud.Essentials.Http;
 using Skybrud.Essentials.Time;
 using Skybrud.Essentials.Http.Collections;
 using Skybrud.Essentials.Http.Options;
+using Skybrud.Essentials.Strings.Extensions;
 
 namespace Skybrud.Social.Twitter.Options.Search {
 
@@ -12,7 +13,7 @@ namespace Skybrud.Social.Twitter.Options.Search {
     /// <see>
     ///     <cref>https://developer.twitter.com/en/docs/tweets/search/api-reference/get-search-tweets</cref>
     /// </see>
-    public class TwitterSearchTweetOptions : IHttpGetOptions {
+    public class TwitterSearchTweetOptions : IHttpRequestOptions {
 
         #region Properties
 
@@ -110,6 +111,27 @@ namespace Skybrud.Social.Twitter.Options.Search {
             if (MaxId > 0) query.Set("max_id", MaxId);
             if (!IncludeEntities) query.Set("include_entities", "false");
             return query;
+
+        }
+
+        /// <inheritdoc />
+        public IHttpRequest GetRequest() {
+
+            // Validate required properties
+            if (string.IsNullOrWhiteSpace(Query)) throw new PropertyNotSetException(Query);
+
+            // Initialize the query string
+            IHttpQueryString query = new HttpQueryString();
+            if (!string.IsNullOrWhiteSpace(Query)) query.Set("q", Query);
+            if (ResultType != TwitterSearchTweetResultType.Mixed) query.Set("result_type", ResultType.ToLower());
+            if (Count > 0) query.Set("count", Count);
+            if (Until != null) query.Set("until", Until.ToString("yyyy-MM-dd"));
+            if (SinceId > 0) query.Set("since_id", SinceId);
+            if (MaxId > 0) query.Set("max_id", MaxId);
+            if (!IncludeEntities) query.Set("include_entities", "false");
+
+            // Initialize a new GET request
+            return HttpRequest.Get("/1.1/account/verify_credentials.json", query);
 
         }
 

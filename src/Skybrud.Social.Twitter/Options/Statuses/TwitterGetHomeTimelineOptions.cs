@@ -1,5 +1,8 @@
+using Skybrud.Essentials.Http;
+using Skybrud.Essentials.Http.Collections;
+
 namespace Skybrud.Social.Twitter.Options.Statuses {
-    
+
     /// <summary>
     /// Class with options for getting the home timeline of the authenticated user.
     /// </summary>
@@ -24,6 +27,21 @@ namespace Skybrud.Social.Twitter.Options.Statuses {
         public TwitterGetHomeTimelineOptions(int count) {
             Count = count;
             IncludeRetweets = true;
+        }
+
+        #endregion
+
+        #region Member methods
+
+        /// <inheritdoc />
+        public override IHttpRequest GetRequest() {
+
+            // Initialize the query string
+            IHttpQueryString query = base.GetQueryString();
+
+            // Initialize a new GET request
+            return HttpRequest.Get("/1.1/statuses/home_timeline.json", query);
+
         }
 
         #endregion

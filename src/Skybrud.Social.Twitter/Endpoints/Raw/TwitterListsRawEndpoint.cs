@@ -51,7 +51,7 @@ namespace Skybrud.Social.Twitter.Endpoints.Raw {
         ///     <cref>https://developer.twitter.com/en/docs/accounts-and-users/create-manage-lists/api-reference/get-lists-show</cref>
         /// </see>
         public IHttpResponse GetList(long userId, string slug) {
-            if (String.IsNullOrWhiteSpace(slug)) throw new ArgumentNullException(nameof(slug));
+            if (string.IsNullOrWhiteSpace(slug)) throw new ArgumentNullException(nameof(slug));
             return GetList(new TwitterGetListOptions(userId, slug));
         }
 
@@ -65,8 +65,8 @@ namespace Skybrud.Social.Twitter.Endpoints.Raw {
         ///     <cref>https://dev.twitter.com/rest/reference/get/lists/show</cref>
         /// </see>
         public IHttpResponse GetList(string screenName, string slug) {
-            if (String.IsNullOrWhiteSpace(screenName)) throw new ArgumentNullException(nameof(screenName));
-            if (String.IsNullOrWhiteSpace(slug)) throw new ArgumentNullException(nameof(slug));
+            if (string.IsNullOrWhiteSpace(screenName)) throw new ArgumentNullException(nameof(screenName));
+            if (string.IsNullOrWhiteSpace(slug)) throw new ArgumentNullException(nameof(slug));
             return GetList(new TwitterGetListOptions(screenName, slug));
         }
 
@@ -80,7 +80,7 @@ namespace Skybrud.Social.Twitter.Endpoints.Raw {
         /// </see>
         public IHttpResponse GetList(TwitterGetListOptions options) {
             if (options == null) throw new ArgumentNullException(nameof(options));
-            return Client.DoHttpGetRequest("https://api.twitter.com/1.1/lists/list.json", options);
+            return Client.GetResponse(options);
         }
 
         /// <summary>
@@ -115,7 +115,7 @@ namespace Skybrud.Social.Twitter.Endpoints.Raw {
         ///     <cref>https://developer.twitter.com/en/docs/accounts-and-users/create-manage-lists/api-reference/get-lists-list</cref>
         /// </see>
         public IHttpResponse GetLists(string screenName) {
-            if (String.IsNullOrWhiteSpace(screenName)) throw new ArgumentNullException(nameof(screenName));
+            if (string.IsNullOrWhiteSpace(screenName)) throw new ArgumentNullException(nameof(screenName));
             return GetLists(new TwitterGetListsOptions(screenName));
         }
 
@@ -129,7 +129,7 @@ namespace Skybrud.Social.Twitter.Endpoints.Raw {
         /// </see>
         public IHttpResponse GetLists(TwitterGetListsOptions options) {
             if (options == null) throw new ArgumentNullException(nameof(options));
-            return Client.DoHttpGetRequest("https://api.twitter.com/1.1/lists/list.json", options);
+            return Client.GetResponse(options);
         }
 
         /// <summary>
@@ -153,7 +153,7 @@ namespace Skybrud.Social.Twitter.Endpoints.Raw {
         ///     <cref>https://developer.twitter.com/en/docs/accounts-and-users/create-manage-lists/api-reference/get-lists-ownerships</cref>
         /// </see>
         public IHttpResponse GetOwnerships(string screenName) {
-            if (String.IsNullOrWhiteSpace(screenName)) throw new ArgumentNullException(nameof(screenName));
+            if (string.IsNullOrWhiteSpace(screenName)) throw new ArgumentNullException(nameof(screenName));
             return GetOwnerships(new TwitterGetOwnershipsOptions(screenName));
         }
 
@@ -167,7 +167,7 @@ namespace Skybrud.Social.Twitter.Endpoints.Raw {
         /// </see>
         public IHttpResponse GetOwnerships(TwitterGetOwnershipsOptions options) {
             if (options == null) throw new ArgumentNullException(nameof(options));
-            return Client.DoHttpGetRequest("https://api.twitter.com/1.1/lists/list.json", options);
+            return Client.GetResponse(options);
         }
 
         /// <summary>
@@ -202,7 +202,7 @@ namespace Skybrud.Social.Twitter.Endpoints.Raw {
         ///     <cref>https://developer.twitter.com/en/docs/accounts-and-users/create-manage-lists/api-reference/get-lists-memberships</cref>
         /// </see>
         public IHttpResponse GetMemberships(string screenName) {
-            if (String.IsNullOrWhiteSpace(screenName)) throw new ArgumentNullException(nameof(screenName));
+            if (string.IsNullOrWhiteSpace(screenName)) throw new ArgumentNullException(nameof(screenName));
             return GetMemberships(new TwitterGetMembershipsOptions(screenName));
         }
 
@@ -216,7 +216,7 @@ namespace Skybrud.Social.Twitter.Endpoints.Raw {
         /// </see>
         public IHttpResponse GetMemberships(TwitterGetMembershipsOptions options) {
             if (options == null) throw new ArgumentNullException(nameof(options));
-            return Client.DoHttpGetRequest("https://api.twitter.com/1.1/lists/memberships.json", options);
+            return Client.GetResponse(options);
         }
 
         /// <summary>
@@ -254,7 +254,7 @@ namespace Skybrud.Social.Twitter.Endpoints.Raw {
         ///     <cref>https://developer.twitter.com/en/docs/accounts-and-users/create-manage-lists/api-reference/get-lists-members</cref>
         /// </see>
         public IHttpResponse GetMembers(string screenName, string slug) {
-            if (String.IsNullOrWhiteSpace(screenName)) throw new ArgumentNullException(nameof(screenName));
+            if (string.IsNullOrWhiteSpace(screenName)) throw new ArgumentNullException(nameof(screenName));
             return GetMembers(new TwitterGetMembersOptions(screenName, slug));
         }
 
@@ -269,7 +269,7 @@ namespace Skybrud.Social.Twitter.Endpoints.Raw {
         /// </see>
         public IHttpResponse GetMembers(TwitterGetMembersOptions options) {
             if (options == null) throw new ArgumentNullException(nameof(options));
-            return Client.DoHttpGetRequest("https://api.twitter.com/1.1/lists/members.json", options);
+            return Client.GetResponse(options);
         }
 
         /// <summary>
@@ -281,7 +281,7 @@ namespace Skybrud.Social.Twitter.Endpoints.Raw {
         ///     <cref>https://developer.twitter.com/en/docs/accounts-and-users/create-manage-lists/api-reference/post-lists-create</cref>
         /// </see>
         public IHttpResponse CreateList(string name) {
-            if (String.IsNullOrWhiteSpace(name)) throw new ArgumentNullException(nameof(name));
+            if (string.IsNullOrWhiteSpace(name)) throw new ArgumentNullException(nameof(name));
             return CreateList(new TwitterCreateListOptions(name));
         }
 
@@ -295,7 +295,7 @@ namespace Skybrud.Social.Twitter.Endpoints.Raw {
         /// </see>
         public IHttpResponse CreateList(TwitterCreateListOptions options) {
             if (options == null) throw new ArgumentNullException(nameof(options));
-            return Client.DoHttpPostRequest("https://api.twitter.com/1.1/lists/create.json", options);
+            return Client.GetResponse(options);
         }
 
         /// <summary>
@@ -320,7 +320,7 @@ namespace Skybrud.Social.Twitter.Endpoints.Raw {
         /// </see>
         public IHttpResponse DeleteList(TwitterDeleteListOptions options) {
             if (options == null) throw new ArgumentNullException(nameof(options));
-            return Client.DoHttpPostRequest("https://api.twitter.com/1.1/lists/destroy.json", options);
+            return Client.GetResponse(options);
         }
 
         /// <summary>
@@ -346,7 +346,7 @@ namespace Skybrud.Social.Twitter.Endpoints.Raw {
         ///     <cref>https://developer.twitter.com/en/docs/accounts-and-users/create-manage-lists/api-reference/post-lists-members-create</cref>
         /// </see>
         public IHttpResponse AddMember(long listId, string screenName) {
-            if (String.IsNullOrWhiteSpace(screenName)) throw new ArgumentNullException(nameof(screenName));
+            if (string.IsNullOrWhiteSpace(screenName)) throw new ArgumentNullException(nameof(screenName));
             return AddMember(new TwitterAddMemberOptions(listId, screenName));
         }
 
@@ -360,7 +360,7 @@ namespace Skybrud.Social.Twitter.Endpoints.Raw {
         /// </see>
         public IHttpResponse AddMember(TwitterAddMemberOptions options) {
             if (options == null) throw new ArgumentNullException(nameof(options));
-            return Client.DoHttpPostRequest("https://api.twitter.com/1.1/lists/members/create.json", options);
+            return Client.GetResponse(options);
         }
 
         /// <summary>
@@ -386,7 +386,7 @@ namespace Skybrud.Social.Twitter.Endpoints.Raw {
         ///     <cref>https://developer.twitter.com/en/docs/accounts-and-users/create-manage-lists/api-reference/post-lists-members-destroy</cref>
         /// </see>
         public IHttpResponse RemoveMember(long listId, string screenName) {
-            if (String.IsNullOrWhiteSpace(screenName)) throw new ArgumentNullException(nameof(screenName));
+            if (string.IsNullOrWhiteSpace(screenName)) throw new ArgumentNullException(nameof(screenName));
             return RemoveMember(new TwitterRemoveMemberOptions(listId, screenName));
         }
 
@@ -400,7 +400,7 @@ namespace Skybrud.Social.Twitter.Endpoints.Raw {
         /// </see>
         public IHttpResponse RemoveMember(TwitterRemoveMemberOptions options) {
             if (options == null) throw new ArgumentNullException(nameof(options));
-            return Client.DoHttpPostRequest("https://api.twitter.com/1.1/lists/members/destroy.json", options);
+            return Client.GetResponse(options);
         }
 
         #endregion

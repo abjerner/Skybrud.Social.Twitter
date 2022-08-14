@@ -1,4 +1,4 @@
-﻿using System;
+﻿using Skybrud.Essentials.Http;
 using Skybrud.Essentials.Http.Collections;
 using Skybrud.Essentials.Http.Options;
 
@@ -10,7 +10,7 @@ namespace Skybrud.Social.Twitter.Options.Lists {
     /// <see>
     ///     <cref>https://developer.twitter.com/en/docs/accounts-and-users/create-manage-lists/api-reference/get-lists-memberships</cref>
     /// </see>
-    public class TwitterGetMembershipsOptions : IHttpGetOptions {
+    public class TwitterGetMembershipsOptions : IHttpRequestOptions {
 
         #region Properties
 
@@ -69,18 +69,20 @@ namespace Skybrud.Social.Twitter.Options.Lists {
 
         #region Member methods
 
-        /// <summary>
-        /// Gets an instance of <see cref="IHttpQueryString"/> representing the GET parameters.
-        /// </summary>
-        /// <returns>An instance of <see cref="IHttpQueryString"/>.</returns>
-        public IHttpQueryString GetQueryString() {
-            IHttpQueryString qs = new HttpQueryString();
-            if (UserId > 0) qs.Set("user_id", UserId);
-            if (!String.IsNullOrWhiteSpace(ScreenName)) qs.Set("screen_name", ScreenName);
-            if (Count > 0) qs.Set("count", Count);
-            if (Cursor > 0) qs.Set("cursor", Cursor);
-            if (FilterToOwnedLists) qs.Set("filter_to_owned_lists", "1");
-            return qs;
+        /// <inheritdoc />
+        public IHttpRequest GetRequest() {
+
+            // Initialize the query string
+            IHttpQueryString query = new HttpQueryString();
+            if (UserId > 0) query.Set("user_id", UserId);
+            if (!string.IsNullOrWhiteSpace(ScreenName)) query.Set("screen_name", ScreenName);
+            if (Count > 0) query.Set("count", Count);
+            if (Cursor > 0) query.Set("cursor", Cursor);
+            if (FilterToOwnedLists) query.Set("filter_to_owned_lists", "1");
+
+            // Initialize a new GET request
+            return HttpRequest.Get("/1.1/lists/memberships.json", query);
+
         }
 
         #endregion

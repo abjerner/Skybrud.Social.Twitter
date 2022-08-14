@@ -1,5 +1,4 @@
 using System;
-using Skybrud.Essentials.Common;
 using Skybrud.Essentials.Http;
 using Skybrud.Social.Twitter.Models.Statuses;
 using Skybrud.Social.Twitter.OAuth;
@@ -55,7 +54,7 @@ namespace Skybrud.Social.Twitter.Endpoints.Raw {
         /// </see>
         public IHttpResponse GetStatusMessage(TwitterGetStatusMessageOptions options) {
             if (options == null) throw new ArgumentNullException(nameof(options));
-            return Client.DoHttpGetRequest("https://api.twitter.com/1.1/statuses/show.json", options);
+            return Client.GetResponse(options);
         }
 
         #endregion
@@ -71,8 +70,8 @@ namespace Skybrud.Social.Twitter.Endpoints.Raw {
         ///     <cref>https://developer.twitter.com/en/docs/tweets/post-and-engage/api-reference/post-statuses-update</cref>
         /// </see>
         public IHttpResponse PostStatusMessage(string status) {
-            if (String.IsNullOrWhiteSpace(status)) throw new ArgumentNullException(nameof(status));
-            return PostStatusMessage(new TwitterPostStatusMessageOptions { Status = status });
+            if (string.IsNullOrWhiteSpace(status)) throw new ArgumentNullException(nameof(status));
+            return PostStatusMessage(new TwitterPostStatusMessageOptions(status));
         }
 
         /// <summary>
@@ -85,8 +84,8 @@ namespace Skybrud.Social.Twitter.Endpoints.Raw {
         ///     <cref>https://developer.twitter.com/en/docs/tweets/post-and-engage/api-reference/post-statuses-update</cref>
         /// </see>
         public IHttpResponse PostStatusMessage(string status, long replyTo) {
-            if (String.IsNullOrWhiteSpace(status)) throw new ArgumentNullException(nameof(status));
-            return PostStatusMessage(new TwitterPostStatusMessageOptions { Status = status, ReplyTo = replyTo });
+            if (string.IsNullOrWhiteSpace(status)) throw new ArgumentNullException(nameof(status));
+            return PostStatusMessage(new TwitterPostStatusMessageOptions(status, replyTo));
         }
 
         /// <summary>
@@ -99,8 +98,7 @@ namespace Skybrud.Social.Twitter.Endpoints.Raw {
         /// </see>
         public IHttpResponse PostStatusMessage(TwitterPostStatusMessageOptions options) {
             if (options == null) throw new ArgumentNullException(nameof(options));
-            if (String.IsNullOrWhiteSpace(options.Status)) throw new PropertyNotSetException(nameof(options.Status));
-            return Client.DoHttpPostRequest("https://api.twitter.com/1.1/statuses/update.json", options);
+            return Client.GetResponse(options);
         }
 
         #endregion
@@ -197,7 +195,7 @@ namespace Skybrud.Social.Twitter.Endpoints.Raw {
         /// </see>
         public IHttpResponse GetUserTimeline(TwitterGetUserTimelineOptions options) {
             if (options == null) throw new ArgumentNullException(nameof(options));
-            return Client.DoHttpGetRequest("https://api.twitter.com/1.1/statuses/user_timeline.json", options);
+            return Client.GetResponse(options);
         }
 
         #endregion
@@ -240,7 +238,7 @@ namespace Skybrud.Social.Twitter.Endpoints.Raw {
         /// </see>
         public IHttpResponse GetHomeTimeline(TwitterGetHomeTimelineOptions options) {
             if (options == null) throw new ArgumentNullException(nameof(options));
-            return Client.DoHttpGetRequest("https://api.twitter.com/1.1/statuses/home_timeline.json", options);
+            return Client.GetResponse(options);
         }
 
         #endregion
@@ -280,7 +278,7 @@ namespace Skybrud.Social.Twitter.Endpoints.Raw {
         /// </see>
         public IHttpResponse GetMentionsTimeline(TwitterGetMentionsTimelineOptions options) {
             if (options == null) throw new ArgumentNullException(nameof(options));
-            return Client.DoHttpGetRequest("https://api.twitter.com/1.1/statuses/mentions_timeline.json", options);
+            return Client.GetResponse(options);
         }
 
         #endregion
@@ -320,7 +318,7 @@ namespace Skybrud.Social.Twitter.Endpoints.Raw {
         /// </see>
         public IHttpResponse GetRetweetsOfMe(TwitterGetRetweetsOfMeTimelineOptions options) {
             if (options == null) throw new ArgumentNullException(nameof(options));
-            return Client.DoHttpGetRequest("https://api.twitter.com/1.1/statuses/retweets_of_me.json", options);
+            return Client.GetResponse(options);
         }
 
         #endregion
@@ -351,7 +349,7 @@ namespace Skybrud.Social.Twitter.Endpoints.Raw {
         ///     <cref>https://developer.twitter.com/en/docs/tweets/post-and-engage/api-reference/post-statuses-retweet-id</cref>
         /// </see>
         public IHttpResponse RetweetStatusMessage(long statusId, bool trimUser) {
-            return Client.DoHttpPostRequest("https://api.twitter.com/1.1/statuses/retweet/" + statusId + ".json" + (trimUser ? "?trim_user=true" : ""));
+            return Client.Post("https://api.twitter.com/1.1/statuses/retweet/" + statusId + ".json" + (trimUser ? "?trim_user=true" : ""));
         }
 
         /// <summary>
@@ -407,7 +405,7 @@ namespace Skybrud.Social.Twitter.Endpoints.Raw {
         ///     <cref>https://developer.twitter.com/en/docs/tweets/post-and-engage/api-reference/post-statuses-destroy-id</cref>
         /// </see>
         public IHttpResponse DestroyStatusMessage(long statusId, bool trimUser) {
-            return Client.DoHttpPostRequest("https://api.twitter.com/1.1/statuses/destroy/" + statusId + ".json" + (trimUser ? "?trim_user=true" : ""));
+            return Client.Post("https://api.twitter.com/1.1/statuses/destroy/" + statusId + ".json" + (trimUser ? "?trim_user=true" : ""));
         }
 
         /// <summary>

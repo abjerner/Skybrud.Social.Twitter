@@ -1,4 +1,6 @@
 ﻿using System;
+using Skybrud.Essentials.Common;
+using Skybrud.Essentials.Http;
 using Skybrud.Essentials.Http.Collections;
 using Skybrud.Essentials.Http.Options;
 using Skybrud.Essentials.Strings;
@@ -12,7 +14,7 @@ namespace Skybrud.Social.Twitter.Options.Lists {
     /// <see>
     ///     <cref>https://developer.twitter.com/en/docs/accounts-and-users/create-manage-lists/api-reference/post-lists-create</cref>
     /// </see>
-    public class TwitterCreateListOptions : IHttpPostOptions {
+    public class TwitterCreateListOptions : IHttpRequestOptions {
 
         #region Properties
 
@@ -82,28 +84,20 @@ namespace Skybrud.Social.Twitter.Options.Lists {
 
         #region Member methods
 
-        /// <summary>
-        /// Gets an instance of <see cref="IHttpQueryString"/> representing the GET parameters.
-        /// </summary>
-        /// <returns>An instance of <see cref="IHttpQueryString"/>.</returns>
-        public IHttpQueryString GetQueryString() {
-            return new HttpQueryString();
-        }
+        /// <inheritdoc />
+        public IHttpRequest GetRequest() {
 
-        /// <summary>
-        /// Gets an instance of <see cref="IHttpPostData"/> representing the POST parameters.
-        /// </summary>
-        /// <returns>An instance of <see cref="IHttpPostData"/>.</returns>
-        public IHttpPostData GetPostData() {
+            // Validate required properties
+            if (string.IsNullOrWhiteSpace(Name)) throw new ArgumentNullException(nameof(Name));
 
-            if (String.IsNullOrWhiteSpace(Name)) throw new ArgumentNullException(nameof(Name));
+            // Initialize the POST body
+            IHttpPostData body = new HttpPostData();
+            body.Set("name", Name);
+            body.Set("mode", StringUtils.ToCamelCase(Mode));
+            if (!string.IsNullOrWhiteSpace(Description)) body.Add("description", Description);
 
-            IHttpPostData data = new HttpPostData();
-            data.Set("name", Name);
-            data.Set("mode", StringUtils.ToCamelCase(Mode));
-            if (!String.IsNullOrWhiteSpace(Description)) data.Add("description", Description);
-
-            return data;
+            // Initialize a new GET request
+            return HttpRequest.Post("/1.1/lists/create.json", null, body);
 
         }
 

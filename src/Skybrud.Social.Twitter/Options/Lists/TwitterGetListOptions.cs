@@ -1,4 +1,6 @@
 ﻿using System;
+using Skybrud.Essentials.Common;
+using Skybrud.Essentials.Http;
 using Skybrud.Essentials.Http.Collections;
 using Skybrud.Essentials.Http.Options;
 
@@ -7,7 +9,7 @@ namespace Skybrud.Social.Twitter.Options.Lists {
     /// <summary>
     /// Options for a request to the Twitter API for getting a information about a Twitter list.
     /// </summary>
-    public class TwitterGetListOptions : IHttpGetOptions {
+    public class TwitterGetListOptions : IHttpRequestOptions {
 
         #region Properties
 
@@ -77,12 +79,27 @@ namespace Skybrud.Social.Twitter.Options.Lists {
         /// </summary>
         /// <returns>An instance of <see cref="IHttpQueryString"/>.</returns>
         public IHttpQueryString GetQueryString() {
-            IHttpQueryString qs = new HttpQueryString();
-            if (Id > 0) qs.Set("list_id", UserId);
-            if (!String.IsNullOrWhiteSpace(Slug)) qs.Set("slug", Slug);
-            if (UserId > 0) qs.Set("owner_id", UserId);
-            if (!String.IsNullOrWhiteSpace(ScreenName)) qs.Set("owner_screen_name", ScreenName);
-            return qs;
+            IHttpQueryString query = new HttpQueryString();
+            if (Id > 0) query.Set("list_id", Id);
+            if (!string.IsNullOrWhiteSpace(Slug)) query.Set("slug", Slug);
+            if (UserId > 0) query.Set("owner_id", UserId);
+            if (!string.IsNullOrWhiteSpace(ScreenName)) query.Set("owner_screen_name", ScreenName);
+            return query;
+        }
+
+        /// <inheritdoc />
+        public IHttpRequest GetRequest() {
+
+            // Initialize the query string
+            IHttpQueryString query = new HttpQueryString();
+            if (Id > 0) query.Set("list_id", Id);
+            if (!string.IsNullOrWhiteSpace(Slug)) query.Set("slug", Slug);
+            if (UserId > 0) query.Set("owner_id", UserId);
+            if (!string.IsNullOrWhiteSpace(ScreenName)) query.Set("owner_screen_name", ScreenName);
+
+            // Initialize a new GET request
+            return HttpRequest.Get("/1.1/lists/list.json", query);
+
         }
 
         #endregion

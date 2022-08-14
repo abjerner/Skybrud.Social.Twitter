@@ -1,3 +1,5 @@
+using Skybrud.Essentials.Common;
+using Skybrud.Essentials.Http;
 using Skybrud.Essentials.Http.Collections;
 using Skybrud.Essentials.Http.Options;
 
@@ -9,7 +11,7 @@ namespace Skybrud.Social.Twitter.Options.Users {
     /// <see>
     ///     <cref>https://developer.twitter.com/en/docs/accounts-and-users/follow-search-get-users/api-reference/get-users-search</cref>
     /// </see>
-    public class TwitterSearchUsersOptions : IHttpGetOptions {
+    public class TwitterSearchUsersOptions : IHttpRequestOptions {
 
         #region Properties
 
@@ -50,20 +52,21 @@ namespace Skybrud.Social.Twitter.Options.Users {
 
         #region Member methods
 
-        /// <summary>
-        /// Gets an instance of <see cref="IHttpQueryString"/> representing the GET parameters.
-        /// </summary>
-        /// <returns>An instance of <see cref="IHttpQueryString"/>.</returns>
-        public IHttpQueryString GetQueryString() {
+        /// <inheritdoc />
+        public IHttpRequest GetRequest() {
 
+            // Must have a query
+            if (!string.IsNullOrWhiteSpace(Query)) throw new PropertyNotSetException(nameof(Query));
+
+            // Initialize the query string
             IHttpQueryString query = new HttpQueryString();
-
             query.Set("q", Query);
             if (Page > 1) query.Set("page", Page);
             if (Count != 20) query.Set("count", Count);
             if (!IncludeEntities) query.Set("include_entities", "false");
 
-            return query;
+            // Initialize a new GET request
+            return HttpRequest.Get("/1.1/users/search.json", query);
 
         }
 

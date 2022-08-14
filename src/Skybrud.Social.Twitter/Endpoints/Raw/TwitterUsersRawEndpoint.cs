@@ -1,5 +1,4 @@
 using System;
-using Skybrud.Essentials.Common;
 using Skybrud.Essentials.Http;
 using Skybrud.Social.Twitter.OAuth;
 using Skybrud.Social.Twitter.Options.Users;
@@ -67,7 +66,7 @@ namespace Skybrud.Social.Twitter.Endpoints.Raw {
         ///     <cref>https://developer.twitter.com/en/docs/accounts-and-users/follow-search-get-users/api-reference/get-users-show</cref>
         /// </see>
         public IHttpResponse GetUser(string screenName) {
-            if (String.IsNullOrWhiteSpace(screenName)) throw new ArgumentNullException(nameof(screenName));
+            if (string.IsNullOrWhiteSpace(screenName)) throw new ArgumentNullException(nameof(screenName));
             return GetUser(new TwitterGetUserOptions(screenName));
         }
 
@@ -82,7 +81,7 @@ namespace Skybrud.Social.Twitter.Endpoints.Raw {
         ///     <cref>https://developer.twitter.com/en/docs/accounts-and-users/follow-search-get-users/api-reference/get-users-show</cref>
         /// </see>
         public IHttpResponse GetUser(string screenName, bool includeEntities) {
-            if (String.IsNullOrWhiteSpace(screenName)) throw new ArgumentNullException(nameof(screenName));
+            if (string.IsNullOrWhiteSpace(screenName)) throw new ArgumentNullException(nameof(screenName));
             return GetUser(new TwitterGetUserOptions(screenName, includeEntities));
         }
 
@@ -97,7 +96,7 @@ namespace Skybrud.Social.Twitter.Endpoints.Raw {
         /// </see>
         public IHttpResponse GetUser(TwitterGetUserOptions options) {
             if (options == null) throw new ArgumentNullException(nameof(options));
-            return Client.DoHttpGetRequest("https://api.twitter.com/1.1/users/show.json", options);
+            return Client.GetResponse(options);
         }
 
         #endregion
@@ -108,7 +107,7 @@ namespace Skybrud.Social.Twitter.Endpoints.Raw {
         /// Provides a simple, relevance-based search interface to public user accounts on Twitter. Try querying by
         /// topical interest, full name, company name, location, or other criteria. Exact match searches are not
         /// supported.
-        /// 
+        ///
         /// Only the first 1,000 matching results are available.
         /// </summary>
         /// <param name="query">The search query to run against people search.</param>
@@ -126,7 +125,7 @@ namespace Skybrud.Social.Twitter.Endpoints.Raw {
         /// Provides a simple, relevance-based search interface to public user accounts on Twitter. Try querying by
         /// topical interest, full name, company name, location, or other criteria. Exact match searches are not
         /// supported.
-        /// 
+        ///
         /// Only the first 1,000 matching results are available.
         /// </summary>
         /// <param name="options">The options for the request to the API.</param>
@@ -136,8 +135,7 @@ namespace Skybrud.Social.Twitter.Endpoints.Raw {
         /// </see>
         public IHttpResponse Search(TwitterSearchUsersOptions options) {
             if (options == null) throw new ArgumentNullException(nameof(options));
-            if (!String.IsNullOrWhiteSpace(options.Query)) throw new PropertyNotSetException(nameof(options.Query));
-            return Client.DoHttpGetRequest("https://api.twitter.com/1.1/users/search.json", options);
+            return Client.GetResponse(options);
         }
 
         #endregion

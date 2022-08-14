@@ -38,8 +38,8 @@ namespace Skybrud.Social.Twitter.Endpoints.Raw {
         ///     <cref>https://developer.twitter.com/en/docs/geo/place-information/api-reference/get-geo-id-place_id</cref>
         /// </see>
         public IHttpResponse GetPlace(string placeId) {
-            if (String.IsNullOrWhiteSpace(placeId)) throw new ArgumentNullException(nameof(placeId));
-            return Client.DoHttpGetRequest("https://api.twitter.com/1.1/geo/id/" + placeId + ".json");
+            if (string.IsNullOrWhiteSpace(placeId)) throw new ArgumentNullException(nameof(placeId));
+            return Client.Get($"/1.1/geo/id/{placeId}.json");
         }
 
         /// <summary>
@@ -73,7 +73,7 @@ namespace Skybrud.Social.Twitter.Endpoints.Raw {
         ///     <cref>https://developer.twitter.com/en/docs/geo/places-near-location/api-reference/get-geo-reverse_geocode</cref>
         /// </see>
         public IHttpResponse ReverseGeocode(TwitterReverseGeocodeOptions options) {
-            return Client.DoHttpGetRequest("https://api.twitter.com/1.1/geo/reverse_geocode.json", options);
+            return Client.GetResponse(options);
         }
 
         #endregion

@@ -1,4 +1,6 @@
-﻿using Skybrud.Essentials.Http.Collections;
+﻿using Skybrud.Essentials.Common;
+using Skybrud.Essentials.Http;
+using Skybrud.Essentials.Http.Collections;
 using Skybrud.Essentials.Http.Options;
 
 namespace Skybrud.Social.Twitter.Options.Lists {
@@ -9,7 +11,7 @@ namespace Skybrud.Social.Twitter.Options.Lists {
     /// <see>
     ///     <cref>https://developer.twitter.com/en/docs/accounts-and-users/create-manage-lists/api-reference/post-lists-destroy</cref>
     /// </see>
-    public class TwitterDeleteListOptions : IHttpPostOptions {
+    public class TwitterDeleteListOptions : IHttpRequestOptions {
 
         #region Properties
 
@@ -59,6 +61,20 @@ namespace Skybrud.Social.Twitter.Options.Lists {
         /// <returns>An instance of <see cref="IHttpPostData"/>.</returns>
         public IHttpPostData GetPostData() {
             return new HttpPostData {{"list_id", ListId}};
+        }
+
+        /// <inheritdoc />
+        public IHttpRequest GetRequest() {
+
+            // Validate required properties
+            if (ListId == 0) throw new PropertyNotSetException(nameof(ListId));
+
+            // Initialize the POST body
+            IHttpPostData body = new HttpPostData { { "list_id", ListId } };
+
+            // Initialize a new GET request
+            return HttpRequest.Post("/1.1/lists/destroy.json", null, body);
+
         }
 
         #endregion

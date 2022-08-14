@@ -38,7 +38,7 @@ namespace Skybrud.Social.Twitter.Endpoints.Raw {
         ///     <cref>https://developer.twitter.com/en/docs/tweets/search/api-reference/get-search-tweets</cref>
         /// </see>
         public IHttpResponse SearchTweets(string query) {
-            if (String.IsNullOrWhiteSpace(query)) throw new ArgumentNullException(nameof(query));
+            if (string.IsNullOrWhiteSpace(query)) throw new ArgumentNullException(nameof(query));
             return SearchTweets(query, 0);
         }
 
@@ -52,7 +52,7 @@ namespace Skybrud.Social.Twitter.Endpoints.Raw {
         ///     <cref>https://developer.twitter.com/en/docs/tweets/search/api-reference/get-search-tweets</cref>
         /// </see>
         public IHttpResponse SearchTweets(string query, int count) {
-            if (String.IsNullOrWhiteSpace(query)) throw new ArgumentNullException(nameof(query));
+            if (string.IsNullOrWhiteSpace(query)) throw new ArgumentNullException(nameof(query));
             return SearchTweets(new TwitterSearchTweetOptions(query, count));
         }
 
@@ -65,8 +65,8 @@ namespace Skybrud.Social.Twitter.Endpoints.Raw {
         ///     <cref>https://developer.twitter.com/en/docs/tweets/search/api-reference/get-search-tweets</cref>
         /// </see>
         public IHttpResponse SearchTweets(TwitterSearchTweetOptions options) {
-            if (options == null) options = new TwitterSearchTweetOptions();
-            return Client.DoHttpGetRequest("https://api.twitter.com/1.1/search/tweets.json", options);
+            if (options == null) throw new ArgumentNullException(nameof(options));
+            return Client.GetResponse(options);
         }
 
         #endregion

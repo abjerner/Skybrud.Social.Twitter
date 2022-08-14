@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Skybrud.Essentials.Common;
+using Skybrud.Essentials.Http;
 using Skybrud.Essentials.Http.Collections;
 using Skybrud.Essentials.Http.Options;
 
@@ -7,7 +8,7 @@ namespace Skybrud.Social.Twitter.Options.Lists {
     /// <summary>
     /// Options for a request to the Twitter API for getting the list owned by a given user.
     /// </summary>
-    public class TwitterGetOwnershipsOptions : IHttpGetOptions {
+    public class TwitterGetOwnershipsOptions : IHttpRequestOptions {
 
         #region Properties
 
@@ -60,17 +61,23 @@ namespace Skybrud.Social.Twitter.Options.Lists {
 
         #region Member methods
 
-        /// <summary>
-        /// Gets an instance of <see cref="IHttpQueryString"/> representing the GET parameters.
-        /// </summary>
-        /// <returns>An instance of <see cref="IHttpQueryString"/>.</returns>
-        public IHttpQueryString GetQueryString() {
+        /// <inheritdoc />
+        public IHttpRequest GetRequest() {
+
+            // Validate required properties
+            // TODO: If neither is specified, does it indicate the authenticated user?
+            if (UserId == 0 && string.IsNullOrWhiteSpace(ScreenName)) throw new PropertyNotSetException(nameof(UserId));
+
+            // Initialize the query string
             IHttpQueryString qs = new HttpQueryString();
             if (UserId > 0) qs.Set("user_id", UserId);
-            if (!String.IsNullOrWhiteSpace(ScreenName)) qs.Set("screen_name", ScreenName);
+            if (!string.IsNullOrWhiteSpace(ScreenName)) qs.Set("screen_name", ScreenName);
             if (Count > 0) qs.Set("count", Count);
             if (Cursor > 0) qs.Set("cursor", Cursor);
-            return qs;
+
+            // Initialize a new GET request
+            return HttpRequest.Get("/1.1/lists/ownerships.json", qs);
+
         }
 
         #endregion

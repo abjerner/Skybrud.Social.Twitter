@@ -1,3 +1,6 @@
+using Skybrud.Essentials.Http;
+using Skybrud.Essentials.Http.Collections;
+
 namespace Skybrud.Social.Twitter.Options.Statuses {
 
     /// <summary>
@@ -24,6 +27,21 @@ namespace Skybrud.Social.Twitter.Options.Statuses {
         public TwitterGetRetweetsOfMeTimelineOptions(int count) {
             Count = count;
             IncludeRetweets = true;
+        }
+
+        #endregion
+
+        #region Member methods
+
+        /// <inheritdoc />
+        public override IHttpRequest GetRequest() {
+
+            // Initialize the query string
+            IHttpQueryString query = base.GetQueryString();
+
+            // Initialize a new GET request
+            return HttpRequest.Get("/1.1/statuses/retweets_of_me.json", query);
+
         }
 
         #endregion

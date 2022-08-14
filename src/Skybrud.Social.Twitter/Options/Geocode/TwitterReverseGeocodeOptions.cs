@@ -1,17 +1,18 @@
+using Skybrud.Essentials.Http;
 using Skybrud.Essentials.Http.Collections;
 using Skybrud.Essentials.Http.Options;
 using Skybrud.Essentials.Strings.Extensions;
 using Skybrud.Social.Twitter.Models.Geocode;
 
 namespace Skybrud.Social.Twitter.Options.Geocode {
-    
+
     /// <summary>
     /// Class with options for performing a reverse geocode lookup for places in the Twitter API.
     /// </summary>
     /// <see>
     ///     <cref>https://developer.twitter.com/en/docs/geo/places-near-location/api-reference/get-geo-reverse_geocode</cref>
     /// </see>
-    public class TwitterReverseGeocodeOptions : IHttpGetOptions {
+    public class TwitterReverseGeocodeOptions : IHttpRequestOptions {
 
         #region Properties
 
@@ -41,19 +42,19 @@ namespace Skybrud.Social.Twitter.Options.Geocode {
         /// <see cref="TwitterGranularity.City"/>, <see cref="TwitterGranularity.Admin"/> or
         /// <see cref="TwitterGranularity.Country"/>. If no granularity is provided for the request,
         /// <see cref="TwitterGranularity.Neighborhood"/> is assumed.
-        /// 
+        ///
         /// Setting this to <see cref="TwitterGranularity.City"/>, for example, will find places which have a type of
         /// <see cref="TwitterGranularity.City"/>, <see cref="TwitterGranularity.Admin"/> or
         /// <see cref="TwitterGranularity.Country"/>.
         /// </summary>
-        public TwitterGranularity Granularity { get; set; }
+        public TwitterGranularity? Granularity { get; set; }
 
         /// <summary>
         /// A hint as to the number of results to return. This does not guarantee that the number of results returned
         /// will equal max_results, but instead informs how many "nearby" results to return. Ideally, only pass in the
         /// number of places you intend to display to the user here.
         /// </summary>
-        public int MaxResults { get; set; }
+        public int? MaxResults { get; set; }
 
         #endregion
 
@@ -119,7 +120,7 @@ namespace Skybrud.Social.Twitter.Options.Geocode {
         /// <param name="meters">The accuracy in meters.</param>
         /// <returns>The original <see cref="TwitterReverseGeocodeOptions"/>.</returns>
         public TwitterReverseGeocodeOptions SetAccuraryInMeters(int meters) {
-            Accurary = meters + "m";
+            Accurary = $"{meters}m";
             return this;
         }
 
@@ -129,15 +130,12 @@ namespace Skybrud.Social.Twitter.Options.Geocode {
         /// <param name="feet">The accuracy in feet.</param>
         /// <returns>The original <see cref="TwitterReverseGeocodeOptions"/>.</returns>
         public TwitterReverseGeocodeOptions SetAccuraryInFeet(int feet) {
-            Accurary = feet + "ft";
+            Accurary = $"{feet}ft";
             return this;
         }
 
-        /// <summary>
-        /// Gets an instance of <see cref="IHttpQueryString"/> representing the GET parameters.
-        /// </summary>
-        /// <returns>An instance of <see cref="IHttpQueryString"/>.</returns>
-        public IHttpQueryString GetQueryString() {
+        /// <inheritdoc />
+        public IHttpRequest GetRequest() {
 
             // Initialize the query string
             IHttpQueryString query = new HttpQueryString();
@@ -148,15 +146,16 @@ namespace Skybrud.Social.Twitter.Options.Geocode {
 
             // Set optional parameters
             if (Accurary != null && Accurary != "0m") query.Set("accuracy", Accurary);
-            if (Granularity != default(TwitterGranularity)) query.Set("granularity", Granularity.ToLower());
-            if (MaxResults > 0) query.Set("max_results", MaxResults);
+            if (Granularity is not null) query.Set("granularity", Granularity.ToLower());
+            if (MaxResults is not null) query.Set("max_results", MaxResults.Value);
 
-            return query;
+            // Initialize a new GET request
+            return HttpRequest.Get("/1.1/geo/reverse_geocode.json", query);
 
         }
 
         #endregion
-    
+
     }
 
 }

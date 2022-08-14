@@ -61,7 +61,7 @@ namespace Skybrud.Social.Twitter.Endpoints.Raw {
         ///     <cref>https://dev.twitter.com/rest/reference/get/followers/ids</cref>
         /// </see>
         public IHttpResponse GetIds(TwitterFollowersIdsOptions options) {
-            return Client.DoHttpGetRequest("https://api.twitter.com/1.1/followers/ids.json", options);
+            return Client.GetResponse(options);
         }
 
         /// <summary>
@@ -97,7 +97,7 @@ namespace Skybrud.Social.Twitter.Endpoints.Raw {
         ///     <cref>https://dev.twitter.com/rest/reference/get/followers/list</cref>
         /// </see>
         public IHttpResponse GetList(TwitterFollowersListOptions options) {
-            return Client.DoHttpGetRequest("https://api.twitter.com/1.1/followers/list.json", options);
+            return Client.GetResponse(options);
         }
 
         #endregion

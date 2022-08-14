@@ -19,7 +19,7 @@ namespace Skybrud.Social.Twitter.Endpoints.Raw {
         #endregion
 
         #region Constructor
-        
+
         internal TwitterFriendsRawEndpoint(TwitterOAuthClient client) {
             Client = client;
         }
@@ -61,7 +61,7 @@ namespace Skybrud.Social.Twitter.Endpoints.Raw {
         ///     <cref>https://dev.twitter.com/rest/reference/get/friends/ids</cref>
         /// </see>
         public IHttpResponse GetIds(TwitterFriendsIdsOptions options) {
-            return Client.DoHttpGetRequest("https://api.twitter.com/1.1/friends/ids.json", options);
+            return Client.GetResponse(options);
         }
 
         /// <summary>
@@ -97,7 +97,7 @@ namespace Skybrud.Social.Twitter.Endpoints.Raw {
         ///     <cref>https://dev.twitter.com/rest/reference/get/friends/list</cref>
         /// </see>
         public IHttpResponse GetList(TwitterFriendsListOptions options) {
-            return Client.DoHttpGetRequest("https://api.twitter.com/1.1/friends/list.json", options);
+            return Client.GetResponse(options);
         }
 
         #endregion

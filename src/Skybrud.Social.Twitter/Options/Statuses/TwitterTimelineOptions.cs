@@ -1,10 +1,14 @@
+using Skybrud.Essentials.Http;
 using Skybrud.Essentials.Strings;
 using Skybrud.Essentials.Http.Collections;
 using Skybrud.Essentials.Http.Options;
 
 namespace Skybrud.Social.Twitter.Options.Statuses {
 
-    public abstract class TwitterTimelineOptions : IHttpGetOptions {
+    /// <summary>
+    /// Abstract class with options for getting a timeline.
+    /// </summary>
+    public abstract class TwitterTimelineOptions : IHttpRequestOptions {
 
         #region Properties
 
@@ -51,7 +55,7 @@ namespace Skybrud.Social.Twitter.Options.Statuses {
         /// <summary>
         /// When set to <c>false</c>, the timeline will strip any native retweets (though they will still count
         /// toward both the maximal length of the timeline and the slice selected by the count parameter).
-        /// 
+        ///
         /// Note: If you're using the <c>trim_user</c> parameter in conjunction with <c>include_rts</c>,
         /// the retweets will still contain a full user object.
         /// </summary>
@@ -93,7 +97,7 @@ namespace Skybrud.Social.Twitter.Options.Statuses {
         /// Gets an instance of <see cref="IHttpQueryString"/> representing the GET parameters.
         /// </summary>
         /// <returns>An instance of <see cref="IHttpQueryString"/>.</returns>
-        public IHttpQueryString GetQueryString() {
+        protected virtual IHttpQueryString GetQueryString() {
 
             // Define the query string
             IHttpQueryString qs = new HttpQueryString();
@@ -111,6 +115,9 @@ namespace Skybrud.Social.Twitter.Options.Statuses {
             return qs;
 
         }
+
+        /// <inheritdoc />
+        public abstract IHttpRequest GetRequest();
 
         #endregion
 

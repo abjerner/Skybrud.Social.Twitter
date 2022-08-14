@@ -1,7 +1,8 @@
-﻿using System;
-using Skybrud.Essentials.Common;
+﻿using Skybrud.Essentials.Common;
+using Skybrud.Essentials.Http;
 using Skybrud.Essentials.Http.Collections;
 using Skybrud.Essentials.Http.Options;
+using Skybrud.Essentials.Maps;
 
 namespace Skybrud.Social.Twitter.Options.Statuses {
 
@@ -11,7 +12,7 @@ namespace Skybrud.Social.Twitter.Options.Statuses {
     /// <see>
     ///     <cref>https://developer.twitter.com/en/docs/tweets/post-and-engage/api-reference/post-statuses-update</cref>
     /// </see>
-    public class TwitterPostStatusMessageOptions : IHttpPostOptions {
+    public class TwitterPostStatusMessageOptions : IHttpRequestOptions {
 
         #region Properties
 
@@ -58,22 +59,40 @@ namespace Skybrud.Social.Twitter.Options.Statuses {
 
         #endregion
 
+        #region Constructors
+
         /// <summary>
-        /// Gets an instance of <see cref="IHttpQueryString"/> representing the GET parameters.
+        /// Initializes a new instance with default options.
         /// </summary>
-        /// <returns>An instance of <see cref="IHttpQueryString"/>.</returns>
-        public IHttpQueryString GetQueryString() {
-            return null;
+        public TwitterPostStatusMessageOptions() { }
+
+        /// <summary>
+        /// Initializes a new instanced based on the specified <paramref name="status"/>.
+        /// </summary>
+        /// <param name="status">The text of the status message.</param>
+        public TwitterPostStatusMessageOptions(string status) {
+            Status = status;
         }
 
         /// <summary>
-        /// Gets an instance of <see cref="IHttpPostData"/> representing the POST parameters.
+        /// Initializes a new instanced based on the specified <paramref name="status"/>.
         /// </summary>
-        /// <returns>An instance of <see cref="IHttpPostData"/>.</returns>
-        public IHttpPostData GetPostData() {
+        /// <param name="status">The text of the status message.</param>
+        /// <param name="replyTo">The ID of the status message which this status message should be a reply to.</param>
+        public TwitterPostStatusMessageOptions(string status, long replyTo) {
+            Status = status;
+            ReplyTo = replyTo;
+        }
+
+        #endregion
+
+        #region Member methods
+
+        /// <inheritdoc />
+        public IHttpRequest GetRequest() {
 
             // Validate required properties
-            if (String.IsNullOrWhiteSpace(Status)) throw new PropertyNotSetException(nameof(Status));
+            if (string.IsNullOrWhiteSpace(Status)) throw new PropertyNotSetException(nameof(Status));
 
             // Initialize a new instance with required parameters
             IHttpPostData data = new HttpPostData();
@@ -82,17 +101,20 @@ namespace Skybrud.Social.Twitter.Options.Statuses {
             // Append optional parameters to be POST data
             if (ReplyTo > 0) data.Add("in_reply_to_status_id", ReplyTo);
             if (IsPossiblySensitive) data.Add("possibly_sensitive", "true");
-            if (Math.Abs(Latitude) > Double.Epsilon && Math.Abs(Longitude) > Double.Epsilon) {
+            if (!PointUtils.IsNullIsland(Latitude, Longitude)) {
                 data.Add("lat", Latitude);
                 data.Add("long", Longitude);
             }
             if (PlaceId != null) data.Add("place_id", PlaceId);
             if (DisplayCoordinates) data.Add("display_coordinates", "true");
 
-            return data;
+            // Initialize a new GET request
+            return HttpRequest.Post("/1.1/statuses/update.json", null, data);
 
         }
-    
+
+        #endregion
+
     }
 
 }

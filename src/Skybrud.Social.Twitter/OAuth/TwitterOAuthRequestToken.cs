@@ -4,10 +4,18 @@ using Skybrud.Essentials.Http.OAuth.Models;
 
 namespace Skybrud.Social.Twitter.OAuth {
 
+    /// <summary>
+    /// Class with information about a Twitter request token.
+    /// </summary>
     public class TwitterOAuthRequestToken : OAuthRequestToken {
 
         #region Constructors
 
+        /// <summary>
+        /// Initializes a new instance based on the specified <paramref name="client"/> and <paramref name="query."/>
+        /// </summary>
+        /// <param name="client">The current OAuth client.</param>
+        /// <param name="query">The query string representing the request token information.</param>
         protected TwitterOAuthRequestToken(OAuthClient client, IHttpQueryString query) : base(client, query) { }
 
         #endregion
@@ -39,7 +47,7 @@ namespace Skybrud.Social.Twitter.OAuth {
         }
 
         #endregion
-    
+
     }
 
 }

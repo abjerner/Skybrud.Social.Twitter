@@ -6,7 +6,7 @@ using Skybrud.Social.Twitter.Endpoints.Raw;
 using Skybrud.Social.Twitter.Responses;
 
 namespace Skybrud.Social.Twitter.OAuth {
-    
+
     /// <summary>
     /// Class for handling the communication with the Twitter API. The class has methods for handling OAuth logins
     /// using a three-legged approach as well as logic for calling the methods decribed in the Twitter API (not all
@@ -109,7 +109,7 @@ namespace Skybrud.Social.Twitter.OAuth {
         /// <param name="tokenSecret">The access token secret of the user.</param>
         /// <param name="callback">The callback URI used for authentication.</param>
         public TwitterOAuthClient(string consumerKey, string consumerSecret, string token, string tokenSecret, string callback) {
-        
+
             // Common properties
             ConsumerKey = consumerKey;
             ConsumerSecret = consumerSecret;
@@ -121,11 +121,18 @@ namespace Skybrud.Social.Twitter.OAuth {
             RequestTokenUrl = "https://api.twitter.com/oauth/request_token";
             AuthorizeUrl = "https://api.twitter.com/oauth/authorize";
             AccessTokenUrl = "https://api.twitter.com/oauth/access_token";
-        
+
         }
 
         #endregion
 
+        /// <summary>
+        /// Gets a new request token from the Twitter API. After acquiring a request token, the user should be
+        /// redirected to the Twitter authentication page for approving your application. If successful, the user will
+        /// be redirected back to the specified callback URL where you then can exchange the request token for an
+        /// access token.
+        /// </summary>
+        /// <returns>An instance of <see cref="OAuthRequestTokenResponse"/> representing the response.</returns>
         public override OAuthRequestTokenResponse GetRequestToken() {
 
             // Make the call to the API/provider
@@ -142,6 +149,12 @@ namespace Skybrud.Social.Twitter.OAuth {
 
         }
 
+        /// <summary>
+        /// Following the 3-legged authorization, you can exchange a request token for an access token
+        /// using this method. This is the third and final step of the authorization process.
+        /// </summary>
+        /// <param name="verifier">The verification key received after the user has accepted the app.</param>
+        /// <returns>An instance of <see cref="OAuthAccessTokenResponse"/> representing the response.</returns>
         public override OAuthAccessTokenResponse GetAccessToken(string verifier) {
 
             // Make the call to the API/provider
@@ -157,7 +170,18 @@ namespace Skybrud.Social.Twitter.OAuth {
             return OAuthAccessTokenResponse.ParseResponse(response, body);
 
         }
-    
+
+        /// <inheritdoc />
+        protected override void PrepareHttpRequest(IHttpRequest request) {
+
+            // Make sure to call the base method to handle all the OAuth stuff
+            base.PrepareHttpRequest(request);
+
+            // Prepend the scheme and host name if not already present
+            if (request.Url.StartsWith("/")) request.Url = $"https://api.twitter.com{request.Url}";
+
+        }
+
     }
 
 }

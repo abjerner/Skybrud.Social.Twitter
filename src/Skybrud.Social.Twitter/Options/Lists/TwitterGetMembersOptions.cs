@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Skybrud.Essentials.Common;
+using Skybrud.Essentials.Http;
 using Skybrud.Essentials.Http.Collections;
 using Skybrud.Essentials.Http.Options;
 
@@ -10,24 +11,24 @@ namespace Skybrud.Social.Twitter.Options.Lists {
     /// <see>
     ///     <cref>https://developer.twitter.com/en/docs/accounts-and-users/create-manage-lists/api-reference/get-lists-members</cref>
     /// </see>
-    public class TwitterGetMembersOptions : IHttpGetOptions {
+    public class TwitterGetMembersOptions : IHttpRequestOptions {
 
         #region Properties
 
         /// <summary>
         /// Gets or sets the ID of the list.
         /// </summary>
-        public long Id { get; set; }
-
-        /// <summary>
-        /// Gets or sets the slug of the list.
-        /// </summary>
-        public string Slug { get; set; }
+        public long ListId { get; set; }
 
         /// <summary>
         /// Gets or sets the ID of the owning user.
         /// </summary>
         public long UserId { get; set; }
+
+        /// <summary>
+        /// Gets or sets the slug of the list.
+        /// </summary>
+        public string Slug { get; set; }
 
         /// <summary>
         /// Gets or sets the screen name of the owning user.
@@ -68,7 +69,7 @@ namespace Skybrud.Social.Twitter.Options.Lists {
         /// </summary>
         /// <param name="listId">The ID of the list.</param>
         public TwitterGetMembersOptions(long listId) : this() {
-            Id = listId;
+            ListId = listId;
         }
 
         /// <summary>
@@ -95,21 +96,26 @@ namespace Skybrud.Social.Twitter.Options.Lists {
 
         #region Member methods
 
-        /// <summary>
-        /// Gets an instance of <see cref="IHttpQueryString"/> representing the GET parameters.
-        /// </summary>
-        /// <returns>An instance of <see cref="IHttpQueryString"/>.</returns>
-        public IHttpQueryString GetQueryString() {
-            IHttpQueryString qs = new HttpQueryString();
-            if (Id > 0) qs.Set("list_id", UserId);
-            if (!String.IsNullOrWhiteSpace(Slug)) qs.Set("slug", Slug);
-            if (UserId > 0) qs.Set("owner_id", UserId);
-            if (!String.IsNullOrWhiteSpace(ScreenName)) qs.Set("owner_screen_name", ScreenName);
-            if (Count > 0) qs.Set("count", Count);
-            if (Cursor > 0) qs.Set("cursor", Cursor);
-            if (!IncludeEntities) qs.Set("include_entities", "0");
-            if (SkipStatus) qs.Set("skip_status", "1");
-            return qs;
+        /// <inheritdoc />
+        public IHttpRequest GetRequest() {
+
+            // Validate required properties
+            if (ListId == 0 && UserId == 0 && string.IsNullOrWhiteSpace(Slug)) throw new PropertyNotSetException(nameof(ListId));
+
+            // Initialize the query string
+            IHttpQueryString query = new HttpQueryString();
+            if (ListId > 0) query.Set("list_id", UserId);
+            if (!string.IsNullOrWhiteSpace(Slug)) query.Set("slug", Slug);
+            if (UserId > 0) query.Set("owner_id", UserId);
+            if (!string.IsNullOrWhiteSpace(ScreenName)) query.Set("owner_screen_name", ScreenName);
+            if (Count > 0) query.Set("count", Count);
+            if (Cursor > 0) query.Set("cursor", Cursor);
+            if (!IncludeEntities) query.Set("include_entities", "0");
+            if (SkipStatus) query.Set("skip_status", "1");
+
+            // Initialize a new GET request
+            return HttpRequest.Get("/1.1/lists/members.json", query);
+
         }
 
         #endregion

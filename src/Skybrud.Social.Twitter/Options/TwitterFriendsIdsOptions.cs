@@ -1,4 +1,5 @@
 using System;
+using Skybrud.Essentials.Http;
 using Skybrud.Essentials.Http.Collections;
 using Skybrud.Essentials.Http.Options;
 
@@ -7,16 +8,7 @@ namespace Skybrud.Social.Twitter.Options {
     /// <summary>
     /// Class with options for getting a list of friend IDs.
     /// </summary>
-    public class TwitterFriendsIdsOptions : IHttpGetOptions {
-
-        #region Constants
-
-        public const int DefaultCursor = -1;
-        public const int DefaultCount = 5000;
-        public const bool DefaultSkipStatus = false;
-        public const bool DefaultIncludeUserEntities = true;
-
-        #endregion
+    public class TwitterFriendsIdsOptions : IHttpRequestOptions {
 
         #region Properties
 
@@ -38,13 +30,13 @@ namespace Skybrud.Social.Twitter.Options {
         /// The response from the API will include a <c>previous_cursor</c>
         /// and <c>next_cursor</c> to allow paging back and forth.
         /// </summary>
-        public long Cursor { get; set; }
+        public long? Cursor { get; set; }
 
         /// <summary>
         /// The number of users to return per page, up to a maximum of 200.
         /// Defaults to 20.
         /// </summary>
-        public int Count { get; set; }
+        public int? Count { get; set; }
 
         #endregion
 
@@ -53,10 +45,7 @@ namespace Skybrud.Social.Twitter.Options {
         /// <summary>
         /// Initializes a new instance with default options.
         /// </summary>
-        public TwitterFriendsIdsOptions() {
-            Cursor = DefaultCursor;
-            Count = DefaultCount;
-        }
+        public TwitterFriendsIdsOptions() { }
 
         /// <summary>
         /// Intializes a new instance based on the specified <paramref name="userId"/>.
@@ -83,12 +72,27 @@ namespace Skybrud.Social.Twitter.Options {
         /// </summary>
         /// <returns>An instance of <see cref="IHttpQueryString"/>.</returns>
         public IHttpQueryString GetQueryString() {
-            IHttpQueryString qs = new HttpQueryString();
-            if (UserId > 0) qs.Set("user_id", UserId);
-            if (!String.IsNullOrWhiteSpace(ScreenName)) qs.Set("screen_name", ScreenName);
-            if (Cursor != DefaultCursor) qs.Set("cursor", Cursor);
-            if (Count != DefaultCount) qs.Set("count", Count);
-            return qs;
+            IHttpQueryString query = new HttpQueryString();
+            if (UserId > 0) query.Set("user_id", UserId);
+            if (!string.IsNullOrWhiteSpace(ScreenName)) query.Set("screen_name", ScreenName);
+            if (Cursor != null) query.Set("cursor", Cursor.Value);
+            if (Count != null) query.Set("count", Count.Value);
+            return query;
+        }
+
+        /// <inheritdoc />
+        public IHttpRequest GetRequest() {
+
+            // Initialize the query string
+            IHttpQueryString query = new HttpQueryString();
+            if (UserId > 0) query.Set("user_id", UserId);
+            if (!string.IsNullOrWhiteSpace(ScreenName)) query.Set("screen_name", ScreenName);
+            if (Cursor != null) query.Set("cursor", Cursor.Value);
+            if (Count != null) query.Set("count", Count.Value);
+
+            // Initialize a new GET request
+            return HttpRequest.Get("/1.1/friends/ids.json", query);
+
         }
 
         #endregion

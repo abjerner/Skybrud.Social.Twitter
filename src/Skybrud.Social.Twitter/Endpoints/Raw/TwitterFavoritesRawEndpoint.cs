@@ -73,7 +73,7 @@ namespace Skybrud.Social.Twitter.Endpoints.Raw {
         ///     <cref>https://dev.twitter.com/rest/reference/get/favorites/list</cref>
         /// </see>
         public IHttpResponse GetFavorites(TwitterGetFavoritesOptions options) {
-            return Client.DoHttpGetRequest("https://api.twitter.com/1.1/favorites/list.json", options);
+            return Client.GetResponse(options);
         }
 
         /// <summary>
@@ -91,7 +91,7 @@ namespace Skybrud.Social.Twitter.Endpoints.Raw {
             query.Set("id", statusId);
 
             // Make the call to the API
-            return Client.DoHttpGetRequest("https://api.twitter.com/1.1/favorites/create.json", query);
+            return Client.Get("/1.1/favorites/create.json", query);
 
         }
 
@@ -110,7 +110,7 @@ namespace Skybrud.Social.Twitter.Endpoints.Raw {
             query.Set("id", statusId);
 
             // Make the call to the API
-            return Client.DoHttpGetRequest("https://api.twitter.com/1.1/favorites/destroy.json", query);
+            return Client.Get("/1.1/favorites/destroy.json", query);
 
         }
 
