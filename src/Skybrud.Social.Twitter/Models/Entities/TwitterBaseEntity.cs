@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Newtonsoft.Json.Linq;
 using Skybrud.Essentials.Json.Extensions;
 
@@ -23,7 +24,7 @@ namespace Skybrud.Social.Twitter.Models.Entities {
         /// <summary>
         /// Gets an array with the start and end index of the entity reference.
         /// </summary>
-        public int[] Indices => new[] { StartIndex, EndIndex };
+        public IReadOnlyList<int> Indices { get; }
 
         #endregion
 
@@ -36,6 +37,7 @@ namespace Skybrud.Social.Twitter.Models.Entities {
         protected TwitterBaseEntity(JObject obj) : base(obj) {
             StartIndex = obj.GetArray("indices").GetInt32(0);
             EndIndex = obj.GetArray("indices").GetInt32(1);
+            Indices = new[] { StartIndex, EndIndex };
         }
 
         #endregion

@@ -1,8 +1,9 @@
+using System.Collections.Generic;
 using Newtonsoft.Json.Linq;
 using Skybrud.Essentials.Json.Extensions;
 
 namespace Skybrud.Social.Twitter.Models.Geocode {
-    
+
     /// <summary>
     /// Class representing a bounding box as returned by the Twitter API.
     /// </summary>
@@ -18,7 +19,7 @@ namespace Skybrud.Social.Twitter.Models.Geocode {
         /// <summary>
         /// The set of coordinates describing the bounding box.
         /// </summary>
-        public TwitterCoordinates[][] Coordinates { get; }
+        public IReadOnlyList<IReadOnlyList<TwitterCoordinates>> Coordinates { get; }
 
         #endregion
 
@@ -29,24 +30,25 @@ namespace Skybrud.Social.Twitter.Models.Geocode {
         /// </summary>
         /// <param name="obj">The <see cref="JObject"/> to be parsed.</param>
         protected TwitterBoundingBox(JObject obj) : base(obj) {
-
-            // Get the array
-            JArray coordinates = obj.GetArray("coordinates");
-
-            // Initialize properties
             Type = obj.GetString("type");
-            Coordinates = new TwitterCoordinates[coordinates.Count][];
-
-            // Parse the coordinates
-            for (int i = 0; i < coordinates.Count; i++) {
-                Coordinates[i] = TwitterCoordinates.ParseMultiple(coordinates.GetArray(i));
-            }
-
+            Coordinates = ParseCoordinates(obj.GetArray("coordinates"));
         }
 
         #endregion
 
         #region Static methods
+
+        private static IReadOnlyList<IReadOnlyList<TwitterCoordinates>> ParseCoordinates(JArray array) {
+
+            IReadOnlyList<TwitterCoordinates>[] temp = new IReadOnlyList<TwitterCoordinates>[array.Count];
+
+            for (int i = 0; i < array.Count; i++) {
+                temp[i] = TwitterCoordinates.ParseMultiple(array.GetArray(i));
+            }
+
+            return temp;
+
+        }
 
         /// <summary>
         /// Gets an instance of <see cref="TwitterBoundingBox"/> from the specified <see cref="JObject"/>.

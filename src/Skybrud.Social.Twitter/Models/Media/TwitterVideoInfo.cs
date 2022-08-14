@@ -1,9 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
 using Newtonsoft.Json.Linq;
 using Skybrud.Essentials.Json.Extensions;
 
 namespace Skybrud.Social.Twitter.Models.Media {
-    
+
     /// <summary>
     /// Class representing a resized format of a given media.
     /// </summary>
@@ -14,7 +15,7 @@ namespace Skybrud.Social.Twitter.Models.Media {
         /// <summary>
         /// Gets a 2-element array with the aspect ratio of the video.
         /// </summary>
-        public int[] AspectRatio { get; }
+        public IReadOnlyList<int> AspectRatio { get; }
 
         /// <summary>
         /// Gets the duration of the video. For animated GIFs a duration won't be specified.
@@ -29,7 +30,7 @@ namespace Skybrud.Social.Twitter.Models.Media {
         /// <summary>
         /// Gets an array of all variants/formats of the video.
         /// </summary>
-        public TwitterVideoVariant[] Variants { get; }
+        public IReadOnlyList<TwitterVideoVariant> Variants { get; }
 
         #endregion
 

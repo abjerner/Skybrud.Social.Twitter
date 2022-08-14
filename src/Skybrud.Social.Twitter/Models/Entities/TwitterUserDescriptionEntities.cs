@@ -15,7 +15,7 @@ namespace Skybrud.Social.Twitter.Models.Entities {
         /// <summary>
         /// Gets an array of URLs specified in the description field for a user.
         /// </summary>
-        public TwitterUrlEntity[] Urls { get; private set; }
+        public IReadOnlyList<TwitterUrlEntity> Urls { get; private set; }
 
         #endregion
 
@@ -36,8 +36,8 @@ namespace Skybrud.Social.Twitter.Models.Entities {
         /// <summary>
         /// Gets a collection of all entities in an ascending order.
         /// </summary>
-        public TwitterBaseEntity[] GetAll() {
-            List<TwitterBaseEntity> temp = new List<TwitterBaseEntity>();
+        public IReadOnlyList<TwitterBaseEntity> GetAll() {
+            List<TwitterBaseEntity> temp = new();
             temp.AddRange(Urls);
             return temp.OrderBy(x => x.StartIndex).ToArray();
         }
@@ -45,8 +45,8 @@ namespace Skybrud.Social.Twitter.Models.Entities {
         /// <summary>
         /// Gets a collection of all entities in an descending order.
         /// </summary>
-        public TwitterBaseEntity[] GetAllReversed() {
-            List<TwitterBaseEntity> temp = new List<TwitterBaseEntity>();
+        public IReadOnlyList<TwitterBaseEntity> GetAllReversed() {
+            List<TwitterBaseEntity> temp = new();
             temp.AddRange(Urls);
             return temp.OrderByDescending(x => x.StartIndex).ToArray();
         }

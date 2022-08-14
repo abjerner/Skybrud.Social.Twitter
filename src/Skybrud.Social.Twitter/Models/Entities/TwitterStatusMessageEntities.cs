@@ -15,22 +15,22 @@ namespace Skybrud.Social.Twitter.Models.Entities {
         /// <summary>
         /// Gets an array of all <see cref="TwitterHashTagEntity"/> in the status message.
         /// </summary>
-        public TwitterHashTagEntity[] HashTags { get; }
+        public IReadOnlyList<TwitterHashTagEntity> HashTags { get; }
 
         /// <summary>
         /// Gets an array of all <see cref="TwitterUrlEntity"/> in the status message.
         /// </summary>
-        public TwitterUrlEntity[] Urls { get; }
+        public IReadOnlyList<TwitterUrlEntity> Urls { get; }
 
         /// <summary>
         /// Gets an array of all <see cref="TwitterMentionEntity"/> in the status message.
         /// </summary>
-        public TwitterMentionEntity[] Mentions { get; }
+        public IReadOnlyList<TwitterMentionEntity> Mentions { get; }
 
         /// <summary>
         /// Gets an array of all <see cref="TwitterMediaEntity"/> in the status message.
         /// </summary>
-        public TwitterMediaEntity[] Media { get; }
+        public IReadOnlyList<TwitterMediaEntity> Media { get; }
 
         // Add support for the "symbols" property
 
@@ -58,8 +58,8 @@ namespace Skybrud.Social.Twitter.Models.Entities {
         /// <summary>
         /// Gets a collection of all entities in an ascending order.
         /// </summary>
-        public TwitterBaseEntity[] GetAll() {
-            List<TwitterBaseEntity> temp = new List<TwitterBaseEntity>();
+        public IReadOnlyList<TwitterBaseEntity> GetAll() {
+            List<TwitterBaseEntity> temp = new();
             temp.AddRange(HashTags);
             temp.AddRange(Urls);
             temp.AddRange(Mentions);
@@ -70,8 +70,8 @@ namespace Skybrud.Social.Twitter.Models.Entities {
         /// <summary>
         /// Gets a collection of all entities in an descending order.
         /// </summary>
-        public TwitterBaseEntity[] GetAllReversed() {
-            List<TwitterBaseEntity> temp = new List<TwitterBaseEntity>();
+        public IReadOnlyList<TwitterBaseEntity> GetAllReversed() {
+            List<TwitterBaseEntity> temp = new();
             temp.AddRange(HashTags);
             temp.AddRange(Urls);
             temp.AddRange(Mentions);

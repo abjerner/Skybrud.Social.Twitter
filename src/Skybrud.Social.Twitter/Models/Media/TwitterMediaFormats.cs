@@ -4,7 +4,7 @@ using Newtonsoft.Json.Linq;
 using Skybrud.Essentials.Json.Extensions;
 
 namespace Skybrud.Social.Twitter.Models.Media {
-   
+
     /// <summary>
     /// Class representing a collection of different sizes of a given media.
     /// </summary>
@@ -21,17 +21,17 @@ namespace Skybrud.Social.Twitter.Models.Media {
         /// Gets a reference to the <c>small</c> media format.
         /// </summary>
         public TwitterMediaSize Small { get; }
-        
+
         /// <summary>
         /// Gets a reference to the <c>thumb</c> media format.
         /// </summary>
         public TwitterMediaSize Thumb { get; }
-        
+
         /// <summary>
         /// Gets a reference to the <c>medium</c> media format.
         /// </summary>
         public TwitterMediaSize Medium { get; }
-        
+
         /// <summary>
         /// Gets a reference to the <c>large</c> media format.
         /// </summary>

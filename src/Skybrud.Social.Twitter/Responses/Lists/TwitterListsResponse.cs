@@ -1,4 +1,5 @@
-﻿using Skybrud.Essentials.Http;
+﻿using System.Collections.Generic;
+using Skybrud.Essentials.Http;
 using Skybrud.Social.Twitter.Models.Lists;
 
 namespace Skybrud.Social.Twitter.Responses.Lists {
@@ -6,7 +7,7 @@ namespace Skybrud.Social.Twitter.Responses.Lists {
     /// <summary>
     /// Class respresenting the response for a list of lists.
     /// </summary>
-    public class TwitterListsResponse : TwitterResponse<TwitterList[]> {
+    public class TwitterListsResponse : TwitterResponse<IReadOnlyList<TwitterList>> {
 
         /// <summary>
         /// Initializes a new instance based on the specified <paramref name="response"/>.

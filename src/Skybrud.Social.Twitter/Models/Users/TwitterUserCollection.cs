@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json.Linq;
+﻿using System.Collections.Generic;
+using Newtonsoft.Json.Linq;
 using Skybrud.Essentials.Json.Extensions;
 
 namespace Skybrud.Social.Twitter.Models.Users {
@@ -13,7 +14,7 @@ namespace Skybrud.Social.Twitter.Models.Users {
         /// <summary>
         /// Gets the array with the users returned in the response.
         /// </summary>
-        public TwitterUser[] Users { get; }
+        public IReadOnlyList<TwitterUser> Users { get; }
 
         /// <summary>
         /// Gets the cursor pointing to the next page in the result set.
@@ -53,7 +54,7 @@ namespace Skybrud.Social.Twitter.Models.Users {
         }
 
         #endregion
-    
+
     }
 
 }

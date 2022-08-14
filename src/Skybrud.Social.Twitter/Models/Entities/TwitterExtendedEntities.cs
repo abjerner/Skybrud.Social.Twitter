@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json.Linq;
+﻿using System.Collections.Generic;
+using Newtonsoft.Json.Linq;
 using Skybrud.Essentials.Json.Extensions;
 
 namespace Skybrud.Social.Twitter.Models.Entities {
@@ -13,7 +14,7 @@ namespace Skybrud.Social.Twitter.Models.Entities {
         /// <summary>
         /// Gets an array of all media mentioned in the parent status message.
         /// </summary>
-        public TwitterMediaEntity[] Media { get; }
+        public IReadOnlyList<TwitterMediaEntity> Media { get; }
 
         #endregion
 

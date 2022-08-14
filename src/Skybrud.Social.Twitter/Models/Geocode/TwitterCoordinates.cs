@@ -1,5 +1,9 @@
+using System;
+using System.Collections.Generic;
 using Newtonsoft.Json.Linq;
 using Skybrud.Essentials.Json.Extensions;
+
+// ReSharper disable UseArrayEmptyMethod
 
 namespace Skybrud.Social.Twitter.Models.Geocode {
 
@@ -7,6 +11,13 @@ namespace Skybrud.Social.Twitter.Models.Geocode {
     /// Class representing the coordinates of a point used in the Twitter API.
     /// </summary>
     public class TwitterCoordinates : TwitterObject {
+
+#if NET46_OR_GREATER || NETSTANDARD1_3_OR_GREATER
+        // TODO: Use this instead when available: https://github.com/skybrud/Skybrud.Essentials/issues/40
+        private static readonly TwitterCoordinates[] _empty = Array.Empty<TwitterCoordinates>();
+#else
+        private static readonly TwitterCoordinates[] _empty = new TwitterCoordinates[0];
+#endif
 
         #region Properties
 
@@ -61,8 +72,7 @@ namespace Skybrud.Social.Twitter.Models.Geocode {
         /// <param name="array">The instance of <see cref="JArray"/> to parse.</param>
         /// <returns>An instance of <see cref="TwitterCoordinates"/>.</returns>
         public static TwitterCoordinates Parse(JArray array) {
-            if (array == null) return null;
-            return new TwitterCoordinates(array);
+            return array == null ? null : new TwitterCoordinates(array);
         }
 
         /// <summary>
@@ -70,8 +80,8 @@ namespace Skybrud.Social.Twitter.Models.Geocode {
         /// </summary>
         /// <param name="array">The instance of <see cref="JArray"/> to parse.</param>
         /// <returns>An array of <see cref="TwitterCoordinates"/>.</returns>
-        public static TwitterCoordinates[] ParseMultiple(JArray array) {
-            if (array == null) return new TwitterCoordinates[0];
+        public static IReadOnlyList<TwitterCoordinates> ParseMultiple(JArray array) {
+            if (array == null) return _empty;
             TwitterCoordinates[] temp = new TwitterCoordinates[array.Count];
             for (int i = 0; i < array.Count; i++) {
                 temp[i] = Parse(array.GetArray(i));

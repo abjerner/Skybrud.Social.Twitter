@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Skybrud.Essentials.Http;
 using Skybrud.Social.Twitter.Models.Statuses;
 
@@ -6,7 +7,7 @@ namespace Skybrud.Social.Twitter.Responses.Statuses {
     /// <summary>
     /// Class representing a list of <see cref="TwitterStatusMessage"/>.
     /// </summary>
-    public class TwitterStatusListResponse : TwitterResponse<TwitterStatusMessage[]> {
+    public class TwitterStatusListResponse : TwitterResponse<IReadOnlyList<TwitterStatusMessage>> {
 
         /// <summary>
         /// Initializes a new instance based on the specified <paramref name="response"/>.

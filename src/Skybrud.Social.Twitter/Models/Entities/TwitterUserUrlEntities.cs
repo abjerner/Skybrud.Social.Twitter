@@ -17,7 +17,7 @@ namespace Skybrud.Social.Twitter.Models.Entities {
         /// specify a single URL in their profiles, but an array is still returned by the Twitter
         /// API.
         /// </summary>
-        public TwitterUrlEntity[] Urls { get; }
+        public IReadOnlyList<TwitterUrlEntity> Urls { get; }
 
         #endregion
 
@@ -38,8 +38,8 @@ namespace Skybrud.Social.Twitter.Models.Entities {
         /// <summary>
         /// Gets a collection of all entities in ascending order.
         /// </summary>
-        public TwitterBaseEntity[] GetAll() {
-            List<TwitterBaseEntity> temp = new List<TwitterBaseEntity>();
+        public IReadOnlyList<TwitterBaseEntity> GetAll() {
+            List<TwitterBaseEntity> temp = new();
             temp.AddRange(Urls);
             return temp.OrderBy(x => x.StartIndex).ToArray();
         }
@@ -47,8 +47,8 @@ namespace Skybrud.Social.Twitter.Models.Entities {
         /// <summary>
         /// Gets a collection of all entities in descending order.
         /// </summary>
-        public TwitterBaseEntity[] GetAllReversed() {
-            List<TwitterBaseEntity> temp = new List<TwitterBaseEntity>();
+        public IReadOnlyList<TwitterBaseEntity> GetAllReversed() {
+            List<TwitterBaseEntity> temp = new();
             temp.AddRange(Urls);
             return temp.OrderByDescending(x => x.StartIndex).ToArray();
         }
