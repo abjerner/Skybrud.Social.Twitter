@@ -1,26 +1,14 @@
-**Skybrud.Social.Twitter** is an authentication and service implementation for the Twitter API.
+**Skybrud.Social.Twitter** is a .NET implementation and API wrapper for the Twitter API.
 
 The package lets you set up a Twitter login page as well as communicate with the Twitter API in an object-oritented way, including strongly typed models for the returned data.
-
-
-
-<br /><br />
 
 ### Changelog
 
 The [**releases page**][Releases] lists all releases, and each there will be some information for each release on the most significant changes.
 
-
-
-<br /><br />
-
 ### Documentation
 
 You can find documentation and examples on how to use this package at the [**Skybrud.Social website**][Website].
-
-
-
-<br /><br />
 
 ### Found a bug? Have a question?
 

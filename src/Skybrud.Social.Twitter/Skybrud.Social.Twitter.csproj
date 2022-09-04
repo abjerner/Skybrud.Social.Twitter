@@ -14,7 +14,7 @@
     <Product>Skybrud.Social</Product>
     <Authors>Anders Bjerner</Authors>
     <Copyright>Copyright © 2022</Copyright>
-    <Description>Authentication and service implementation for the Twitter API.</Description>
+    <Description>.NET implementation and API wrapper for the Twitter API.</Description>
   </PropertyGroup>
 
   <!-- Information for the NuGet package -->
