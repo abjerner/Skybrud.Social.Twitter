@@ -14,12 +14,13 @@
     <Product>Skybrud.Social</Product>
     <Authors>Anders Bjerner</Authors>
     <Copyright>Copyright © 2022</Copyright>
-    <Description>Twitter, Skybrud, Social, OAuth, JSON</Description>
+    <Description>Authentication and service implementation for the Twitter API.</Description>
   </PropertyGroup>
 
   <!-- Information for the NuGet package -->
   <PropertyGroup>
     <PackageId>Skybrud.Social.Twitter</PackageId>
+    <PackageTags>Twitter, Skybrud, Social, OAuth, JSON, Limbo, API</PackageTags>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageProjectUrl>https://github.com/abjerner/Skybrud.Social.Twitter</PackageProjectUrl>
     <PackageIcon>Limbo.png</PackageIcon>
