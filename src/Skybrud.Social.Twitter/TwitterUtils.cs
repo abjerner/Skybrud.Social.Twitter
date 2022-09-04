@@ -19,7 +19,7 @@ namespace Skybrud.Social.Twitter {
 
         #region Version
 
-#if NET45_OR_GREATER
+#if NETSTANDARD2_0_OR_GREATER
 
         /// <summary>
         /// Gets the assembly version as a string.
@@ -46,7 +46,7 @@ namespace Skybrud.Social.Twitter {
             return FileVersionInfo.GetVersionInfo(assembly.Location).FileVersion;
         }
 
-        #endif
+#endif
 
         #endregion
 
