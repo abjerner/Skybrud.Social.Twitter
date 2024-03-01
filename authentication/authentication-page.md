@@ -1,10 +1,10 @@
 # Setting up an authentication page
 
-The {{class:Skybrud.Social.Twitter.OAuth.TwitterClient}} class handles the necessary logic for authenticating with the Twitter API.
+The <code type="Skybrud.Social.Twitter.OAuth.TwitterOAuthClient, Skybrud.Social.Twitter">TwitterOAuthClient</code> class handles the necessary logic for authenticating with the Twitter API.
 
 In order to get started, you need to create a [Twitter app](https://apps.twitter.com/) (or use an existing app if you already have one). Your Twitter app will have a consumer key and consumer secret, which together identifies your app.
 
-With the Twitter app in place, you can initialize a new instance of the {{class:Skybrud.Social.Twitter.OAuth.TwitterClient}} class like this:
+With the Twitter app in place, you can initialize a new instance of the <code type="Skybrud.Social.Twitter.OAuth.TwitterOAuthClient, Skybrud.Social.Twitter">TwitterOAuthClient</code> class like this:
 
 ```csharp
 // Initialize the OAuth client
@@ -49,7 +49,7 @@ Response.Redirect(requestToken.AuthorizeUrl);
 
 Once the user grants your app access to the user's Twitter account, the user is redirected back to the URL as defined by the `Callback` property, but with the `oauth_token` and `oauth_verifier` parameters in the query string.
 
-`oauth_token` is the request token that we received earlier. With this, we can retrieve the request token secret from the session. We should use these to update the `Token` and `TokenSecret` properties of the {{class:Skybrud.Social.Twitter.OAuth.TwitterClient}} instance.
+`oauth_token` is the request token that we received earlier. With this, we can retrieve the request token secret from the session. We should use these to update the `Token` and `TokenSecret` properties of the <code type="Skybrud.Social.Twitter.OAuth.TwitterOAuthClient, Skybrud.Social.Twitter">TwitterOAuthClient</code> instance.
 
 ```csharp
 // Get OAuth parameters from the query string
